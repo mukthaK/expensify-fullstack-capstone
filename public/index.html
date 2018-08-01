@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Habit Tracker</title>
+    <!-- Responsive Viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Style Sheets -->
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Monda" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cinzel:700|Fauna+One" rel="stylesheet">
+    <!-- Font Awesome icons-->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+
+<body>
+    <!-- Nav bar -->
+    <nav role="navigation" id="nav-bar">
+        <ul>
+            <div class="nav-left">
+                <li>Habit Tracker</li>
+            </div>
+            <div class="nav-right">
+                <li><span></span><input type="hidden" value="" id="loggedin-user"></li>
+                <li><a href="#" id="navbar-login-js">Log In</a></li>
+                <li><a href="#" id="navbar-logout-js">Log Out</a></li>
+            </div>
+        </ul>
+    </nav>
+
+    <!-- Landing screen -->
+    <main role="main" id="landing-screen">
+        <section class="hero">
+            <header role="banner">
+                <h1>Habit Tracker</h1>
+            </header>
+            <h4>Set and track your habits effectively</h4>
+            <div class="hero-signup">
+                <button type="button" class="hero-signup-button" id="hero-signup-button-js">Sign Up</button>
+                <p>Have an account? <button type="button" class="hero-login-button" id="hero-login-button-js"><span>Log In</span></button></p>
+            </div>
+        </section>
+        <div class="feature-heading">Key features for individuals</div>
+        <section class="features">
+            <div class="feature-container">
+                <i class="far fa-list-alt"></i>
+                <div class="feature-description">
+                    <h4>Milestones</h4>
+                    <p>Break down a habit into smaller easier more manageable steps to help you stay on track.</p>
+                </div>
+            </div>
+            <div class="feature-container">
+                <i class="far fa-sticky-note"></i>
+                <div class="feature-description">
+                    <h4>Journal & notes</h4>
+                    <p>Write about your experiences. Make a note of tips and thoughts about your progress.</p>
+                </div>
+            </div>
+            <div class="feature-container">
+                <i class="fas fa-trophy"></i>
+                <div class="feature-description">
+                    <h4>Metric</h4>
+                    <p>Appreciate how far you’ve come with your goals. Celebrate!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Sign up screen -->
+    <main role="main" id="signup-screen">
+        <section class="signup-section">
+            <form role="form" id="signup-form">
+                <fieldset>
+                    <p class="signup-heading">Sign Up</p>
+                    <label for="signup-username">Username</label>
+                    <input type="text" id="signup-username" placeholder="Username" value="Username">
+                    <label for="signup-password">Password</label>
+                    <input type="password" id="signup-password" placeholder="Password" value="Password">
+                    <label for="signup-confirm-password">Confirm password</label>
+                    <input type="password" id="signup-confirm-password" placeholder="Re-enter password" value="Password">
+                    <button role="button" name="login" type="submit" class="signup-button" id="signup-button-js">Sign Up</button>
+                    <p>Have an account?<button role="button" name="login" type="submit" class="singup-screen-login-button" id="singup-screen-login-button-js">Log In</button></p>
+                </fieldset>
+            </form>
+
+        </section>
+    </main>
+
+    <!-- Login screen -->
+    <main role="main" id="login-screen">
+        <section class="login-section">
+            <form role="form" id="login-form">
+                <fieldset>
+                    <p class="login-heading">Log In</p>
+                    <label for="login-username">Username</label>
+                    <input type="text" id="login-username" placeholder="Username" value="Username">
+                    <label for="login-password">Password</label>
+                    <input type="password" id="login-password" placeholder="Password" value="Password">
+                    <button role="button" name="login" type="submit" class="login-button" id="login-button-js">Log In</button>
+                    <p>Do not have an account?<button role="button" name="submit" type="submit" class="login-screen-signup-button" id="login-screen-signup-button-js">Sign Up</button></p>
+                </fieldset>
+            </form>
+            <div class="demo-info">
+                <p>Demo Log In: Username | password</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- User Dashboard -->
+    <main role="main" class="user-dashboard" id="dashboard-js">
+        <div class="newuser-msg">
+            <p>Looks like you aren't tracking any habits yet, so...</p>
+        </div>
+        <div class="add-habit">
+            <button class="add-habit-button" id="add-habit-button-js"><i class="fa fa-plus" aria-hidden="true"></i></button>
+            <span>Add a new habit</span>
+        </div>
+        <div class="habit-container-wrapper"></div>
+    </main>
+
+    <!-- Add a new Habit -->
+    <main role="main" id="habit-add-screen">
+        <form role="form" class="habit-form">
+            <fieldset>
+                <label for="habit-name">Habit title</label>
+                <input type="text" id="habit-name" placeholder="Name for a Habit" value="">
+                <div class="select-day">
+                    <span>I want to repeat this</span>
+                    <input type="radio" name="day" id="monday" value="monday" checked>
+                    <label for="monday">Mon</label>
+
+                    <input type="radio" name="day" id="tuesday" value="tuesday">
+                    <label for="tuesday">Tue</label>
+
+                    <input type="radio" name="day" id="wednesday" value="wednesday">
+                    <label for="wednesday">Wed</label>
+
+                    <input type="radio" name="day" id="thursday" value="thursday">
+                    <label for="thursday">Thu</label>
+
+                    <input type="radio" name="day" id="friday" value="friday">
+                    <label for="friday">Fri</label>
+
+                    <input type="radio" name="day" id="saturday" value="saturday">
+                    <label for="saturday">Sat</label>
+
+                    <input type="radio" name="day" id="sunday" value="sunday">
+                    <label for="sunday">Sun</label>
+                </div>
+                <div class="select-daytime">
+                    <span>I will do it</span>
+                    <select name="daytime" id="habit-time">
+                        <option value="anytime">At any time of the day</option>
+                        <option value="morning">In the morning</option>
+                        <option value="afternoon">In the afternoon</option>
+                        <option value="evening">In the evening</option>
+                    </select>
+                </div>
+            </fieldset>
+            <button type="submit" class="habit-form-done" id="habit-form-done-js">Done</button>
+            <button type="submit" class="habit-form-cancel" id="habit-form-cancel-js">Cancel</button>
+        </form>
+    </main>
+
+    <!-- Footer for the page -->
+    <footer role="contentinfo" class="footer-container">
+        <p> Say Hello!
+            <a href="https://www.linkedin.com/in/muktha-krishnaswamy/" target="_blank"><i class="fab fa-linkedin"></i></a>&nbsp;
+            <a href="mailto:muktha.1689@gmail.com"><i class="fas fa-envelope"></i></a>
+        </p>
+        <p>Source code <a href="https://github.com/mukthaK/habit-tracking-full-stack-capstone" target="_blank"><i class="fab fa-github"></i></a></p>
+        <p>&copy;Developed by Muktha Krishnaswamy</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
+    <script src="client.js" type="text/javascript"></script>
+</body>
+
+</html>
