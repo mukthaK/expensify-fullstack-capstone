@@ -3,26 +3,24 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Habit Tracker</title>
+    <title>Expensify</title>
     <!-- Responsive Viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Style Sheets -->
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Megrim" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Monda" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Cinzel:700|Fauna+One" rel="stylesheet">
+
     <!-- Font Awesome icons-->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+
 </head>
 
 <body>
-    <!-- Nav bar -->
+    <!-- Nav bar
     <nav role="navigation" id="nav-bar">
         <ul>
             <div class="nav-left">
-                <li>Habit Tracker</li>
+                <li>Expensify</li>
             </div>
             <div class="nav-right">
                 <li><span></span><input type="hidden" value="" id="loggedin-user"></li>
@@ -31,43 +29,35 @@
             </div>
         </ul>
     </nav>
+-->
 
     <!-- Landing screen -->
-    <main role="main" id="landing-screen">
-        <section class="hero">
-            <header role="banner">
-                <h1>Habit Tracker</h1>
-            </header>
-            <h4>Set and track your habits effectively</h4>
-            <div class="hero-signup">
-                <button type="button" class="hero-signup-button" id="hero-signup-button-js">Sign Up</button>
-                <p>Have an account? <button type="button" class="hero-login-button" id="hero-login-button-js"><span>Log In</span></button></p>
-            </div>
-        </section>
-        <div class="feature-heading">Key features for individuals</div>
-        <section class="features">
-            <div class="feature-container">
-                <i class="far fa-list-alt"></i>
-                <div class="feature-description">
-                    <h4>Milestones</h4>
-                    <p>Break down a habit into smaller easier more manageable steps to help you stay on track.</p>
+    <main role="main" id="landing-screen" class="bg-img">
+        <div class="row">
+<!--            <div class="container">-->
+            <div class="column">
+                <div class="about-app">
+                    <h1>Expensify</h1>
+                    <h3>Split expenses with friends</h3>
+                    <h5>The app maintains a running total</h5>
+                        <h5>so that you can pay each other at once</h5>
                 </div>
             </div>
-            <div class="feature-container">
-                <i class="far fa-sticky-note"></i>
-                <div class="feature-description">
-                    <h4>Journal & notes</h4>
-                    <p>Write about your experiences. Make a note of tips and thoughts about your progress.</p>
-                </div>
+            <div class="container column">
+                <form role="form" class="login-form">
+                    <h1>Log In</h1>
+
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Email" name="email" required>
+
+                    <label for="psw"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+
+                    <button type="submit" class="btn">Log In</button>
+                </form>
             </div>
-            <div class="feature-container">
-                <i class="fas fa-trophy"></i>
-                <div class="feature-description">
-                    <h4>Metric</h4>
-                    <p>Appreciate how far you’ve come with your goals. Celebrate!</p>
-                </div>
-            </div>
-        </section>
+<!--            </div>-->
+        </div>
     </main>
 
     <!-- Sign up screen -->
