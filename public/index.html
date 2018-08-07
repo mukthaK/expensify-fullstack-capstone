@@ -12,158 +12,131 @@
     <!-- Fonts -->
 
     <!-- Font Awesome icons-->
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-87DrmpqHRiY8hPLIr7ByqhPIywuSsjuQAfMXAE0sMUpY3BM7nXjf+mLIUSvhDArs" crossorigin="anonymous">
 </head>
 
-<body>
-    <!-- Nav bar
-    <nav role="navigation" id="nav-bar">
-        <ul>
-            <div class="nav-left">
-                <li>Expensify</li>
-            </div>
-            <div class="nav-right">
-                <li><span></span><input type="hidden" value="" id="loggedin-user"></li>
-                <li><a href="#" id="navbar-login-js">Log In</a></li>
-                <li><a href="#" id="navbar-logout-js">Log Out</a></li>
-            </div>
-        </ul>
+<body class="bg-img">
+    <!-- Navbar -->
+    <nav role="navigation" class="topnav">
+        <div class="nav-left">
+            <a href="#home" id="">Expensify</a>
+        </div>
+        <div class="nav-right" id="myTopnav">
+            <a href="#friends" id="">Friends</a>
+            <a href="#bill" id="">Bill</a>
+            <a href="#youOwe" id="">You owe</a>
+            <a href="#youAreOwed" id="">You are owed</a>
+            <a href="#activity" id="">Activity</a>
+            <a href="#chgPswd" id="">Change password</a>
+            <a href="#logout" id="">Log Out</a>
+            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+            <i class="fa fa-bars" aria-hidden="true"></i>
+        </a>
+        </div>
     </nav>
--->
 
     <!-- Landing screen -->
-    <main role="main" id="landing-screen" class="bg-img">
+    <main role="main" id="home">
         <div class="row">
-<!--            <div class="container">-->
             <div class="column">
                 <div class="about-app">
                     <h1>Expensify</h1>
                     <h3>Split expenses with friends</h3>
                     <h5>The app maintains a running total</h5>
-                        <h5>so that you can pay each other at once</h5>
+                    <h5>so that you can pay each other at once</h5>
                 </div>
             </div>
             <div class="container column">
+                <!-- form hide and show ?????? -->
                 <form role="form" class="login-form">
                     <h1>Log In</h1>
-
-                    <label for="email"><b>Email</b></label>
-                    <input type="text" placeholder="Enter Email" name="email" required>
-
-                    <label for="psw"><b>Password</b></label>
-                    <input type="password" placeholder="Enter Password" name="password" required>
-
-                    <button type="submit" class="btn">Log In</button>
+                    <label for="login-email">Email</label>
+                    <input type="email" placeholder="Enter Email" name="email" value="" required>
+                    <label for="login-psw">Password</label>
+                    <input type="password" placeholder="Enter Password" name="password" value="" required>
+                    <button role="button" type="submit" class="btn">Log In</button>
+                    <span>Dont have an account? </span>
+                    <button role="button" type="submit" class="signup-btn"><span>Sign Up!</span></button>
+                </form>
+                <form role="form" class="signup-form">
+                    <h1>Sign Up</h1>
+                    <label for="username">Username</label>
+                    <input type="text" placeholder="Enter Username" value="" required>
+                    <label for="signup-email">Email</label>
+                    <input type="email" placeholder="Enter Email" name="email" value="" required>
+                    <label for="signup-psw">Password</label>
+                    <input type="password" id="signup-password" placeholder="Enter Password" value="" required>
+                    <button role="button" type="submit" class="btn">Sign Up</button>
+                    <span>Already registered? </span>
+                    <button role="button" type="submit" class="signup-btn"><span>Log In!</span></button>
                 </form>
             </div>
-<!--            </div>-->
         </div>
-    </main>
-
-    <!-- Sign up screen -->
-    <main role="main" id="signup-screen">
-        <section class="signup-section">
-            <form role="form" id="signup-form">
-                <fieldset>
-                    <p class="signup-heading">Sign Up</p>
-                    <label for="signup-username">Username</label>
-                    <input type="text" id="signup-username" placeholder="Username" value="Username">
-                    <label for="signup-password">Password</label>
-                    <input type="password" id="signup-password" placeholder="Password" value="Password">
-                    <label for="signup-confirm-password">Confirm password</label>
-                    <input type="password" id="signup-confirm-password" placeholder="Re-enter password" value="Password">
-                    <button role="button" name="login" type="submit" class="signup-button" id="signup-button-js">Sign Up</button>
-                    <p>Have an account?<button role="button" name="login" type="submit" class="singup-screen-login-button" id="singup-screen-login-button-js">Log In</button></p>
-                </fieldset>
-            </form>
-
-        </section>
-    </main>
-
-    <!-- Login screen -->
-    <main role="main" id="login-screen">
-        <section class="login-section">
-            <form role="form" id="login-form">
-                <fieldset>
-                    <p class="login-heading">Log In</p>
-                    <label for="login-username">Username</label>
-                    <input type="text" id="login-username" placeholder="Username" value="Username">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" placeholder="Password" value="Password">
-                    <button role="button" name="login" type="submit" class="login-button" id="login-button-js">Log In</button>
-                    <p>Do not have an account?<button role="button" name="submit" type="submit" class="login-screen-signup-button" id="login-screen-signup-button-js">Sign Up</button></p>
-                </fieldset>
-            </form>
-            <div class="demo-info">
-                <p>Demo Log In: Username | password</p>
-            </div>
-        </section>
     </main>
 
     <!-- User Dashboard -->
-    <main role="main" class="user-dashboard" id="dashboard-js">
-        <div class="newuser-msg">
-            <p>Looks like you aren't tracking any habits yet, so...</p>
+    <!-- Friends -->
+    <main role="main" id="friends">
+        <div class="friends-wrapper">
+            <div class="friend-form-container">
+                <span class="message"></span>
+                <form role="form" class="add-friend-form">
+                    <label for="name">Name</label>
+                    <input type="text" placeholder="Enter Name" value="" required>
+                    <label for="email">Email</label>
+                    <input type="email" placeholder="Enter Email" name="email" value="" required>
+                    <button role="button" type="submit" class="btn">Add</button>
+                </form>
+            </div>
+            <!-- div or ul-li ???????? -->
+            <div class="friends-list">
+                <div class="friend">
+                    <span>John</span><button role="button" type="submit" class="friend-delete">&times;</button>
+                </div>
+                <div class="friend">
+                    <span>Rose</span><button role="button" type="submit" class="friend-delete">&times;</button>
+                </div>
+                <div class="friend">
+                    <span>Jen</span><button role="button" type="submit" class="friend-delete">&times;</button>
+                </div>
+                <div class="friend">
+                    <span>Kati</span><button role="button" type="submit" class="friend-delete">&times;</button>
+                </div>
+            </div>
         </div>
-        <div class="add-habit">
-            <button class="add-habit-button" id="add-habit-button-js"><i class="fa fa-plus" aria-hidden="true"></i></button>
-            <span>Add a new habit</span>
-        </div>
-        <div class="habit-container-wrapper"></div>
     </main>
 
-    <!-- Add a new Habit -->
-    <main role="main" id="habit-add-screen">
-        <form role="form" class="habit-form">
-            <fieldset>
-                <label for="habit-name">Habit title</label>
-                <input type="text" id="habit-name" placeholder="Name for a Habit" value="">
-                <div class="select-day">
-                    <span>I want to repeat this</span>
-                    <input type="radio" name="day" id="monday" value="monday" checked>
-                    <label for="monday">Mon</label>
+    <!-- Bill -->
+    <main role="main" id="bill">
 
-                    <input type="radio" name="day" id="tuesday" value="tuesday">
-                    <label for="tuesday">Tue</label>
 
-                    <input type="radio" name="day" id="wednesday" value="wednesday">
-                    <label for="wednesday">Wed</label>
+        <div class="bill-wrapper">
+            <form role="form" class="add-bill-form">
+                <label for="name">With you and:</label>
+                <!-- checkbox selection list or anyother type ????? multiple selection -->
+                <input type="text" placeholder="Enter Name" value="" required>
+                <label for="description">Enter a description:</label>
+                <input type="text" placeholder="Rent" name="description" value="" required>
+                <label for="split"><input type="radio" name="split" value="" required>Split equally</label>
 
-                    <input type="radio" name="day" id="thursday" value="thursday">
-                    <label for="thursday">Thu</label>
+                <label for="split"><input type="radio" name="split" value="" required>You owe John $</label>
 
-                    <input type="radio" name="day" id="friday" value="friday">
-                    <label for="friday">Fri</label>
+                <label for="split"><input type="radio" name="split" value="" required>John owes you $</label>
 
-                    <input type="radio" name="day" id="saturday" value="saturday">
-                    <label for="saturday">Sat</label>
+                <button role="button" type="submit" class="btn">Add</button>
+            </form>
+        </div>
 
-                    <input type="radio" name="day" id="sunday" value="sunday">
-                    <label for="sunday">Sun</label>
-                </div>
-                <div class="select-daytime">
-                    <span>I will do it</span>
-                    <select name="daytime" id="habit-time">
-                        <option value="anytime">At any time of the day</option>
-                        <option value="morning">In the morning</option>
-                        <option value="afternoon">In the afternoon</option>
-                        <option value="evening">In the evening</option>
-                    </select>
-                </div>
-            </fieldset>
-            <button type="submit" class="habit-form-done" id="habit-form-done-js">Done</button>
-            <button type="submit" class="habit-form-cancel" id="habit-form-cancel-js">Cancel</button>
-        </form>
     </main>
 
     <!-- Footer for the page -->
     <footer role="contentinfo" class="footer-container">
-        <p> Say Hello!
+        <p>&copy; 2018 Muktha Krishnaswamy</p>
+        <div class="footer-links">
             <a href="https://www.linkedin.com/in/muktha-krishnaswamy/" target="_blank"><i class="fab fa-linkedin"></i></a>&nbsp;
-            <a href="mailto:muktha.1689@gmail.com"><i class="fas fa-envelope"></i></a>
-        </p>
-        <p>Source code <a href="https://github.com/mukthaK/habit-tracking-full-stack-capstone" target="_blank"><i class="fab fa-github"></i></a></p>
-        <p>&copy;Developed by Muktha Krishnaswamy</p>
+            <a href="mailto:muktha.1689@gmail.com"><i class="fas fa-envelope"></i></a>&nbsp;
+            <a href="https://github.com/mukthaK/habit-tracking-full-stack-capstone" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
     </footer>
     <script src="https://code.jquery.com/jquery-3.2.1.js" integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE=" crossorigin="anonymous"></script>
     <script src="client.js" type="text/javascript"></script>

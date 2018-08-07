@@ -335,7 +335,8 @@ function hideHabitFormContainer(habitId) {
 }
 
 $(document).ready(function () {
-    $('main').hide();
+    //    $('main').hide();
+    $('main').show();
     $('#nav-bar').show();
     $('#navbar-logout-js').hide();
     $('#landing-screen').show();
