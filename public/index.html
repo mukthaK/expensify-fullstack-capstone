@@ -108,8 +108,6 @@
 
     <!-- Bill -->
     <main role="main" id="bill">
-
-
         <div class="bill-wrapper">
             <form role="form" class="add-bill-form">
                 <label for="name">With you and:</label>
@@ -118,15 +116,102 @@
                 <label for="description">Enter a description:</label>
                 <input type="text" placeholder="Rent" name="description" value="" required>
                 <label for="split"><input type="radio" name="split" value="" required>Split equally</label>
-
                 <label for="split"><input type="radio" name="split" value="" required>You owe John $</label>
-
                 <label for="split"><input type="radio" name="split" value="" required>John owes you $</label>
-
                 <button role="button" type="submit" class="btn">Add</button>
             </form>
         </div>
+    </main>
 
+    <!-- You Owe  -->
+    <main role="main" id="youOwe">
+
+        <div class="youOwe-wrapper">
+            <p>Showing only people that you owe</p>
+            <button role="button" type="button" class="accordion">John<span>$505.00</span></button>
+            <div class="panel">
+                <p>Coffee.....$5.00</p>
+                <p>Rent.....$500.00</p>
+                <button role="button" type="submit">Settle Up</button>
+            </div>
+
+            <button class="accordion">Jen<span>$30.00</span></button>
+            <div class="panel">
+                <p>Milk.....$5.00</p>
+                <p>Lunch.....$25.00</p>
+                <button role="button" type="submit">Settle Up</button>
+            </div>
+
+            <button class="accordion">Kati<span>$38.00</span></button>
+            <div class="panel">
+                <p>Dinner.....$30.00</p>
+                <p>Ice cream.....$8.00</p>
+                <button role="button" type="submit">Settle Up</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- You are owed -->
+    <main role="main" id="youAreOwed">
+        <div class="youAreOwed-wrapper">
+            <p>Showing only people that owe you</p>
+            <button role="button" type="button" class="accordion">Rose<span>$505.00</span></button>
+            <div class="panel">
+                <p>Coffee.....$5.00</p>
+                <p>Rent.....$500.00</p>
+                <button role="button" type="submit">Settle Up</button>
+            </div>
+
+            <button class="accordion">Jen<span>$30.00</span></button>
+            <div class="panel">
+                <p>Milk.....$5.00</p>
+                <p>Lunch.....$25.00</p>
+                <button role="button" type="submit">Settle Up</button>
+            </div>
+
+            <button class="accordion">Kati<span>$38.00</span></button>
+            <div class="panel">
+                <p>Dinner.....$30.00</p>
+                <p>Ice cream.....$8.00</p>
+                <button role="button" type="submit">Settle Up</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Activity -->
+    <main role="main" id="activity">
+        <!-- need to capture date ?????? -->
+        <div class="activity-wrapper">
+            <p class="activity-title">Recent Activity</p>
+            <div class="note">
+                <p>You added "Rent".</p>
+                <p>You get back $500.00</p>
+            </div>
+
+
+            <div class="note">
+                <p>You added "Dinner".</p>
+                <p>You owe $30.00</p>
+            </div>
+
+
+            <div class="note">
+                <p>You recorded a payment.</p>
+                <p>You paid $50.00</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- change pswd -->
+    <main role="main" id="chgPswd">
+        <div class="chgPswd-wrapper">
+            <form role="form" class="chgPswd-form">
+                <h1>Change Password</h1>
+                <label for="chgPswd-psw">Password</label>
+                <input type="password" placeholder="Enter Password" name="password" value="" required>
+                <button role="button" type="submit" class="btn">Save</button>
+            </form>
+        </div>
     </main>
 
     <!-- Footer for the page -->

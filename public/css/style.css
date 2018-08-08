@@ -12,6 +12,7 @@ html {
 .bg-img {
     /* The image used */
     background-color: lightsteelblue;
+    background-color: #b0c4de75;
     height: 100vh;
 }
 
@@ -104,6 +105,7 @@ input[type=password]:focus {
     cursor: pointer;
     width: 100%;
     opacity: 0.9;
+    text-align: center;
 }
 
 .btn:hover {
@@ -162,7 +164,8 @@ input[type=password]:focus {
 }
 
 .login-form h1,
-.signup-form h1 {
+.signup-form h1,
+.chgPswd-wrapper h1 {
     padding: 25px 0;
     text-align: center;
     font-size: 21px;
@@ -190,7 +193,8 @@ input[type=password]:focus {
 .add-friend-form {
     margin: 0 auto;
     width: 700px;
-    padding: 20px;
+    padding: 16px;
+    background-color: white;
 }
 
 .friend-form-container {}
@@ -225,6 +229,128 @@ input[type=password]:focus {
 }
 
 /* User dashboard */
+
+.add-bill-form {
+    background-color: white;
+    width: 600px;
+    padding: 16px;
+}
+
+/* You Owe style */
+
+.youOwe-wrapper,
+.youAreOwed-wrapper {
+    width: 60%;
+    margin: 0 auto;
+    padding: 16px;
+}
+
+/* Style the buttons that are used to open and close the accordion panel */
+
+.accordion {
+    background-color: #eee;
+    color: #444;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    text-align: left;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+}
+
+.accordion span {
+    float: right;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+
+.active,
+.accordion:hover {
+    background-color: #ccc;
+}
+
+/* Style the accordion panel. Note: hidden by default */
+
+.panel {
+    padding: 0 18px;
+    background-color: white;
+    /*    display: none;*/
+    overflow: hidden;
+    padding: 10px;
+}
+
+.panel p,
+.panel button {
+    display: block;
+    float: right;
+    clear: both;
+    padding: 10px;
+}
+
+.panel button {
+    background-color: lightpink;
+    color: white;
+    padding: 8px 20px;
+    border: none;
+    cursor: pointer;
+    opacity: 0.9;
+    text-align: center;
+}
+
+/* Unicode character for "plus" sign (>>) */
+
+/*
+.accordion:after {
+    content: '\226B';
+    font-size: 13px;
+    color: #777;
+    float: right;
+    margin-left: 5px;
+}
+*/
+
+/* Unicode character for "minus" sign (<<) */
+
+/*
+.active:after {
+    content: "\226A";
+}
+*/
+
+/* activity */
+
+.activity-wrapper {
+    margin: 0 auto;
+    padding: 16px;
+    width: 60%;
+    background-color: white;
+}
+
+.activity-title {
+    border-bottom: 1px solid #F0F0F0;
+    padding: 10px 20px;
+}
+
+.note {
+    border-bottom: 1px solid #F0F0F0;
+    padding: 20px;
+}
+
+.note p {
+    padding: 5px;
+}
+
+/* change pswd */
+
+.chgPswd-wrapper {
+    width: 30%;
+    background-color: white;
+    padding: 16px;
+    margin: 0 auto;
+}
+
+
 
 /* Footer style */
 
@@ -305,4 +431,13 @@ input[type=password]:focus {
     .row {
         height: 100vh;
     }
+}
+
+#chgPswd,
+#activity,
+#youOwe,
+#youAreOwed,
+#bill,
+#friends {
+    margin: 100px;
 }
