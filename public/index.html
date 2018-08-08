@@ -38,16 +38,16 @@
     <!-- Landing screen -->
     <main role="main" id="home">
         <div class="row">
-            <div class="column">
+            <div class="column-1">
                 <div class="about-app">
                     <h1>Expensify</h1>
                     <h3>Split expenses with friends</h3>
                     <h5>The app maintains a running total</h5>
-                    <h5>so that you can pay each other at once</h5>
+                    <h5>so that you can pay each other at once!</h5>
                 </div>
             </div>
-            <div class="container column">
-                <!-- form hide and show ?????? -->
+            <div class="container column-2">
+
                 <form role="form" class="login-form">
                     <h1>Log In</h1>
                     <label for="login-email">Email</label>
@@ -88,7 +88,7 @@
                     <button role="button" type="submit" class="btn">Add</button>
                 </form>
             </div>
-            <!-- div or ul-li ???????? -->
+
             <div class="friends-list">
                 <div class="friend">
                     <span>John</span><button role="button" type="submit" class="friend-delete">&times;</button>
@@ -109,16 +109,46 @@
     <!-- Bill -->
     <main role="main" id="bill">
         <div class="bill-wrapper">
-            <form role="form" class="add-bill-form">
-                <label for="name">With you and:</label>
-                <!-- checkbox selection list or anyother type ????? multiple selection -->
+            <form role="form" class="bill-friend bill-form">
+                <label for="name">With you and: </label>
                 <input type="text" placeholder="Enter Name" value="" required>
-                <label for="description">Enter a description:</label>
-                <input type="text" placeholder="Rent" name="description" value="" required>
-                <label for="split"><input type="radio" name="split" value="" required>Split equally</label>
-                <label for="split"><input type="radio" name="split" value="" required>You owe John $</label>
-                <label for="split"><input type="radio" name="split" value="" required>John owes you $</label>
-                <button role="button" type="submit" class="btn">Add</button>
+                <button role="button" type="submit" class="bill-btn">Add</button>
+                <div class="friends-billed">
+                    <span class="friend-name"></span>
+                </div>
+                <button role="button" type="submit" class="bill-btn">Next</button>
+            </form>
+            <form role="form" class="bill-desc bill-form">
+                <div>
+                    <label for="description">Enter a description:</label>
+                    <input type="text" placeholder="Rent" name="description" value="" required>
+                </div>
+                <div>
+                    <label for="amount">Amount:</label>
+                    <input type="number" placeholder="$500" name="amount" value="$" required>
+                </div>
+                <div>
+                    <button role="button" type="submit" class="bill-btn">Next</button>
+                </div>
+
+            </form>
+            <form role="form" class="bill-split bill-form">
+                <div class="split-type">
+                    <input type="radio" name="split" value="" required>
+                    <label for="split">Split equally</label>
+                </div>
+                <div class="split-type">
+                    <input type="radio" name="split" value="" required>
+                    <label for="split">You owe <span>John $</span></label>
+                </div>
+                <div class="split-type">
+                    <input type="radio" name="split" value="" required>
+                    <label for="split"><span>John</span> owes you <span>$</span></label>
+                </div>
+                <div class="split-type">
+                    <button role="button" type="submit" class="bill-btn">Add</button>
+                </div>
+
             </form>
         </div>
     </main>
@@ -180,7 +210,6 @@
 
     <!-- Activity -->
     <main role="main" id="activity">
-        <!-- need to capture date ?????? -->
         <div class="activity-wrapper">
             <p class="activity-title">Recent Activity</p>
             <div class="note">
@@ -208,7 +237,7 @@
             <form role="form" class="chgPswd-form">
                 <h1>Change Password</h1>
                 <label for="chgPswd-psw">Password</label>
-                <input type="password" placeholder="Enter Password" name="password" value="" required>
+                <input type="password" placeholder="Enter New Password" name="password" value="" required>
                 <button role="button" type="submit" class="btn">Save</button>
             </form>
         </div>

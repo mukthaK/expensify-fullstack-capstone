@@ -23,11 +23,18 @@ html {
 
 /* Create two equal columns that floats next to each other */
 
-.column {
+.column-1 {
     float: left;
-    width: 50%;
+    width: 60%;
     /*    padding: 10px;*/
-    margin: 183px 0 0 0;
+    margin: 150px 0 0 0;
+}
+
+.column-2 {
+    float: left;
+    width: 40%;
+    /*    padding: 10px;*/
+    margin: 150px 0 0 0;
 }
 
 /* Clear floats after the columns */
@@ -40,7 +47,9 @@ html {
 
 .about-app {
     /*    text-align: center;*/
-    padding: 0 0 0 80px;
+    width: 445px;
+    padding: 20px;
+    margin: 0 auto;
 }
 
 .about-app h1 {
@@ -79,21 +88,6 @@ input[type=password]:focus {
     outline: none;
 }
 
-.bill-wrapper {
-    width: 70%;
-    margin: 50px auto;
-    font-size: 20px;
-
-}
-
-.bill-wrapper label {
-    display: block;
-    padding: 10px;
-}
-
-.bill-wrapper input[type=radio] {
-    margin: 5px;
-}
 
 /* Set a style for the submit button */
 
@@ -197,7 +191,11 @@ input[type=password]:focus {
     background-color: white;
 }
 
-.friend-form-container {}
+.friend-form-container {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+}
 
 .add-friend-form input {
     display: inline-block;
@@ -229,12 +227,6 @@ input[type=password]:focus {
 }
 
 /* User dashboard */
-
-.add-bill-form {
-    background-color: white;
-    width: 600px;
-    padding: 16px;
-}
 
 /* You Owe style */
 
@@ -323,7 +315,7 @@ input[type=password]:focus {
 .activity-wrapper {
     margin: 0 auto;
     padding: 16px;
-    width: 60%;
+    width: 70%;
     background-color: white;
 }
 
@@ -344,13 +336,60 @@ input[type=password]:focus {
 /* change pswd */
 
 .chgPswd-wrapper {
-    width: 30%;
+    width: 40%;
     background-color: white;
     padding: 16px;
     margin: 0 auto;
 }
 
+/* bill style */
 
+.bill-wrapper {
+    width: 70%;
+    margin: 50px auto;
+    font-size: 20px;
+}
+
+.bill-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.bill-form input {
+    display: inline-block;
+    width: auto;
+    border-bottom: 1px dashed #F0F0F0;
+    background: none;
+    padding: 5px;
+}
+
+.bill-btn {
+    border: none;
+    background-color: lightpink;
+    color: white;
+    padding: 10px 10px;
+    cursor: pointer;
+    opacity: 0.9;
+    text-align: center;
+    margin: 10px;
+}
+
+.bill-desc,
+.bill-friend {
+    text-align: center;
+}
+
+.bill-split {
+    text-align: center;
+}
+
+.split-type {
+    padding: 10px;
+}
+
+.split-type label {
+    padding: 5px;
+}
 
 /* Footer style */
 
@@ -382,12 +421,12 @@ input[type=password]:focus {
 
 /* Extra small devices (phones, 600px and down) */
 
-@media only screen and (max-width: 768px) {
-    .column {
+@media only screen and (max-width: 850px) {
+    .column-1,
+    .column-2 {
         width: 100%;
         padding: 0 20px 0 20px;
         margin: 100px 0 0 0;
-
     }
     .about-app h1 {
         font-size: 42px;
@@ -398,6 +437,23 @@ input[type=password]:focus {
     .about-app h5 {
         font-size: 19px;
         padding: 2px;
+    }
+    .about-app {
+        text-align: center;
+    }
+    .friend {
+        width: 100%;
+    }
+    .youOwe-wrapper,
+    .youAreOwed-wrapper {
+        width: 80%;
+    }
+    .activity-wrapper {
+        width: 80%;
+        padding: 10px;
+    }
+    .chgPswd-wrapper {
+        width: 50%;
     }
 
 }
@@ -412,6 +468,8 @@ input[type=password]:focus {
         float: right;
         display: block;
     }
+
+
 }
 
 @media screen and (max-width: 600px) {
@@ -431,8 +489,46 @@ input[type=password]:focus {
     .row {
         height: 100vh;
     }
+    .add-friend-form {
+        width: 100%;
+    }
+    .add-friend-form input {
+        width: 100%;
+        display: block;
+        margin: 5px 0 22px 0;
+    }
+
+    .add-friend-form button {
+        display: block;
+        width: 100%;
+    }
+    .youOwe-wrapper,
+    .youAreOwed-wrapper {
+        width: 90%;
+    }
 }
 
+@media screen and (max-width: 480px) {
+    .about-app {
+        width: 100%;
+    }
+    .about-app h1 {
+        font-size: 38px;
+    }
+    .about-app h3 {
+        font-size: 18px;
+    }
+    .about-app h5 {
+        font-size: 15px;
+        padding: 2px;
+    }
+    .chgPswd-wrapper {
+        width: 70%;
+    }
+
+}
+
+/*
 #chgPswd,
 #activity,
 #youOwe,
@@ -441,3 +537,4 @@ input[type=password]:focus {
 #friends {
     margin: 100px;
 }
+*/
