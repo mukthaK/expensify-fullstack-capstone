@@ -328,151 +328,119 @@ function displayMilestones(result, habitId) {
     $(".milestone-container." + habitId).html(buildTheHtmlOutput);
 }
 
-
 function hideHabitFormContainer(habitId) {
     $('#' + habitId).hide();
     //alert("Cancel button clicked");
 }
 
+// **
 $(document).ready(function () {
-    //    $('main').hide();
     $('main').show();
-    $('#nav-bar').show();
-    $('#navbar-logout-js').hide();
-    $('#landing-screen').show();
-    $('#footer-container').show();
-    //habit container - checkin
-    //$('#checkin-habit-js').on('click', function (event) {
-    //    event.preventDefault();
-    //      alert("habit checkin icon clicked");
-    //});
-    $(".newuser-msg").hide();
+    $('#navbar').hide();
+    $('.signup-form').hide();
+    $('#friends').hide();
+    $('#bill').hide();
+    $('#youOwe').hide();
+    $('#youAreOwed').hide();
+    $('#activity').hide();
+    $('#chgPswd').hide();
+    $('#footer').show();
 });
 
-// Signup button on landing screen(hero)
-$(document).on('click', '#hero-signup-button-js', function (event) {
-    event.preventDefault();
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
-    $('#signup-screen').show();
-    $('#footer-container').show();
-});
-
-//login button on landing screen(hero)
-$(document).on('click', '#hero-login-button-js', function (event) {
-    event.preventDefault();
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
-    $('#footer-container').show();
-    $('#login-screen').show();
-});
-
-//Login button at Nav bar
-$(document).on('click', '#navbar-login-js', function (event) {
-    event.preventDefault();
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
-    $('#footer-container').show();
-    $('#login-screen').show();
-});
-
+// **
 // login button at signup form
-$(document).on('click', '#singup-screen-login-button-js', function (event) {
+$(document).on('click', '#login-signup-js', function (event) {
     event.preventDefault();
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
-    $('#footer-container').show();
-    $('#login-screen').show();
+    $('.login-form').show();
+    $('.signup-form').hide();
+    //alert("login btn on signup clicked")
 });
 
+// **
 // signup button at login form
-$(document).on('click', '#login-screen-signup-button-js', function (event) {
+$(document).on('click', '#signup-login-js', function (event) {
     event.preventDefault();
-    $('main').hide();
-    $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('.nav-left li, .nav-right li').css('color', 'white');
-    $('#footer-container').show();
-    $('#signup-screen').show();
+    $('.login-form').hide();
+    $('.signup-form').show();
+    //alert("signup btn on login clicked");
 });
 
+// ** ...
 //Signup button at signup form
-$(document).on('click', '#signup-button-js', function (event) {
+$(document).on('click', '#signup-js', function (event) {
     event.preventDefault();
     // get values from sign up form
     const username = $('#signup-username').val();
-    const password = $('#signup-password').val();
-    const confirmPassword = $('#signup-confirm-password').val();
+    const email = $('#signup-email').val();
+    const password = $('#signup-psw').val();
 
     // validate user inputs
     if (username == '')
         alert('Must input username');
     else if (password == '')
         alert('Must input password');
-    else if (confirmPassword == '')
-        alert('Must re-enter password');
-    else if (password != confirmPassword)
-        alert('Passwords do not match');
+    else if (email == '')
+        alert('Must enter email');
     // if valid
     else {
         // create the payload object (what data we send to the api call)
         const newUserObject = {
             username: username,
+            email: email,
             password: password
         };
+        console.log(newUserObject);
         // make the api call using the payload above
-        $.ajax({
-                type: 'POST',
-                url: '/users/create',
-                dataType: 'json',
-                data: JSON.stringify(newUserObject),
-                contentType: 'application/json'
-            })
-            // if call is succefull
-            .done(function (result) {
-                console.log(result);
-                $('#loggedin-user').val(result.username);
-                $('#nav-bar span').text("Hello " + result.username);
-                $('main').hide();
-                $('#nav-bar').show();
-                $('#nav-bar').addClass('nav-background');
-                $('.nav-left li, .nav-right li').css('color', 'white');
-                $('#footer-container').show();
-                $('#dashboard-js').show();
-                $('#navbar-login-js').hide();
-                $('#navbar-logout-js').show();
-                $(".newuser-msg").show();
-                $('.habit-edit-screen').hide();
-                populateHabitsByUsername(result.username);
-            })
-            // if the call is failing
-            .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-            });
+        //        $.ajax({
+        //                type: 'POST',
+        //                url: '/users/create',
+        //                dataType: 'json',
+        //                data: JSON.stringify(newUserObject),
+        //                contentType: 'application/json'
+        //            })
+        // if call is succefull
+        //            .done(function (result) {
+        $('main').hide();
+        $('#navbar').show();
+        //alert("signup clicked");
+        $('#youOwe').show();
+
+        //                console.log(result);
+        //                $('#loggedin-user').val(result.username);
+        //                $('#nav-bar span').text("Hello " + result.username);
+        //                $('main').hide();
+        //                $('#nav-bar').show();
+        //                $('#nav-bar').addClass('nav-background');
+        //                $('.nav-left li, .nav-right li').css('color', 'white');
+        //                $('#footer-container').show();
+        //                $('#dashboard-js').show();
+        //                $('#navbar-login-js').hide();
+        //                $('#navbar-logout-js').show();
+        //                $(".newuser-msg").show();
+        //                $('.habit-edit-screen').hide();
+        //                populateHabitsByUsername(result.username);
+        //            })
+        //            // if the call is failing
+        //            .fail(function (jqXHR, error, errorThrown) {
+        //                console.log(jqXHR);
+        //                console.log(error);
+        //                console.log(errorThrown);
+        //            });
     }
 });
 
+// ** ...
 // Login button at Login form
-$(document).on('click', '#login-button-js', function (event) {
+$(document).on('click', '#login-js', function (event) {
     event.preventDefault();
 
     // Get the inputs from the user in Log In form
-    const username = $("#login-username").val();
-    const password = $("#login-password").val();
+    const email = $("#login-email").val();
+    const password = $("#login-psw").val();
 
     // validate the input
-    if (username == "") {
-        alert('Please input user name');
+    if (email == "") {
+        alert('Please input email');
     } else if (password == "") {
         alert('Please input password');
     }
@@ -480,56 +448,107 @@ $(document).on('click', '#login-button-js', function (event) {
     else {
         // create the payload object (what data we send to the api call)
         const loginUserObject = {
-            username: username,
+            email: email,
             password: password
         };
         console.log(loginUserObject);
-
-        //make the api call using the payload above
-        $.ajax({
-                type: 'POST',
-                url: '/users/login',
-                dataType: 'json',
-                data: JSON.stringify(loginUserObject),
-                contentType: 'application/json'
-            })
-            //if call is succefull
-            .done(function (result) {
-                //console.log(result);
-                $('#loggedin-user').val(result.username);
-                $('#nav-bar span').text("Hello " + result.username);
-
-                populateHabitsByUsername(result.username);
-
-                $('main').hide();
-                $('#nav-bar').show();
-                $('#nav-bar').addClass('nav-background');
-                $('.nav-left li, .nav-right li').css('color', 'white');
-                $('#navbar-login-js').hide();
-                $('#navbar-logout-js').show();
-                $('#footer-container').show();
-                $('#dashboard-js').show();
-                $('.habit-edit-screen').hide();
-            })
-            //if the call is failing
-            .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-                alert('Incorrect Username or Password');
-            });
-    };
+        //
+        //        //make the api call using the payload above
+        //        $.ajax({
+        //                type: 'POST',
+        //                url: '/users/login',
+        //                dataType: 'json',
+        //                data: JSON.stringify(loginUserObject),
+        //                contentType: 'application/json'
+        //            })
+        //            //if call is succefull
+        //            .done(function (result) {
+        $('main').hide();
+        $('#navbar').show();
+        //alert("login clicked");
+        $('#youOwe').show();
+        //                console.log(result);
+        //                $('#loggedin-user').val(result.username);
+        //                $('#nav-bar span').text("Hello " + result.username);
+        //
+        //                populateHabitsByUsername(result.username);
+        //
+        //                $('main').hide();
+        //                $('#nav-bar').show();
+        //                $('#nav-bar').addClass('nav-background');
+        //                $('.nav-left li, .nav-right li').css('color', 'white');
+        //                $('#navbar-login-js').hide();
+        //                $('#navbar-logout-js').show();
+        //                $('#footer-container').show();
+        //                $('#dashboard-js').show();
+        //                $('.habit-edit-screen').hide();
+        //            })
+        //            //if the call is failing
+        //            .fail(function (jqXHR, error, errorThrown) {
+        //                console.log(jqXHR);
+        //                console.log(error);
+        //                console.log(errorThrown);
+        //                alert('Incorrect Username or Password');
+        //            });
+    }
 });
 
-// user dashboard - add habit button
-$(document).on('click', '#add-habit-button-js', function (event) {
+// **
+// user dashboard - click on friend link
+$(document).on('click', '#friends-js', function (event) {
     event.preventDefault();
     $('main').hide();
     $('#nav-bar').show();
-    $('#nav-bar').addClass('nav-background');
-    $('#footer-container').show();
-    $('#habit-add-screen').show();
+    $('#friends').show();
 });
+
+// **
+// Bill link
+$(document).on('click', '#bill-js', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('#nav-bar').show();
+    $('#bill').show();
+});
+
+// **
+// YouOwe link
+$(document).on('click', '#youOwe-js', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('#nav-bar').show();
+    $('#youOwe').show();
+});
+
+
+// **
+// youAreOwed link
+$(document).on('click', '#youAreOwed-js', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('#nav-bar').show();
+    $('#youAreOwed').show();
+});
+
+
+// **
+// activity link
+$(document).on('click', '#activity-js', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('#nav-bar').show();
+    $('#activity').show();
+});
+
+// **
+// chgPswd link
+$(document).on('click', '#chgPswd-js', function (event) {
+    event.preventDefault();
+    $('main').hide();
+    $('#nav-bar').show();
+    $('#chgPswd').show();
+});
+
 
 //habit container - delete habit
 $('#delete-habit-js').on('click', function (event) {
@@ -840,8 +859,8 @@ $(document).on('change', '.milestone-item', function (event) {
         });
 });
 
-// Nav bar logout
-$('#navbar-logout-js').click(function (event) {
+//  logout
+$(document).on('click', '#logout-js', function (event) {
     event.preventDefault();
     location.reload();
 });
