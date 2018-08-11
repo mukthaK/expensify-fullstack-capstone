@@ -58,15 +58,17 @@ function closeServer() {
 
 
 // ---------------USER ENDPOINTS-------------------------------------
-// creating a new user
+// creating a new user **
 app.post('/users/create', (req, res) => {
     //take the  username and the password from the ajax api call
     let username = req.body.username;
     let password = req.body.password;
+    let email = req.body.email;
 
     //exclude extra spaces from the username and password
     username = username.trim();
     password = password.trim();
+    email = email.trim();
 
     //create an encryption key
     bcrypt.genSalt(10, (err, salt) => {
@@ -91,6 +93,7 @@ app.post('/users/create', (req, res) => {
             //using the mongoose DB schema, connect to the database and create the new user
             User.create({
                 username,
+                email,
                 password: hash,
             }, (err, item) => {
                 //if creating a new user in the DB returns an error..
@@ -114,12 +117,12 @@ app.post('/users/create', (req, res) => {
 // Loging in a user
 app.post('/users/login', function (req, res) {
     //take the username and the password from the ajax api call
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
 
     //using the mongoose DB schema, connect to the database and the user with the same username as above
     User.findOne({
-        username: username
+        email: email
     }, function (err, items) {
         //if the there is an error connecting to the DB
         if (err) {
@@ -154,7 +157,7 @@ app.post('/users/login', function (req, res) {
                 //if the password is valid
                 else {
                     //return the logged in user
-                    console.log(`User \`${username}\` logged in.`);
+                    console.log(`User \`${email}\` logged in.`);
                     return res.json(items);
                 }
             });
