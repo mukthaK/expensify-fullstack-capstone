@@ -335,13 +335,14 @@ function hideHabitFormContainer(habitId) {
 
 
 
-function addFriendToList(friend) {
+function addFriendToList(email, username) {
     const loggedinUser = $('#loggedin-user').val();
 
     // create the payload object (what data we send to the api call)
     const friendObject = {
         loggedinUser,
-        friend
+        email,
+        username
     };
     console.log(friendObject);
 
@@ -396,7 +397,7 @@ function displayFriend(friend) {
     let buildTheHtmlOutput = "";
 
     $.each(friend, function (friendKey, friendValue) {
-
+        console.log(friendKey, friendValue);
         buildTheHtmlOutput += '<div class="friend">';
         buildTheHtmlOutput += `<span>${friendValue.username}</span>`;
         buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
@@ -568,10 +569,12 @@ $(document).on('click', '#login-js', function (event) {
 // user dashboard - click on friend link
 $(document).on('click', '#friends-js', function (event) {
     event.preventDefault();
+    const loggedinUser = $('#loggedin-user').val();
     $('main').hide();
     $('#nav-bar').show();
     $('#friends').show();
     $('.invite').hide();
+    getFriends(loggedinUser);
 });
 
 // **
@@ -679,7 +682,7 @@ $(document).on('click', '#add-friend-js', function (event) {
                 } // if friend found
                 else {
                     // add friend to list
-                    addFriendToList(result[0]);
+                    addFriendToList(result[0].email, result[0].username);
                     // show friend on dashboard
                     getFriends(loggedinUser);
 
@@ -732,7 +735,7 @@ $(document).on('click', '#invite-js', function (event) {
             console.log(result);
 
             // add friend to list
-            addFriendToList(result);
+            addFriendToList(result.email, result.username);
             //display in user friend dashboard
             console.log(loggedinUser);
             getFriends(loggedinUser);

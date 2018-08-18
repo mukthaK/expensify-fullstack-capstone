@@ -83,7 +83,7 @@ function sendEmail(name, email, loggedinUser, password) {
         // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
         subject: 'Invitation to join Expensify!',
         //text: 'gmail-send example 1', // Plain text
-        html: htmlString           // HTML
+        html: htmlString // HTML
     });
     send({ // Overriding default parameters
         //        subject: 'attached ' + filepath, // Override value set as default
@@ -355,13 +355,14 @@ app.get('/friend/:email', function (req, res) {
 // GET ------------------------------------
 // accessing all of a user's friends list **
 app.get('/getfriends/:loggedinUser', function (req, res) {
-    // Get all the habits from the database
+    // Get all the friends from the database
     Friend
         .find()
-        .then(function (friend) {
+        .then(function (friends) {
+            console.log(friends);
             // Creates friendOutput array
             let friendsOutput = [];
-            friend.map(function (friend) {
+            friends.map(function (friend) {
                 // if there is a friend matching existing user...
                 if (friend.loggedinUser == req.params.loggedinUser) {
                     // ... added to the habit output array
@@ -492,11 +493,13 @@ app.put('/notes/save', (req, res) => {
 // Adding entry for friend (list) **
 app.post('/friend/add', (req, res) => {
     let loggedinUser = req.body.loggedinUser;
-    let friend = req.body.friend;
+    let email = req.body.email;
+    let username = req.body.username;
 
     Friend.create({
         loggedinUser,
-        friend
+        email,
+        username
     }, (err, item) => {
         if (err) {
             return res.status(500).json({
