@@ -446,24 +446,18 @@ app.put('/notes/save', (req, res) => {
 
 // ---------------MILESTONES ENDPOINTS-------------------------------------
 // POST-----------------------------------------------
-// Adding entry for Milestones
-app.post('/milestones/add', (req, res) => {
-    let milestonesContent = req.body.milestonesContent;
-    let habitName = req.body.habitName;
+// Adding entry for friend (list) **
+app.post('/friend/add', (req, res) => {
     let loggedinUser = req.body.loggedinUser;
-    let habitID = req.body.habitID;
+    let friend = req.body.friend;
 
-    Milestones.create({
-        milestonesContent,
-        // Set the default checked value as false
-        checked: false,
-        habitName,
-        habitID,
-        loggedinUser
+    Friend.create({
+        loggedinUser,
+        friend
     }, (err, item) => {
         if (err) {
             return res.status(500).json({
-                message: 'Failed to add milestones'
+                message: 'Failed to add friend'
             });
         }
         if (item) {

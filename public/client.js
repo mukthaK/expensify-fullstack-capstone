@@ -343,6 +343,39 @@ function displayFriend(friend) {
 
     $('.friends-list').html(buildTheHtmlOutput);
 }
+
+function addFriendToList(friend) {
+    const loggedinUser = $('#loggedin-user').val();
+
+    // create the payload object (what data we send to the api call)
+    const friendObject = {
+        loggedinUser,
+        friend
+    };
+    console.log(friendObject);
+
+    //make the api call using the payload above
+    $.ajax({
+            type: 'POST',
+            url: '/friend/add',
+            dataType: 'json',
+            data: JSON.stringify(friendObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            console.log(result);
+            displayFriend(loggedinUser);
+            //$('#dashboard-js').show();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('Incorrect friend');
+        });
+}
 // **
 $(document).ready(function () {
     $('main').show();
@@ -617,7 +650,7 @@ $(document).on('click', '#add-friend-js', function (event) {
                 } // if friend found
                 else {
                     // add friend to list
-                    //addFriendToList(result[0]);
+                    addFriendToList(result[0]);
                     // show friend on dashboard
                     displayFriend(loggedinUser);
 
@@ -670,7 +703,7 @@ $(document).on('click', '#invite-js', function (event) {
             console.log(result);
 
             // add friend to list
-            //addFriendToList(result);
+            addFriendToList(result);
             //display in user friend dashboard
             displayFriend(loggedinUser);
         })
@@ -680,8 +713,6 @@ $(document).on('click', '#invite-js', function (event) {
             console.log(errorThrown);
             alert('Incorrect new friend');
         });
-
-
 });
 
 // friend invite no click
