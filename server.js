@@ -60,13 +60,39 @@ function closeServer() {
 function sendEmail(name, email, loggedinUser, password) {
     console.log('* [example 1.1] sending test email');
     console.log(name, email, loggedinUser, password);
-    //    let htmlString = `<h3>Hello ${name}!.</h3>`;
-    //    htmlString += `<p>${loggedinUser} has invited you to join Expensify - Split expenses with friends.The app maintains a running total so that you can pay each other at once! </p>`;
-    //    htmlString += `<p>Here is the link to join Expensify.</p>`;
-    //    htmlString += `<a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>`;
-    //    htmlString += `<p>username: ${name}</p>`;
-    //    htmlString += `<p>email: ${email}</p>`;
-    //    htmlString += `<p>password: ${password}</p>`;
+    let htmlString = `<h3>Hello ${name}!.</h3>`;
+    htmlString += `<p>${loggedinUser} has invited you to join Expensify - Split expenses with friends.The app maintains a running total so that you can pay each other at once! </p>`;
+    htmlString += `<p>Here is the link to join Expensify.</p>`;
+    htmlString += `<a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>`;
+    htmlString += `<p>username: ${name}</p>`;
+    htmlString += `<p>email: ${email}</p>`;
+    htmlString += `<p>password: ${password}</p>`;
+
+    var send = require('gmail-send')({
+        //var send = require('../index.js')({
+        user: 'expensify.info@gmail.com',
+        // user: credentials.user,                  // Your GMail account used to send emails
+        pass: 'Expfo@123',
+        // pass: credentials.pass,                  // Application-specific password
+        to: email,
+        // to:   credentials.user,                  // Send to yourself
+        // you also may set array of recipients:
+        // [ 'user1@gmail.com', 'user2@gmail.com' ]
+        // from:    credentials.user,            // from: by default equals to user
+        // replyTo: credentials.user,            // replyTo: by default undefined
+        // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
+        subject: 'Invitation to join Expensify!',
+        //text: 'gmail-send example 1', // Plain text
+        html: htmlString           // HTML
+    });
+    send({ // Overriding default parameters
+        //        subject: 'attached ' + filepath, // Override value set as default
+        //        files: [ filepath ],
+    }, function (err, res) {
+        console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
+    });
+
+
 
     //console.log(htmlString);
     // Require'ing module and setting default options
