@@ -333,6 +333,16 @@ function hideHabitFormContainer(habitId) {
     //alert("Cancel button clicked");
 }
 
+function displayFriend(friend) {
+    let buildTheHtmlOutput = "";
+
+    buildTheHtmlOutput += '<div class="friend">';
+    buildTheHtmlOutput += `<span>${friend.username}</span>`;
+    buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
+    buildTheHtmlOutput += '</div>';
+
+    $('.friends-list').html(buildTheHtmlOutput);
+}
 // **
 $(document).ready(function () {
     $('main').show();
@@ -499,6 +509,7 @@ $(document).on('click', '#friends-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#friends').show();
+    $('.invite').hide();
 });
 
 // **
@@ -565,7 +576,7 @@ $('#delete-habit-js').on('click', function (event) {
 // add friend
 $(document).on('click', '#add-friend-js', function (event) {
     event.preventDefault();
-
+    //alert("add friend clicked");
     // Get the inputs from the user in add friend form
     const name = $("#friend-name").val();
     //    const email = $("input[type='radio']:checked").val();
@@ -573,6 +584,7 @@ $(document).on('click', '#add-friend-js', function (event) {
 
     const loggedinUser = $('#loggedin-user').val();
 
+    console.log("add friend: ", name, email, loggedinUser);
     // validate the input
     if (name == "") {
         alert('Please enter  name');
@@ -581,98 +593,102 @@ $(document).on('click', '#add-friend-js', function (event) {
     }
     // if the input is valid
     else {
-        // create the payload object (what data we send to the api call)
-        //        const newHabitObject = {
-        //            habitName: habitName,
-        //            weekday: weekday,
-        //            time: time,
-        //            loggedinUser: loggedinUser
-        //        };
-        //
-        //        //make the api call using the payload above
-        //        $.ajax({
-        //                type: 'POST',
-        //                url: '/habit/create',
-        //                dataType: 'json',
-        //                data: JSON.stringify(newHabitObject),
-        //                contentType: 'application/json'
-        //            })
-        //            //if call is successfull
-        //            .done(function (result) {
-        //                console.log(result);
-        //                $('#habit-add-screen').hide();
-        //                $('#dashboard-js').show();
-        //                populateHabitsByUsername(result.loggedinUser);
-        //
-        //                $('html, body').animate({
-        //                    scrollTop: $('footer').offset().top
-        //                }, 1200);
-        //
-        //            })
-        //            //if the call is failing
-        //            .fail(function (jqXHR, error, errorThrown) {
-        //                console.log(jqXHR);
-        //                console.log(error);
-        //                console.log(errorThrown);
-        //                alert('Incorrect New habit object');
-        //            });
-    }
-});
 
-// Habit edit form submit
-$(document).on('submit', '.habit-edit-form', function (event) {
-    event.preventDefault();
+        $('#save-friend-name').val(name); // ok to do ?????
+        $('#save-friend-email').val(email);
 
-    // Get the inputs from the user in Log In form
-    const habitName = $(this).find(".habit-name").val();
-    const weekday = $(this).find("input[type='radio']:checked").val();
-    const time = $(this).find('.habit-time').val();
-    const habitId = $(this).closest('.habit-container').find('.noteMilestoneContainerID').val();
-    const loggedinUser = $('#loggedin-user').val();
-    //console.log(habitName, weekday, time, habitId, loggedinUser);
-
-    // validate the input
-    if (habitName == "") {
-        alert('Please input habit name');
-    } else if (weekday == "") {
-        alert('Please select the weekday');
-    } else if (time == '') {
-        alert('Please select the time');
-    }
-    // if the input is valid
-    else {
-        // create the payload object (what data we send to the api call)
-        const editHabitObject = {
-            habitName: habitName,
-            weekday: weekday,
-            time: time,
-            loggedinUser: loggedinUser
-        };
-
-        //make the api call using the payload above
+        //make the api call to check if friend is a user of app
         $.ajax({
-                type: 'PUT',
-                url: `/update-habit/${habitId}`,
+                type: 'GET',
+                url: `/friend/${email}`,
                 dataType: 'json',
-                data: JSON.stringify(editHabitObject),
+                //                data: JSON.stringify(newFriendObject),
                 contentType: 'application/json'
             })
             //if call is successfull
             .done(function (result) {
-                console.log(result);
-                populateHabitsByUsername(loggedinUser);
-                $('.habit-edit-form').hide();
-                alert('Habit is updated');
+                console.log("friend check", result);
+                // if no frind returned
+                if (result.length === 0) {
+                    //display message - want to invite friend?
+                    $('.invite').show();
+
+
+                } // if friend found
+                else {
+                    // add friend to list
+                    //addFriendToList(result[0]);
+                    // show friend on dashboard
+                    displayFriend(loggedinUser);
+
+                    //add friend to the loged in user friends list ???
+                }
+                //                $('#habit-add-screen').hide();
+                //                $('#dashboard-js').show();
+                //                populateHabitsByUsername(result.loggedinUser);
+                //
+                //                $('html, body').animate({
+                //                    scrollTop: $('footer').offset().top
+                //                }, 1200);
+
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
                 console.log(jqXHR);
                 console.log(error);
                 console.log(errorThrown);
-                alert('Incorrect New habit object');
+                alert('Incorrect New friend object');
             });
+    }
+});
+//  friend invite yes click
+$(document).on('click', '#invite-js', function (event) {
+    event.preventDefault();
+    //alert("invite accepted");
+    let name = $(this).parent().parent().find('#save-friend-name').val();
+    let email = $(this).parent().parent().find('#save-friend-email').val();
+    let loggedinUser = $('#loggedin-user').val();
+    console.log(" friend name", name, " friend enmil", email, " loggedin user", loggedinUser);
+    //// if yes -> make post call with all the details to create new user
+    // create the payload object (what data we send to the api call)
+    const newFriendObject = {
+        name: name,
+        email: email,
+        loggedinUser: loggedinUser
     };
+    console.log(newFriendObject);
 
+    //make the api call using the payload above
+    $.ajax({
+            type: 'POST',
+            url: '/friend/create',
+            dataType: 'json',
+            data: JSON.stringify(newFriendObject),
+            contentType: 'application/json'
+        })
+        .done(function (result) {
+            console.log(result);
+
+            // add friend to list
+            //addFriendToList(result);
+            //display in user friend dashboard
+            displayFriend(loggedinUser);
+        })
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('Incorrect new friend');
+        });
+
+
+});
+
+// friend invite no click
+$(document).on('click', '#invite-cancel-js', function (event) {
+    event.preventDefault();
+    alert("invite cancelled");
+    $('.invite').hide();
 });
 
 // habit  form cancel button

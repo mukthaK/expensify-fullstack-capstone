@@ -285,7 +285,7 @@ input[type=password]:focus {
 .add-friend-form {
     margin: 0 auto;
     width: 700px;
-    padding: 16px 0 0 85px;
+    /*    padding: 16px 0 0 85px;*/
     /*    background-color: white;*/
 }
 
@@ -331,6 +331,22 @@ input[type=password]:focus {
 }
 
 /* User dashboard */
+
+.invite {
+    text-align: center;
+    padding: 10px;
+}
+
+.invite p {
+    color: white;
+    padding: 5px;
+}
+
+.invite-btn {
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #9ed2c5;
+}
 
 /* You Owe style */
 

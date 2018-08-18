@@ -89,20 +89,28 @@
                     <button role="button" type="submit" class="btn" id="add-friend-js">Add</button>
                 </form>
             </div>
+            <input type="hidden" id="save-friend-name" value="">
+            <input type="hidden" id="save-friend-email" value="">
+            <div class="invite">
+                <p>Sorry! We couldn't find the friend you are looking to add.</p>
+                <p>Would you like to invite?</p>
+                <button role="button" type="submit" class="invite-btn" id="invite-js">Yes</button>
+                <button role="button" type="submit" class="invite-btn" id="invite-cancel-js">No</button>
+            </div>
 
             <div class="friends-list">
-                <div class="friend">
-                    <span>John</span><button role="button" type="submit" class="friend-delete">&times;</button>
-                </div>
-                <div class="friend">
-                    <span>Rose</span><button role="button" type="submit" class="friend-delete">&times;</button>
-                </div>
-                <div class="friend">
-                    <span>Jen</span><button role="button" type="submit" class="friend-delete">&times;</button>
-                </div>
-                <div class="friend">
-                    <span>Kati</span><button role="button" type="submit" class="friend-delete">&times;</button>
-                </div>
+
+                <!--
+<div class="friend">
+    <span>Rose</span><button role="button" type="submit" class="friend-delete">&times;</button>
+</div>
+<div class="friend">
+    <span>Jen</span><button role="button" type="submit" class="friend-delete">&times;</button>
+</div>
+<div class="friend">
+    <span>Kati</span><button role="button" type="submit" class="friend-delete">&times;</button>
+</div>
+-->
             </div>
         </section>
     </main>

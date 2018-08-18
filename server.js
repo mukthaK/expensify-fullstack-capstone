@@ -1,6 +1,6 @@
 const User = require('./models/user');
-const Habit = require('./models/habit');
-const Notes = require('./models/notes');
+const Friend = require('./models/friend');
+//const Notes = require('./models/notes');
 const Milestones = require('./models/milestones');
 const bodyParser = require('body-parser');
 const config = require('./config');
@@ -56,6 +56,83 @@ function closeServer() {
     }));
 }
 
+// gmail send api
+function sendEmail(name, email, loggedinUser, password) {
+    console.log('* [example 1.1] sending test email');
+    console.log(name, email, loggedinUser, password);
+    //    let htmlString = `<h3>Hello ${name}!.</h3>`;
+    //    htmlString += `<p>${loggedinUser} has invited you to join Expensify - Split expenses with friends.The app maintains a running total so that you can pay each other at once! </p>`;
+    //    htmlString += `<p>Here is the link to join Expensify.</p>`;
+    //    htmlString += `<a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>`;
+    //    htmlString += `<p>username: ${name}</p>`;
+    //    htmlString += `<p>email: ${email}</p>`;
+    //    htmlString += `<p>password: ${password}</p>`;
+
+    //console.log(htmlString);
+    // Require'ing module and setting default options
+
+    var send = require('gmail-send')({
+        //var send = require('../index.js')({
+        user: 'expensify.info@gmail.com',
+        // user: credentials.user,                  // Your GMail account used to send emails
+        password: 'Expfo@123',
+        // pass: credentials.pass,                  // Application-specific password
+        to: email,
+        // to:   credentials.user,                  // Send to yourself
+        // you also may set array of recipients:
+        // [ 'user1@gmail.com', 'user2@gmail.com' ]
+        // from:    credentials.user,            // from: by default equals to user
+        // replyTo: credentials.user,            // replyTo: by default undefined
+        // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
+        subject: 'Invitation to join Expensify!',
+        text: `Hello ${name}! You have been invited you to join Expensify - Split expenses with friends. The app maintains a running total so that you can pay each other at once!
+        Here is the link to join Expensify.  <a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>
+        username: ${name}
+        email: ${email}
+        password: ${password}` // Plain text
+        //html: htmlString // HTML
+    });
+
+
+    // Override any default option and send email
+
+    //    console.log('* [example 1.1] sending test email');
+    //
+    //    var filepath = './demo-attachment.txt';  // File to attach
+    //
+    send({ // Overriding default parameters
+        //            subject: 'attached '+filepath,         // Override value set as default
+        //            files: [ filepath ],
+    }, function (err, res) {
+        console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
+    });
+
+    // Set additional file properties
+
+    //    console.log('* [example 1.2] sending test email');
+    //
+    //    send({ // Overriding default parameters
+    //        subject: 'attached '+filepath,              // Override value set as default
+    //        files: [                                    // Array of files to attach
+    //            {
+    //                path: filepath,
+    //                filename: 'filename-can-be-changed.txt' // You can override filename in the attachment if needed
+    //            }
+    //        ],
+    //    }, function (err, res) {
+    //        console.log('* [example 1.2] send() callback returned: err:', err, '; res:', res);
+    //    });
+}
+
+function makeid() {
+    var text = "";
+    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for (var i = 0; i < 5; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
+}
 
 // ---------------USER ENDPOINTS-------------------------------------
 // creating a new user **
@@ -165,45 +242,71 @@ app.post('/users/login', function (req, res) {
     });
 });
 
-// -------------------HABIT ENDPOINTS----------------------------
+// -------------------Expensify ENDPOINTS---------------------------
 // POST -----------------------------------------
-// creating a new Entry
-app.post('/habit/create', (req, res) => {
-    let habitName = req.body.habitName;
-    let weekday = req.body.weekday;
-    let time = req.body.time;
+// creating a new Entry friend ** ??
+app.post('/friend/create', (req, res) => {
+    let username = req.body.name;
+    let email = req.body.email;
+    let password = makeid();
     let loggedinUser = req.body.loggedinUser;
+    console.log("friend create payload ", username, email, password, loggedinUser);
 
-    Habit.create({
-        habitName,
-        weekday,
-        time,
-        loggedinUser,
-        checkin: 0
-    }, (err, item) => {
-        if (err) {
-            return res.status(500).json({
-                message: 'Internal Server Error'
+    User
+        .create({
+            username,
+            email,
+            password
+        }, (err, item) => {
+            if (err) {
+                return res.status(500).json({
+                    message: 'cannot create user- new friend'
+                });
+            }
+            if (item) {
+                console.log("friend generated ", item)
+                sendEmail(item.username, item.email, loggedinUser, password);
+                //            Notes.create({
+                //                notesContent: 'Type here...',
+                //                habitName,
+                //                habitID: item._id,
+                //                loggedinUser
+                //            }, (err, item) => {
+                //                if (err) {
+                //                    console.log('Error Creating Notes while creating Habit');
+                //                }
+                //                if (item) {
+                //                    console.log(item);
+                //                }
+                //            });
+                return res.json(item);
+            }
+        });
+    //        .catch(function (err) {
+    //            console.error(err);
+    //            res.status(500).json({
+    //                message: 'Friend could not be created!'
+    //            });
+    //        });
+});
+
+// GET to check friend exists **
+app.get('/friend/:email', function (req, res) {
+    console.log("email id server side" + req.params.email);
+    User
+        .find({
+            "email": req.params.email
+        })
+        .then(function (friend) {
+            console.log("friend ", friend);
+            return res.json(friend);
+        })
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Get Friend failed'
             });
-        }
-        if (item) {
-            console.log("itemID for the habit generation", item._id)
-            Notes.create({
-                notesContent: 'Type here...',
-                habitName,
-                habitID: item._id,
-                loggedinUser
-            }, (err, item) => {
-                if (err) {
-                    console.log('Error Creating Notes while creating Habit');
-                }
-                if (item) {
-                    console.log(item);
-                }
-            });
-            return res.json(item);
-        }
-    });
+        });
 });
 
 // GET ------------------------------------
