@@ -333,16 +333,7 @@ function hideHabitFormContainer(habitId) {
     //alert("Cancel button clicked");
 }
 
-function displayFriend(friend) {
-    let buildTheHtmlOutput = "";
 
-    buildTheHtmlOutput += '<div class="friend">';
-    buildTheHtmlOutput += `<span>${friend.username}</span>`;
-    buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
-    buildTheHtmlOutput += '</div>';
-
-    $('.friends-list').html(buildTheHtmlOutput);
-}
 
 function addFriendToList(friend) {
     const loggedinUser = $('#loggedin-user').val();
@@ -365,7 +356,7 @@ function addFriendToList(friend) {
         //if call is succefull
         .done(function (result) {
             console.log(result);
-            displayFriend(loggedinUser);
+            getFriends(loggedinUser);
             //$('#dashboard-js').show();
         })
         //if the call is failing
@@ -376,6 +367,44 @@ function addFriendToList(friend) {
             alert('Incorrect friend');
         });
 }
+
+function getFriends(loggedinUser) {
+    //const loggedinUser = $('#loggedin-user').val();
+    //make the api call to get habits by username
+    $.ajax({
+            type: 'GET',
+            url: `/getfriends/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
+        .done(function (result) {
+            console.log(result);
+            displayFriend(result.friendsOutput);
+            //$('.habit-edit-screen').hide();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
+function displayFriend(friend) {
+
+    let buildTheHtmlOutput = "";
+
+    $.each(friend, function (friendKey, friendValue) {
+
+        buildTheHtmlOutput += '<div class="friend">';
+        buildTheHtmlOutput += `<span>${friendValue.username}</span>`;
+        buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
+        buildTheHtmlOutput += '</div>';
+    });
+    $('.friends-list').html(buildTheHtmlOutput);
+}
+
 // **
 $(document).ready(function () {
     $('main').show();
@@ -652,7 +681,7 @@ $(document).on('click', '#add-friend-js', function (event) {
                     // add friend to list
                     addFriendToList(result[0]);
                     // show friend on dashboard
-                    displayFriend(loggedinUser);
+                    getFriends(loggedinUser);
 
                     //add friend to the loged in user friends list ???
                 }
@@ -705,7 +734,8 @@ $(document).on('click', '#invite-js', function (event) {
             // add friend to list
             addFriendToList(result);
             //display in user friend dashboard
-            displayFriend(loggedinUser);
+            console.log(loggedinUser);
+            getFriends(loggedinUser);
         })
         .fail(function (jqXHR, error, errorThrown) {
             console.log(jqXHR);

@@ -71,27 +71,44 @@ function sendEmail(name, email, loggedinUser, password) {
     //console.log(htmlString);
     // Require'ing module and setting default options
 
-    var send = require('gmail-send')({
-        //var send = require('../index.js')({
-        user: 'expensify.info@gmail.com',
-        // user: credentials.user,                  // Your GMail account used to send emails
-        password: 'Expfo@123',
-        // pass: credentials.pass,                  // Application-specific password
-        to: email,
-        // to:   credentials.user,                  // Send to yourself
-        // you also may set array of recipients:
-        // [ 'user1@gmail.com', 'user2@gmail.com' ]
-        // from:    credentials.user,            // from: by default equals to user
-        // replyTo: credentials.user,            // replyTo: by default undefined
-        // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
-        subject: 'Invitation to join Expensify!',
-        text: `Hello ${name}! You have been invited you to join Expensify - Split expenses with friends. The app maintains a running total so that you can pay each other at once!
-        Here is the link to join Expensify.  <a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>
-        username: ${name}
-        email: ${email}
-        password: ${password}` // Plain text
-        //html: htmlString // HTML
-    });
+    //    var send = require('gmail-send')({
+    //var send = require('../index.js')({
+    //        user: 'expensify.info@gmail.com',
+    // user: credentials.user,                  // Your GMail account used to send emails
+    //        password: 'Expfo@123',
+    // pass: credentials.pass,                  // Application-specific password
+    //        to: 'muktha.1689@gmail.com',
+    // to:   credentials.user,                  // Send to yourself
+    // you also may set array of recipients:
+    // [ 'user1@gmail.com', 'user2@gmail.com' ]
+    // from:    credentials.user,            // from: by default equals to user
+    // replyTo: credentials.user,            // replyTo: by default undefined
+    // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
+    //        subject: 'Invitation to join Expensify!',
+    //        text: `Hello!` // Plain text
+    //html: htmlString // HTML
+    //    });
+    //    var send = require('gmail-send')({
+    //        //var send = require('../index.js')({
+    //        user: 'expensify.info@gmail.com',
+    //        // user: credentials.user,                  // Your GMail account used to send emails
+    //        password: 'Expfo@123',
+    //        // pass: credentials.pass,                  // Application-specific password
+    //        to: email,
+    //        // to:   credentials.user,                  // Send to yourself
+    //        // you also may set array of recipients:
+    //        // [ 'user1@gmail.com', 'user2@gmail.com' ]
+    //        // from:    credentials.user,            // from: by default equals to user
+    //        // replyTo: credentials.user,            // replyTo: by default undefined
+    //        // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
+    //        subject: 'Invitation to join Expensify!',
+    //        text: `Hello ${name}! You have been invited you to join Expensify - Split expenses with friends. The app maintains a running total so that you can pay each other at once!
+    //        Here is the link to join Expensify.  <a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>
+    //        username: ${name}
+    //        email: ${email}
+    //        password: ${password}` // Plain text
+    //        //html: htmlString // HTML
+    //    });
 
 
     // Override any default option and send email
@@ -100,12 +117,12 @@ function sendEmail(name, email, loggedinUser, password) {
     //
     //    var filepath = './demo-attachment.txt';  // File to attach
     //
-    send({ // Overriding default parameters
-        //            subject: 'attached '+filepath,         // Override value set as default
-        //            files: [ filepath ],
-    }, function (err, res) {
-        console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
-    });
+    //    send({ // Overriding default parameters
+    //            subject: 'attached '+filepath,         // Override value set as default
+    //            files: [ filepath ],
+    //    }, function (err, res) {
+    //        console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
+    //    });
 
     // Set additional file properties
 
@@ -310,23 +327,23 @@ app.get('/friend/:email', function (req, res) {
 });
 
 // GET ------------------------------------
-// accessing all of a user's entries
-app.get('/get-habit/:loggedinUser', function (req, res) {
+// accessing all of a user's friends list **
+app.get('/getfriends/:loggedinUser', function (req, res) {
     // Get all the habits from the database
-    Habit
+    Friend
         .find()
-        .then(function (habits) {
-            // Creates habitOutput array
-            let habitsOutput = [];
-            habits.map(function (habit) {
-                // if there is a habit matching existing user...
-                if (habit.loggedinUser == req.params.loggedinUser) {
+        .then(function (friend) {
+            // Creates friendOutput array
+            let friendsOutput = [];
+            friend.map(function (friend) {
+                // if there is a friend matching existing user...
+                if (friend.loggedinUser == req.params.loggedinUser) {
                     // ... added to the habit output array
-                    habitsOutput.push(habit);
+                    friendsOutput.push(friend);
                 }
             });
             res.json({
-                habitsOutput
+                friendsOutput
             });
         })
         .catch(function (err) {
