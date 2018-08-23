@@ -3,7 +3,7 @@ const Friend = require('./models/friend');
 //const Notes = require('./models/notes');
 const Milestones = require('./models/milestones');
 const bodyParser = require('body-parser');
-const config = require('./config');
+const config = require('./configbuilder').config();
 const mongoose = require('mongoose');
 const moment = require('moment');
 const cors = require('cors');
@@ -61,9 +61,10 @@ function sendEmail(name, email, loggedinUser, password) {
     console.log('* [example 1.1] sending test email');
     console.log(name, email, loggedinUser, password);
     let htmlString = `<h3>Hello ${name}!.</h3>`;
-    htmlString += `<p>${loggedinUser} has invited you to join Expensify - Split expenses with friends.The app maintains a running total so that you can pay each other at once! </p>`;
+    htmlString += `<p>You have been invited to join Expensify.</p>`;
+    htmlString += `<p>Expensify helps you split expenses with friends. The app maintains a running total so that you can pay each other at once! </p>`;
     htmlString += `<p>Here is the link to join Expensify.</p>`;
-    htmlString += `<a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>`;
+    htmlString += `Log In to <a href="https://expensify-capstone.herokuapp.com/">Expensify</a>`;
     htmlString += `<p>username: ${name}</p>`;
     htmlString += `<p>email: ${email}</p>`;
     htmlString += `<p>password: ${password}</p>`;
@@ -72,7 +73,7 @@ function sendEmail(name, email, loggedinUser, password) {
         //var send = require('../index.js')({
         user: 'expensify.info@gmail.com',
         // user: credentials.user,                  // Your GMail account used to send emails
-        pass: 'Expfo@123',
+        pass: config.PASSWORD_EMAIL,
         // pass: credentials.pass,                  // Application-specific password
         to: email,
         // to:   credentials.user,                  // Send to yourself
