@@ -70,16 +70,102 @@ function sendEmail(name, email, loggedinUser, password) {
     htmlString += `<p>password: ${password}</p>`;
 
     var send = require('gmail-send')({
+        //var send = require('../index.js')({
         user: 'expensify.info@gmail.com',
+        // user: credentials.user,                  // Your GMail account used to send emails
         pass: config.PASSWORD_EMAIL,
+        // pass: credentials.pass,                  // Application-specific password
         to: email,
+        // to:   credentials.user,                  // Send to yourself
+        // you also may set array of recipients:
+        // [ 'user1@gmail.com', 'user2@gmail.com' ]
+        // from:    credentials.user,            // from: by default equals to user
+        // replyTo: credentials.user,            // replyTo: by default undefined
+        // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
         subject: 'Invitation to join Expensify!',
-        html: htmlString
+        //text: 'gmail-send example 1', // Plain text
+        html: htmlString // HTML
     });
-    send({
+    send({ // Overriding default parameters
+        //        subject: 'attached ' + filepath, // Override value set as default
+        //        files: [ filepath ],
     }, function (err, res) {
         console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
     });
+
+
+
+    //console.log(htmlString);
+    // Require'ing module and setting default options
+
+    //    var send = require('gmail-send')({
+    //var send = require('../index.js')({
+    //        user: 'expensify.info@gmail.com',
+    // user: credentials.user,                  // Your GMail account used to send emails
+    //        password: '',
+    // pass: credentials.pass,                  // Application-specific password
+    //        to: 'test@gmail.com',
+    // to:   credentials.user,                  // Send to yourself
+    // you also may set array of recipients:
+    // [ 'user1@gmail.com', 'user2@gmail.com' ]
+    // from:    credentials.user,            // from: by default equals to user
+    // replyTo: credentials.user,            // replyTo: by default undefined
+    // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
+    //        subject: 'Invitation to join Expensify!',
+    //        text: `Hello!` // Plain text
+    //html: htmlString // HTML
+    //    });
+    //    var send = require('gmail-send')({
+    //        //var send = require('../index.js')({
+    //        user: 'expensify.info@gmail.com',
+    //        // user: credentials.user,                  // Your GMail account used to send emails
+    //        password: '',
+    //        // pass: credentials.pass,                  // Application-specific password
+    //        to: email,
+    //        // to:   credentials.user,                  // Send to yourself
+    //        // you also may set array of recipients:
+    //        // [ 'user1@gmail.com', 'user2@gmail.com' ]
+    //        // from:    credentials.user,            // from: by default equals to user
+    //        // replyTo: credentials.user,            // replyTo: by default undefined
+    //        // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
+    //        subject: 'Invitation to join Expensify!',
+    //        text: `Hello ${name}! You have been invited you to join Expensify - Split expenses with friends. The app maintains a running total so that you can pay each other at once!
+    //        Here is the link to join Expensify.  <a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>
+    //        username: ${name}
+    //        email: ${email}
+    //        password: ${password}` // Plain text
+    //        //html: htmlString // HTML
+    //    });
+
+
+    // Override any default option and send email
+
+    //    console.log('* [example 1.1] sending test email');
+    //
+    //    var filepath = './demo-attachment.txt';  // File to attach
+    //
+    //    send({ // Overriding default parameters
+    //            subject: 'attached '+filepath,         // Override value set as default
+    //            files: [ filepath ],
+    //    }, function (err, res) {
+    //        console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
+    //    });
+
+    // Set additional file properties
+
+    //    console.log('* [example 1.2] sending test email');
+    //
+    //    send({ // Overriding default parameters
+    //        subject: 'attached '+filepath,              // Override value set as default
+    //        files: [                                    // Array of files to attach
+    //            {
+    //                path: filepath,
+    //                filename: 'filename-can-be-changed.txt' // You can override filename in the attachment if needed
+    //            }
+    //        ],
+    //    }, function (err, res) {
+    //        console.log('* [example 1.2] send() callback returned: err:', err, '; res:', res);
+    //    });
 }
 
 function makeid() {
