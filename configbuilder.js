@@ -1,8 +1,8 @@
 exports.config = function () {
-    let c
+    let c;
     try {
         c = require('./config')
-    } catch {
+    } catch (err) {
         c = {}
     }
     return {
