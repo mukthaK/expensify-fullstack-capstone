@@ -102,7 +102,7 @@ function sendEmail(name, email, loggedinUser, password) {
     //var send = require('../index.js')({
     //        user: 'expensify.info@gmail.com',
     // user: credentials.user,                  // Your GMail account used to send emails
-    //        password: 'Expfo@123',
+    //        password: '',
     // pass: credentials.pass,                  // Application-specific password
     //        to: 'muktha.1689@gmail.com',
     // to:   credentials.user,                  // Send to yourself
