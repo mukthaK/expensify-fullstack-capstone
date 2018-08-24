@@ -57,10 +57,10 @@ function closeServer() {
 }
 
 // gmail send api
-function sendEmail(name, email, loggedinUser, password) {
+function sendEmail(email, loggedinUser, password) {
     console.log('* [example 1.1] sending test email');
     console.log(name, email, loggedinUser, password);
-    let htmlString = `<h3>Hello ${name}!.</h3>`;
+    let htmlString = `<h3>Hello!.</h3>`;
     htmlString += `<p>You have been invited to join Expensify.</p>`;
     htmlString += `<p>Expensify helps you split expenses with friends. The app maintains a running total so that you can pay each other at once! </p>`;
     htmlString += `<p>Here is the link to join Expensify.</p>`;
@@ -290,11 +290,11 @@ app.post('/users/login', function (req, res) {
 // POST -----------------------------------------
 // creating a new Entry friend ** ??
 app.post('/friend/create', (req, res) => {
-    let username = req.body.name;
+    //let username = req.body.name;
     let email = req.body.email;
     let password = makeid();
     let loggedinUser = req.body.loggedinUser;
-    console.log("friend create payload ", username, email, password, loggedinUser);
+    console.log("friend create payload ", email, password, loggedinUser);
 
     User
         .create({
@@ -309,7 +309,7 @@ app.post('/friend/create', (req, res) => {
             }
             if (item) {
                 console.log("friend generated ", item)
-                sendEmail(item.username, item.email, loggedinUser, password);
+                sendEmail(item.email, loggedinUser, password);
                 //            Notes.create({
                 //                notesContent: 'Type here...',
                 //                habitName,
@@ -495,12 +495,12 @@ app.put('/notes/save', (req, res) => {
 app.post('/friend/add', (req, res) => {
     let loggedinUser = req.body.loggedinUser;
     let email = req.body.email;
-    let username = req.body.username;
+    //let username = req.body.username;
 
     Friend.create({
         loggedinUser,
         email,
-        username
+        // username
     }, (err, item) => {
         if (err) {
             return res.status(500).json({

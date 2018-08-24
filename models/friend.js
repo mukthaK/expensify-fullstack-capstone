@@ -11,10 +11,10 @@ const friendSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    username: {
-        type: String,
-        required: false
-    }
+    //    username: {
+    //        type: String,
+    //        required: false
+    //    }
 });
 
 const Friend = mongoose.model('friend', friendSchema);

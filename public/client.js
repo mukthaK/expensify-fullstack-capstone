@@ -333,40 +333,76 @@ function hideHabitFormContainer(habitId) {
     //alert("Cancel button clicked");
 }
 
+// to check if friend already been added
+function checkFriend(friendsOutput, email) {
+    console.log(friendsOutput);
+    for (let i = 0; i < friendsOutput.length; i++) {
+        if (friendsOutput[i].email === email) {
+            return true;
+        }
+    }
+    return false;
+}
 
-
-function addFriendToList(email, username) {
+function addFriendToList(email) {
     const loggedinUser = $('#loggedin-user').val();
 
     // create the payload object (what data we send to the api call)
     const friendObject = {
         loggedinUser,
         email,
-        username
+        //username
     };
     console.log(friendObject);
-
-    //make the api call using the payload above
+    // Check if friend already added
     $.ajax({
-            type: 'POST',
-            url: '/friend/add',
+            type: 'GET',
+            url: `/getfriends/${loggedinUser}`,
             dataType: 'json',
-            data: JSON.stringify(friendObject),
             contentType: 'application/json'
         })
-        //if call is succefull
+        //if call is successfull
         .done(function (result) {
             console.log(result);
-            getFriends(loggedinUser);
-            //$('#dashboard-js').show();
+            let exists = checkFriend(result.friendsOutput, email);
+            console.log(exists);
+            // if exists message- already beedn added
+            if (exists) {
+                alert("Friend has alredy been added!");
+            }
+            // if not Add friend to the list (post call)
+            else {
+                //make the api call using the payload above
+                $.ajax({
+                        type: 'POST',
+                        url: '/friend/add',
+                        dataType: 'json',
+                        data: JSON.stringify(friendObject),
+                        contentType: 'application/json'
+                    })
+                    //if call is succefull
+                    .done(function (result) {
+                        console.log(result);
+                        getFriends(loggedinUser);
+                        //$('#dashboard-js').show();
+                    })
+                    //if the call is failing
+                    .fail(function (jqXHR, error, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(error);
+                        console.log(errorThrown);
+                        alert('Incorrect friend');
+                    });
+            }
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
             console.log(jqXHR);
             console.log(error);
             console.log(errorThrown);
-            alert('Incorrect friend');
         });
+
+
 }
 
 function getFriends(loggedinUser) {
@@ -399,7 +435,7 @@ function displayFriend(friend) {
     $.each(friend, function (friendKey, friendValue) {
         console.log(friendKey, friendValue);
         buildTheHtmlOutput += '<div class="friend">';
-        buildTheHtmlOutput += `<span>${friendValue.username}</span>`;
+        buildTheHtmlOutput += `<span>${friendValue.email}</span>`;
         //        buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
         buildTheHtmlOutput += '</div>';
     });
@@ -643,7 +679,7 @@ $(document).on('click', '#add-friend-js', function (event) {
     event.preventDefault();
     //alert("add friend clicked");
     // Get the inputs from the user in add friend form
-    const name = $("#friend-name").val();
+    //const name = $("#friend-name").val();
     //    const email = $("input[type='radio']:checked").val();
     const email = $('#friend-email').val();
 
@@ -651,15 +687,15 @@ $(document).on('click', '#add-friend-js', function (event) {
 
     console.log("add friend: ", name, email, loggedinUser);
     // validate the input
-    if (name == "") {
-        alert('Please enter  name');
-    } else if (email == "") {
+    //    if (name == "") {
+    //        alert('Please enter  name');
+    //    } else
+    if (email == "") {
         alert('Please enter email');
     }
     // if the input is valid
     else {
-
-        $('#save-friend-name').val(name); // ok to do ?????
+        //$('#save-friend-name').val(name); // ok to do ?????
         $('#save-friend-email').val(email);
 
         //make the api call to check if friend is a user of app
@@ -682,7 +718,7 @@ $(document).on('click', '#add-friend-js', function (event) {
                 } // if friend found
                 else {
                     // add friend to list
-                    addFriendToList(result[0].email, result[0].username);
+                    addFriendToList(result[0].email);
                     // show friend on dashboard
                     getFriends(loggedinUser);
 
@@ -710,14 +746,14 @@ $(document).on('click', '#add-friend-js', function (event) {
 $(document).on('click', '#invite-js', function (event) {
     event.preventDefault();
     //alert("invite accepted");
-    let name = $(this).parent().parent().find('#save-friend-name').val();
+    //let name = $(this).parent().parent().find('#save-friend-name').val();
     let email = $(this).parent().parent().find('#save-friend-email').val();
     let loggedinUser = $('#loggedin-user').val();
-    console.log(" friend name", name, " friend enmil", email, " loggedin user", loggedinUser);
+    console.log(" friend email", email, " loggedin user", loggedinUser);
     //// if yes -> make post call with all the details to create new user
     // create the payload object (what data we send to the api call)
     const newFriendObject = {
-        name: name,
+        //name: name,
         email: email,
         loggedinUser: loggedinUser
     };
@@ -735,7 +771,7 @@ $(document).on('click', '#invite-js', function (event) {
             console.log(result);
             $('.invite').hide();
             // add friend to list
-            addFriendToList(result.email, result.username);
+            addFriendToList(result.email);
             //display in user friend dashboard
             console.log(loggedinUser);
             getFriends(loggedinUser);
