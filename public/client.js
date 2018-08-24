@@ -400,7 +400,7 @@ function displayFriend(friend) {
         console.log(friendKey, friendValue);
         buildTheHtmlOutput += '<div class="friend">';
         buildTheHtmlOutput += `<span>${friendValue.username}</span>`;
-        buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
+        //        buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
         buildTheHtmlOutput += '</div>';
     });
     $('.friends-list').html(buildTheHtmlOutput);
@@ -733,7 +733,7 @@ $(document).on('click', '#invite-js', function (event) {
         })
         .done(function (result) {
             console.log(result);
-
+            $('.invite').hide();
             // add friend to list
             addFriendToList(result.email, result.username);
             //display in user friend dashboard
