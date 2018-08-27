@@ -365,7 +365,7 @@ app.get('/getfriends/:loggedinUser', function (req, res) {
             let friendsOutput = [];
             friends.map(function (friend) {
                 // if there is a friend matching existing user...
-                if (friend.loggedinUser == req.params.loggedinUser) {
+                if (friend.loggedinUser == req.params.loggedinUser || friend.email == req.params.loggedinUser) {
                     // ... added to the habit output array
                     friendsOutput.push(friend);
                 }

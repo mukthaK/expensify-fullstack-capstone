@@ -82,8 +82,10 @@
             <div class="friend-form-container">
                 <span class="message"></span>
                 <form role="form" class="add-friend-form">
-                    <label for="friend-name">Name</label>
-                    <input type="text" placeholder="Enter Name" value="" id="friend-name" required>
+                    <!--
+<label for="friend-name">Name</label>
+<input type="text" placeholder="Enter Name" value="" id="friend-name" required>
+-->
                     <label for="friend-email">Email</label>
                     <input type="email" placeholder="Enter Email" name="email" value="" id="friend-email" required>
                     <button role="button" type="submit" class="btn" id="add-friend-js">Add</button>
@@ -125,22 +127,38 @@
                 <div class="friends-billed">
                     <span class="friend-name"></span>
                 </div>
-                <button role="button" type="submit" class="bill-btn">Next</button>
+                <button role="button" type="submit" class="bill-btn" id="bill-friend-next">Next</button>
             </form>
             <form role="form" class="bill-desc bill-form">
                 <div>
-                    <label for="description">Enter a description:</label>
-                    <input type="text" placeholder="Rent" name="description" value="" required>
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" placeholder="Rent" name="description" value="" required>
                 </div>
                 <div>
                     <label for="amount">Amount:</label>
-                    <input type="number" placeholder="$500" name="amount" value="$" required>
+                    <input type="number" id="amount" placeholder="$1500" name="amount" value="$" required>
                 </div>
                 <div>
-                    <button role="button" type="submit" class="bill-btn">Next</button>
+                    <label for="whoPaid">Who paid:</label>
+                    <select id="friendPaid">
+                        <option value="">Option1</option>
+                    </select>
                 </div>
+                <div>
+                    <label for="name">For whom: </label>
+                    <div id="paidFor">
 
+                    </div>
+                </div>
+                <div class="friends-billed">
+
+                    <span class="friend-name"></span>
+                </div>
+                <div>
+                    <button role="button" type="submit" class="bill-btn" id="bill-desc-next">Next</button>
+                </div>
             </form>
+            <!--
             <form role="form" class="bill-split bill-form">
                 <div class="split-type">
                     <input type="radio" name="split" value="" required>
@@ -155,10 +173,11 @@
                     <label for="split"><span>John</span> owes you <span>$</span></label>
                 </div>
                 <div class="split-type">
-                    <button role="button" type="submit" class="bill-btn">Add</button>
+                    <button role="button" type="submit" class="bill-btn" id="bill-split-next">Next</button>
                 </div>
 
             </form>
+-->
         </section>
     </main>
 

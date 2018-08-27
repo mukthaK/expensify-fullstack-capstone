@@ -620,8 +620,78 @@ $(document).on('click', '#bill-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#bill').show();
+    //$('.bill-friend').hide();
+    //$('.bill-split').hide();
+    const loggedinUser = $('#loggedin-user').val();
+
+    $.ajax({
+            type: 'GET',
+            url: `/getfriends/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
+        .done(function (result) {
+            console.log(result);
+            //displayFriend(result.friendsOutput);
+            const friend = result.friendsOutput;
+            let buildTheHtmlOutput = "";
+
+            $.each(friend, function (friendKey, friendValue) {
+                console.log(friendKey, friendValue);
+                buildTheHtmlOutput += `<option value="${friendValue.email}">${friendValue.email}</option>`;
+            });
+            $('#friendPaid').html(buildTheHtmlOutput);
+
+            $.each(friend, function (friendKey, friendValue) {
+                console.log(friendKey, friendValue);
+                buildTheHtmlOutput += `<input type="checkbox" placeholder="" value="${friendValue.email}" required>`;
+            });
+            $('#paidFor').html(buildTheHtmlOutput);
+            //$('.habit-edit-screen').hide();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+
 });
 
+// Bill description --next btn
+$(document).on('click', '#bill-desc-next', function (event) {
+    event.preventDefault();
+
+    const loggedinUser = $('#loggedin-user').val();
+    const description = $('#description').val();
+    const amount = $('#amount').val();
+    console.log("description", description, "amount", amount);
+
+    if (description == "") {
+        alert('Please enter description');
+    } else if (amount == "") {
+        alert('Please enter amount');
+    } else {
+        $('.bill-desc').hide();
+        $('.bill-split').show();
+    }
+})
+
+// Bill split type selection and next btn
+$(document).on('click', '#bill-split-next', function (event) {
+    event.preventDefault();
+
+    const splitType = $("input[name='split']:checked").val();
+    console.log("splitType", splitType);
+
+    if (splitType == "") {
+        alert('Please select an option');
+    } else {
+        $('.bill-split').hide();
+        $('.bill-friend').show();
+    }
+})
 // **
 // YouOwe link
 $(document).on('click', '#youOwe-js', function (event) {

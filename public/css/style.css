@@ -480,6 +480,7 @@ input[type=password]:focus {
 .bill-form {
     width: 80%;
     margin: 0 auto;
+    background-color: white;
 }
 
 .bill-form input {
