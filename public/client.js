@@ -672,8 +672,13 @@ $(document).on('click', '#bill-submit', function (event) {
     const description = $('#description').val();
     const amount = $('#amount').val();
     const whoPaid = $('#friendPaid').val();
-    const paidFor = $("input[name='paidFor']:checked").val();
-    console.log("description", description, "amount", amount, "whoPaid", whoPaid, "paidFor", paidFor);
+    const paidForArray = [];
+
+    $("input[name='paidFor']:checked").each(function () {
+        paidForArray.push($(this).val());
+    })
+
+    console.log("description", description, "amount", amount, "whoPaid", whoPaid, "paidFor", paidForArray);
 
     if (description == "") {
         alert('Please enter description');
@@ -681,8 +686,10 @@ $(document).on('click', '#bill-submit', function (event) {
         alert('Please enter amount');
     } else if (whoPaid == "") {
         alert('Please select who paid the bill');
+    } else if (paidForArray.length == 0) {
+        alert("Please select atleast one checkbox option")
     } else {
-
+        alert(description, amount, whoPaid, paidForArray);
     }
 })
 
