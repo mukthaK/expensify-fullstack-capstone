@@ -636,16 +636,21 @@ $(document).on('click', '#bill-js', function (event) {
             //displayFriend(result.friendsOutput);
             const friend = result.friendsOutput;
             let buildTheHtmlOutput = "";
-
+            //populate drop down list with values
             $.each(friend, function (friendKey, friendValue) {
                 console.log(friendKey, friendValue);
                 buildTheHtmlOutput += `<option value="${friendValue.email}">${friendValue.email}</option>`;
             });
             $('#friendPaid').html(buildTheHtmlOutput);
+            //populate checkboxed with value
 
+            buildTheHtmlOutput = "";
             $.each(friend, function (friendKey, friendValue) {
                 console.log(friendKey, friendValue);
-                buildTheHtmlOutput += `<input type="checkbox" placeholder="" value="${friendValue.email}" required>`;
+                buildTheHtmlOutput += `<div class="friends-billed">`;
+                buildTheHtmlOutput += `<label for="friend-name">${friendValue.email}</label>`;
+                buildTheHtmlOutput += `<input type="checkbox" class="friend-name" value="${friendValue.email}" required>`;
+                buildTheHtmlOutput += `</div>`;
             });
             $('#paidFor').html(buildTheHtmlOutput);
             //$('.habit-edit-screen').hide();
