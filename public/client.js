@@ -649,10 +649,10 @@ $(document).on('click', '#bill-js', function (event) {
                 console.log(friendKey, friendValue);
                 buildTheHtmlOutput += `<div class="friends-billed">`;
                 buildTheHtmlOutput += `<label for="friend-name">${friendValue.email}</label>`;
-                buildTheHtmlOutput += `<input type="checkbox" class="friend-name" value="${friendValue.email}" required>`;
+                buildTheHtmlOutput += `<input type="checkbox" class="friend-name" name="paidFor" value="${friendValue.email}" required>`;
                 buildTheHtmlOutput += `</div>`;
             });
-            $('#paidFor').html(buildTheHtmlOutput);
+            $('#paidForWrapper').html(buildTheHtmlOutput);
             //$('.habit-edit-screen').hide();
         })
         //if the call is failing
@@ -665,38 +665,41 @@ $(document).on('click', '#bill-js', function (event) {
 });
 
 // Bill description --next btn
-$(document).on('click', '#bill-desc-next', function (event) {
+$(document).on('click', '#bill-submit', function (event) {
     event.preventDefault();
 
     const loggedinUser = $('#loggedin-user').val();
     const description = $('#description').val();
     const amount = $('#amount').val();
-    console.log("description", description, "amount", amount);
+    const whoPaid = $('#friendPaid').val();
+    const paidFor = $("input[name='paidFor']:checked").val();
+    console.log("description", description, "amount", amount, "whoPaid", whoPaid, "paidFor", paidFor);
 
     if (description == "") {
         alert('Please enter description');
     } else if (amount == "") {
         alert('Please enter amount');
+    } else if (whoPaid == "") {
+        alert('Please select who paid the bill');
     } else {
-        $('.bill-desc').hide();
-        $('.bill-split').show();
+
     }
 })
 
 // Bill split type selection and next btn
-$(document).on('click', '#bill-split-next', function (event) {
-    event.preventDefault();
-
-    const splitType = $("input[name='split']:checked").val();
-    console.log("splitType", splitType);
-
-    if (splitType == "") {
-        alert('Please select an option');
-    } else {
-        $('.bill-split').hide();
-        $('.bill-friend').show();
-    }
-})
+//$(document).on('click', '#bill-split-next', function (event) {
+//    event.preventDefault();
+//
+//    const splitType = $("input[name='split']:checked").val();
+//    console.log("splitType", splitType);
+//
+//    if (splitType == "") {
+//        alert('Please select an option');
+//    } else {
+//        $('.bill-split').hide();
+//        $('.bill-friend').show();
+//    }
+//})
 // **
 // YouOwe link
 $(document).on('click', '#youOwe-js', function (event) {
