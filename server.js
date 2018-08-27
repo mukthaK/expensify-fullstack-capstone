@@ -59,13 +59,13 @@ function closeServer() {
 // gmail send api
 function sendEmail(email, loggedinUser, password) {
     console.log('* [example 1.1] sending test email');
-    console.log(name, email, loggedinUser, password);
+    console.log(email, loggedinUser, password);
     let htmlString = `<h3>Hello!.</h3>`;
     htmlString += `<p>You have been invited to join Expensify.</p>`;
     htmlString += `<p>Expensify helps you split expenses with friends. The app maintains a running total so that you can pay each other at once! </p>`;
     htmlString += `<p>Here is the link to join Expensify.</p>`;
     htmlString += `Log In to <a href="https://expensify-capstone.herokuapp.com/">Expensify</a>`;
-    htmlString += `<p>username: ${name}</p>`;
+//    htmlString += `<p>username: ${name}</p>`;
     htmlString += `<p>email: ${email}</p>`;
     htmlString += `<p>password: ${password}</p>`;
 
@@ -298,7 +298,7 @@ app.post('/friend/create', (req, res) => {
 
     User
         .create({
-            username,
+            //username,
             email,
             password
         }, (err, item) => {
