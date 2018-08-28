@@ -670,7 +670,7 @@ $(document).on('click', '#bill-submit', function (event) {
 
     const loggedinUser = $('#loggedin-user').val();
     const description = $('#description').val();
-    const amount = $('#amount').val();
+    const payment = $('#amount').val();
     const whoPaid = $('#friendPaid').val();
     const paidForArray = [];
 
@@ -689,7 +689,38 @@ $(document).on('click', '#bill-submit', function (event) {
     } else if (paidForArray.length == 0) {
         alert("Please select atleast one checkbox option")
     } else {
-        alert(description, amount, whoPaid, paidForArray);
+        const amount = payment / paidForArray.length;
+        paidForArray.forEach(function (friendPaidFor) {
+            console.log(friendPaidFor);
+            const newBillObject = {
+                description,
+                amount,
+                paidBy: whoPaid,
+                paidTo: friendPaidFor,
+                //date: new Date(),
+                //loggedinUser: loggedinUser
+            };
+            console.log(newBillObject);
+
+            //make the api call using the payload above
+            $.ajax({
+                    type: 'POST',
+                    url: '/bill/create',
+                    dataType: 'json',
+                    data: JSON.stringify(newBillObject),
+                    contentType: 'application/json'
+                })
+                .done(function (result) {
+                    console.log(result);
+
+                })
+                .fail(function (jqXHR, error, errorThrown) {
+                    console.log(jqXHR);
+                    console.log(error);
+                    console.log(errorThrown);
+                    alert('Incorrect bill');
+                });
+        });
     }
 })
 

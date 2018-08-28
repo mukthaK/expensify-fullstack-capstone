@@ -1,6 +1,6 @@
 const User = require('./models/user');
 const Friend = require('./models/friend');
-//const Notes = require('./models/notes');
+const Bill = require('./models/bill');
 const Milestones = require('./models/milestones');
 const bodyParser = require('body-parser');
 const config = require('./configbuilder').config();
@@ -65,7 +65,7 @@ function sendEmail(email, loggedinUser, password) {
     htmlString += `<p>Expensify helps you split expenses with friends. The app maintains a running total so that you can pay each other at once! </p>`;
     htmlString += `<p>Here is the link to join Expensify.</p>`;
     htmlString += `Log In to <a href="https://expensify-capstone.herokuapp.com/">Expensify</a>`;
-//    htmlString += `<p>username: ${name}</p>`;
+    //    htmlString += `<p>username: ${name}</p>`;
     htmlString += `<p>email: ${email}</p>`;
     htmlString += `<p>password: ${password}</p>`;
 
@@ -508,6 +508,35 @@ app.post('/friend/add', (req, res) => {
             });
         }
         if (item) {
+            return res.json(item);
+        }
+    });
+});
+
+//POST----------
+// Creating Bill **
+app.post('/bill/create', (req, res) => {
+    //let loggedinUser = req.body.loggedinUser;
+    let description = req.body.description;
+    let amount = req.body.amount;
+    let paidBy = req.body.paidBy;
+    let paidTo = req.body.paidTo;
+    //let date = new Date();
+    console.log(description, amount, paidBy, paidTo);
+    Bill.create({
+        description,
+        amount,
+        paidBy,
+        paidTo,
+        date: new Date()
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Failed to add bill'
+            });
+        }
+        if (item) {
+            console.log(item);
             return res.json(item);
         }
     });
