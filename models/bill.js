@@ -16,7 +16,7 @@ const billSchema = new mongoose.Schema({
         required: false
     },
     paidTo: {
-        type: Number,
+        type: String,
         required: false
     },
     date: {

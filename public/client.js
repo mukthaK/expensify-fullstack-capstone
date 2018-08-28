@@ -516,6 +516,7 @@ $(document).on('click', '#signup-js', function (event) {
 
                 console.log(result);
                 $('#loggedin-user').val(result.email);
+                getBillsYouOwe();
                 //                $('#nav-bar span').text("Hello " + result.username);
                 //                $('main').hide();
                 //                $('#nav-bar').show();
@@ -575,8 +576,11 @@ $(document).on('click', '#login-js', function (event) {
                 $('#navbar').show();
                 //alert("login clicked");
                 $('#youOwe').show();
+
                 console.log(result);
                 $('#loggedin-user').val(result.email);
+                getBillsYouOwe();
+
                 //                $('#nav-bar span').text("Hello " + result.username);
                 //
                 //                populateHabitsByUsername(result.username);
@@ -641,7 +645,9 @@ $(document).on('click', '#bill-js', function (event) {
                 console.log(friendKey, friendValue);
                 buildTheHtmlOutput += `<option value="${friendValue.email}">${friendValue.email}</option>`;
             });
+
             $('#friendPaid').html(buildTheHtmlOutput);
+            $('#friendPaid').append(`<option value="${loggedinUser}">${loggedinUser}</option>`);
             //populate checkboxed with value
 
             buildTheHtmlOutput = "";
@@ -653,6 +659,8 @@ $(document).on('click', '#bill-js', function (event) {
                 buildTheHtmlOutput += `</div>`;
             });
             $('#paidForWrapper').html(buildTheHtmlOutput);
+            $('#paidForWrapper').append(`<div class="friends-billed"><label for="friend-name">${loggedinUser}</label><input type="checkbox" class="friend-name" name="paidFor" value="${loggedinUser}" required></div>`);
+
             //$('.habit-edit-screen').hide();
         })
         //if the call is failing
@@ -691,35 +699,37 @@ $(document).on('click', '#bill-submit', function (event) {
     } else {
         const amount = payment / paidForArray.length;
         paidForArray.forEach(function (friendPaidFor) {
-            console.log(friendPaidFor);
-            const newBillObject = {
-                description,
-                amount,
-                paidBy: whoPaid,
-                paidTo: friendPaidFor,
-                //date: new Date(),
-                //loggedinUser: loggedinUser
-            };
-            console.log(newBillObject);
+            if (friendPaidFor !== whoPaid) {
+                console.log(friendPaidFor);
+                const newBillObject = {
+                    description,
+                    amount,
+                    paidBy: whoPaid,
+                    paidTo: friendPaidFor,
+                    //date: new Date(),
+                    //loggedinUser: loggedinUser
+                };
+                console.log(newBillObject);
 
-            //make the api call using the payload above
-            $.ajax({
-                    type: 'POST',
-                    url: '/bill/create',
-                    dataType: 'json',
-                    data: JSON.stringify(newBillObject),
-                    contentType: 'application/json'
-                })
-                .done(function (result) {
-                    console.log(result);
-
-                })
-                .fail(function (jqXHR, error, errorThrown) {
-                    console.log(jqXHR);
-                    console.log(error);
-                    console.log(errorThrown);
-                    alert('Incorrect bill');
-                });
+                //make the api call using the payload above
+                $.ajax({
+                        type: 'POST',
+                        url: '/bill/create',
+                        dataType: 'json',
+                        data: JSON.stringify(newBillObject),
+                        contentType: 'application/json'
+                    })
+                    .done(function (result) {
+                        console.log(result);
+                        getBillsYouOwe();
+                    })
+                    .fail(function (jqXHR, error, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(error);
+                        console.log(errorThrown);
+                        alert('Incorrect bill');
+                    });
+            }
         });
     }
 })
@@ -738,6 +748,60 @@ $(document).on('click', '#bill-submit', function (event) {
 //        $('.bill-friend').show();
 //    }
 //})
+
+//**
+//function to get bills that I owe
+function getBillsYouOwe() {
+    const loggedinUser = $('#loggedin-user').val();
+    $.ajax({
+            type: 'GET',
+            url: `/bill/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
+        .done(function (result) {
+            console.log(result);
+
+            let buildTheHtmlOutput = "";
+            let total = 0;
+            //populate drop down list with values
+            $.each(result, function (billKey, billValue) {
+                console.log(billKey, billValue);
+                buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}<span id="totalBillValue">${billValue.amount}</span></button>`;
+                buildTheHtmlOutput += `<div class="panel">`;
+                buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+                buildTheHtmlOutput += `<button role="button" type="submit">Settle Up</button>`;
+                buildTheHtmlOutput += `</div>`;
+                total += billValue.amount;
+            });
+
+            $('#youOweBills').html(buildTheHtmlOutput);
+            $('#youOweBills').html(buildTheHtmlOutput);
+            //            $('#friendPaid').append(`<option value="${loggedinUser}">${loggedinUser}</option>`);
+            //            //populate checkboxed with value
+            //
+            //            buildTheHtmlOutput = "";
+            //            $.each(friend, function (friendKey, friendValue) {
+            //                console.log(friendKey, friendValue);
+            //                buildTheHtmlOutput += `<div class="friends-billed">`;
+            //                buildTheHtmlOutput += `<label for="friend-name">${friendValue.email}</label>`;
+            //                buildTheHtmlOutput += `<input type="checkbox" class="friend-name" name="paidFor" value="${friendValue.email}" required>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //            });
+            //            $('#paidForWrapper').html(buildTheHtmlOutput);
+            //            $('#paidForWrapper').append(`<div class="friends-billed"><label for="friend-name">${loggedinUser}</label><input type="checkbox" class="friend-name" name="paidFor" value="${loggedinUser}" required></div>`);
+            //
+            //            $('.habit-edit-screen').hide();
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
+
 // **
 // YouOwe link
 $(document).on('click', '#youOwe-js', function (event) {
@@ -745,6 +809,11 @@ $(document).on('click', '#youOwe-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#youOwe').show();
+
+
+    getBillsYouOwe();
+
+
 });
 
 
