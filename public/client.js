@@ -697,7 +697,7 @@ $(document).on('click', '#bill-submit', function (event) {
     } else if (paidForArray.length == 0) {
         alert("Please select atleast one checkbox option")
     } else {
-        const amount = payment / paidForArray.length;
+        const amount = (payment / paidForArray.length).toFixed(2);
         paidForArray.forEach(function (friendPaidFor) {
             if (friendPaidFor !== whoPaid) {
                 console.log(friendPaidFor);
@@ -774,6 +774,7 @@ function getBillsYouOwe() {
                 buildTheHtmlOutput += `<button role="button" type="submit">Settle Up</button>`;
                 buildTheHtmlOutput += `</div>`;
                 total += billValue.amount;
+                console.log(total);
             });
 
             $('#youOweBills').html(buildTheHtmlOutput);
