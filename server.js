@@ -382,13 +382,17 @@ app.get('/getfriends/:loggedinUser', function (req, res) {
         });
 });
 
-//GET---------------------
+//GET---------------------**
 // accessing all the bills to be paid
 app.get('/bill/:loggedinUser', function (req, res) {
     // Get all the friends from the database
     Bill
         .find({
             "paidTo": req.params.loggedinUser
+        })
+        //sort to be done
+        .sort({
+            "paidBy": 1
         })
         .then(function (bills) {
             console.log(bills);
@@ -409,7 +413,43 @@ app.get('/bill/:loggedinUser', function (req, res) {
         .catch(function (err) {
             console.error(err);
             res.status(500).json({
-                message: 'Internal server error- error while getting bills'
+                message: 'Internal server error- error while getting bills to be paid'
+            });
+        });
+});
+
+//GET---------------------**
+// accessing all the bills owed
+app.get('/billowed/:loggedinUser', function (req, res) {
+    // Get all the friends from the database
+    Bill
+        .find({
+            "paidBy": req.params.loggedinUser
+        })
+        //sort to be done
+        .sort({
+            "paidTo": 1
+        })
+        .then(function (bills) {
+            console.log(bills);
+            return res.json(bills);
+            // Creates friendOutput array
+            //            let billsOutput = [];
+            //            bills.map(function (bill) {
+            // if there is a friend matching existing user...
+            //            if (friend.loggedinUser == req.params.loggedinUser || //friend.email == req.params.loggedinUser) {
+            // ... added to the habit output array
+            //                billsOutput.push(bill);
+            //}
+            //            });
+            //            res.json({
+            //                billsOutput
+            //            });
+        })
+        .catch(function (err) {
+            console.error(err);
+            res.status(500).json({
+                message: 'Internal server error- error while getting bills owed'
             });
         });
 });

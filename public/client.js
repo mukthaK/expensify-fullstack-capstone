@@ -749,6 +749,43 @@ $(document).on('click', '#bill-submit', function (event) {
 //    }
 //})
 
+function getUniqueValue(result, flag) {
+    //get unique psidBy users
+    //    let paidByUsers = [...new Set(result.map(item => item.paidBy))];
+    //
+    //    console.log(paidByUsers);
+
+    let temp = {};
+    let obj = null;
+    for (let i = 0; i < result.length; i++) {
+        obj = result[i];
+        if (flag == "youowe") {
+            if (!temp[obj.paidBy]) {
+                temp[obj.paidBy] = obj;
+            } else {
+                temp[obj.paidBy].amount += obj.amount;
+            }
+        } else if (flag == "owed") {
+            if (!temp[obj.paidTo]) {
+                temp[obj.paidTo] = obj;
+            } else {
+                temp[obj.paidTo].amount += obj.amount;
+            }
+            console.log(obj.amount, "debug");
+        }
+    }
+    let billResult = [];
+    for (let prop in temp)
+        billResult.push(temp[prop]);
+    console.log(billResult);
+
+    return billResult;
+}
+
+
+
+
+
 //**
 //function to get bills that I owe
 function getBillsYouOwe() {
@@ -762,23 +799,75 @@ function getBillsYouOwe() {
         //if call is successfull
         .done(function (result) {
             console.log(result);
+            let flag = "youowe";
+            let billResult = getUniqueValue(result, flag);
 
             let buildTheHtmlOutput = "";
-            let total = 0;
+            //            let total = 0;
+            //            let oldValue = "";
+            //            let final_total = 0;
             //populate drop down list with values
-            $.each(result, function (billKey, billValue) {
-                console.log(billKey, billValue);
-                buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}<span id="totalBillValue">${billValue.amount}</span></button>`;
-                buildTheHtmlOutput += `<div class="panel">`;
-                buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-                buildTheHtmlOutput += `<button role="button" type="submit">Settle Up</button>`;
-                buildTheHtmlOutput += `</div>`;
-                total += billValue.amount;
-                console.log(total);
-            });
+            $.each(billResult, function (billKey, billValue) {
 
+                buildTheHtmlOutput += `<div class="panel">`;
+                buildTheHtmlOutput += `<h4>${billValue.paidBy}</h4>`;
+                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+                buildTheHtmlOutput += `</div>`;
+            });
             $('#youOweBills').html(buildTheHtmlOutput);
-            $('#youOweBills').html(buildTheHtmlOutput);
+            //            $.each(result, function (billKey, billValue) {
+            //                console.log(billKey, billValue);
+            //
+            //                let newValue = billValue.paidBy;
+            //                //total = billValue.amount;
+            //
+            //                if (oldValue != newValue) {
+            //                    total = billValue.amount;
+            //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
+            //                    buildTheHtmlOutput += `<div class="panel">`;
+            //                    buildTheHtmlOutput += `<p>Total:${total}</p>`;
+            //                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                    buildTheHtmlOutput += `</div>`;
+            //                    //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //
+            //                }
+            //                if (oldValue == newValue) {
+            //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //                    //buildTheHtmlOutput += `<p>Total:${total}</p>`;
+            //                    total += billValue.amount;
+            //                    //buildTheHtmlOutput += `<p>Total:${final_total}</p>`;
+            //
+            //                }
+            //
+            //                if paid by person already listed, then add the amount
+            //                if (oldValue == newValue) {
+            //                    total += billValue.amount;
+            //                    console.log(total);
+            //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
+            //                    buildTheHtmlOutput += `<div class="panel">`;
+            //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //                    buildTheHtmlOutput += `</div>`;
+            //
+            //                } else {
+            //                    //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}<span id="totalBillValue">${billValue.amount}</span></button>`;
+            //                    buildTheHtmlOutput += `<p>Total: ${total}</p>`;
+            //
+            //                }
+            //
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //
+            //                //                buildTheHtmlOutput += `<div class="panel">`;
+            //                //                buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //                //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                //                buildTheHtmlOutput += `</div>`;
+            //
+            //                oldValue = newValue;
+            //                total = billValue.amount;
+            //            });
+
+
+            //$('#youOweBills').html(buildTheHtmlOutput);
             //            $('#friendPaid').append(`<option value="${loggedinUser}">${loggedinUser}</option>`);
             //            //populate checkboxed with value
             //
@@ -817,7 +906,47 @@ $(document).on('click', '#youOwe-js', function (event) {
 
 });
 
+$(document).on('click', '#settleup-js', function (event) {
+    event.preventDefault();
+    alert('settleup clicked');
+});
 
+function getBillsOwed() {
+    const loggedinUser = $('#loggedin-user').val();
+    $.ajax({
+            type: 'GET',
+            url: `/billowed/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
+        .done(function (result) {
+            console.log(result);
+            let flag = "owed";
+            let billResult = getUniqueValue(result, flag);
+
+            let buildTheHtmlOutput = "";
+            //            let total = 0;
+            //            let oldValue = "";
+            //            let final_total = 0;
+            //populate drop down list with values
+            $.each(billResult, function (billKey, billValue) {
+
+                buildTheHtmlOutput += `<div class="panel">`;
+                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
+                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+                buildTheHtmlOutput += `</div>`;
+            });
+            $('#owedBills').html(buildTheHtmlOutput);
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
+}
 // **
 // youAreOwed link
 $(document).on('click', '#youAreOwed-js', function (event) {
@@ -825,6 +954,8 @@ $(document).on('click', '#youAreOwed-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#youAreOwed').show();
+
+    getBillsOwed();
 });
 
 
