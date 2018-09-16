@@ -762,9 +762,12 @@ function getUniqueValue(result, flag) {
         if (flag == "youowe") {
             if (!temp[obj.paidBy]) {
                 temp[obj.paidBy] = obj;
+                console.log(temp[obj.paidBy]);
             } else {
                 temp[obj.paidBy].amount += obj.amount;
+                //console.log(temp[obj.paidBy].amount, "amount -n");
             }
+
         } else if (flag == "owed") {
             if (!temp[obj.paidTo]) {
                 temp[obj.paidTo] = obj;
@@ -782,9 +785,105 @@ function getUniqueValue(result, flag) {
     return billResult;
 }
 
+function populateDescriptionResults(paidBy, loggedinUser) {
+
+}
+
+function main_calculation(result) {
+    const user = $('#loggedin-user').val();
+    //Since we know the user logged in:
+    let ppl_i_owe = [];
+    let ppl_owe_me = [];
+    let final_output = [];
+
+    let others = [];
+    for (i = 0; i < result.length; i++) {
+        others[i] = (Object.values(result[i])[4]);
+    }
+    var unique_others = Array.from(new Set(others));
+    console.log("People expecting money from:", unique_others);
 
 
+    //User has to get money
+    //let get_money[];
+    for (k = 0; k < unique_others.length; k++) {
+        paid_to = unique_others[k];
+        final_value = 0;
+        //console.log("running for",user);
+        //Loop through all the objects
+        for (i = 0; i < result.length; i++) {
+            //If user is same as the user in that object, then add to the //final amount
+            if (((Object.values(result[i])[3]) == user) & ((Object.values(result[i])[4]) == paid_to)) {
+                final_value += (Object.values(result[i])[2]);
+            }
+        }
+        //console.log(final_value, user, paid_to);
+        temp = {
+            user: user,
+            paid_to: paid_to,
+            amount: final_value
+        }
+        ppl_owe_me.push(temp)
+    }
+    console.log("PPL who owe me are :", ppl_owe_me);
 
+    //User has to pay money.
+    let others_2 = [];
+    for (i = 0; i < result.length; i++) {
+        others_2[i] = (Object.values(result[i])[3]);
+    }
+    var unique_others_2 = Array.from(new Set(others_2));
+    //console.log("People to pay money to:",unique_others_2);
+
+
+    //User has to get money
+    for (k = 0; k < unique_others_2.length; k++) {
+        paid_by = unique_others_2[k];
+        final_value = 0;
+        //console.log("running for",user);
+        //Loop through all the objects
+        for (i = 0; i < result.length; i++) {
+            //If user is same as the user in that object, then add to the //final amount
+            if (((Object.values(result[i])[4]) == user) & ((Object.values(result[i])[3]) == paid_by)) {
+                final_value += (Object.values(result[i])[2]);
+            }
+        }
+        //console.log(final_value, user, paid_by);
+        temp1 = {
+            user: user,
+            paid_by: paid_by,
+            amount: final_value
+        }
+        ppl_i_owe.push(temp1);
+
+    }
+    console.log("PPL who I owe  are :", ppl_i_owe);
+
+    //Finalizing the calc
+    for (i = 0; i < ppl_owe_me.length; i++) {
+        //for each entry here, need to find same user and same payee in other DB
+        for (j = 0; j < ppl_i_owe.length; j++) {
+            if ((Object.values(ppl_owe_me[i])[1]) == (Object.values(ppl_i_owe[j])[1])) {
+                //this means you owe and need to get money from same person
+                temp3 = {
+                    user1: user,
+                    user2: (Object.values(ppl_i_owe[j])[1]),
+                    amount: (Object.values(ppl_owe_me[i])[2]) - (Object.values(ppl_i_owe[j])[2])
+                }
+                value1 = (Object.values(ppl_owe_me[i])[2]);
+                value2 = (Object.values(ppl_i_owe[j])[2]);
+                //console.log(value1, value2);
+                final_output.push(temp3);
+            }
+        }
+
+    }
+
+
+    console.log("FINAL", final_output);
+
+    return final_output;
+}
 
 //**
 //function to get bills that I owe
@@ -799,23 +898,67 @@ function getBillsYouOwe() {
         //if call is successfull
         .done(function (result) {
             console.log(result);
-            let flag = "youowe";
-            let billResult = getUniqueValue(result, flag);
-
+            let billSummary = main_calculation(result);
             let buildTheHtmlOutput = "";
+            $.each(billSummary, function (billKey, billValue) {
+                if (billValue.amount > 0) {
+                    buildTheHtmlOutput += `<div class="panel">`;
+                    buildTheHtmlOutput += `<p>Owes you</p>`;
+                    buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
+                    buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+                    buildTheHtmlOutput += `</div>`;
+                } else if (billValue.amount < 0) {
+                    buildTheHtmlOutput += `<div class="panel">`;
+                    buildTheHtmlOutput += `<p>You owe</p>`;
+                    buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
+                    buildTheHtmlOutput += `<p>Total: $ ${-billValue.amount}</p>`;
+                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+                    buildTheHtmlOutput += `</div>`;
+                }
+            });
+            $('#youOweBills').html(buildTheHtmlOutput);
+            //let flag = "youowe";
+            //let billResult_u_owe = getUniqueValue(result, flag);
+            //console.log(billResult_u_owe, "i get paid");
+            //            flag = "owed";
+            //            let billResult_owed = getUniqueValue(result, flag);
+            //            console.log(billResult_owed, "i need to pay");
+
+            //
+            //            let buildTheHtmlOutput = "";
+            //            $.each(billResult_u_owe, function (billKey, billValue) {
+            //
+            //                buildTheHtmlOutput += `<div class="panel">`;
+            //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
+            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //            });
+            //            $.each(billResult_owed, function (billKey, billValue) {
+            //
+            //                buildTheHtmlOutput += `<div class="panel">`;
+            //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
+            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //            });
             //            let total = 0;
             //            let oldValue = "";
             //            let final_total = 0;
             //populate drop down list with values
-            $.each(billResult, function (billKey, billValue) {
-
-                buildTheHtmlOutput += `<div class="panel">`;
-                buildTheHtmlOutput += `<h4>${billValue.paidBy}</h4>`;
-                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-                buildTheHtmlOutput += `</div>`;
-            });
-            $('#youOweBills').html(buildTheHtmlOutput);
+            //            $.each(billResult, function (billKey, billValue) {
+            //
+            //                buildTheHtmlOutput += `<div class="panel">`;
+            //                buildTheHtmlOutput += `<h4>${billValue.paidBy}</h4>`;
+            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+            //                buildTheHtmlOutput += `<p class="descriptionResult"></p>`;
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //                populateDescriptionResults(billValue.paidBy, loggedinUser);
+            //
+            //            });
+            //            $('#youOweBills').html(buildTheHtmlOutput);
             //            $.each(result, function (billKey, billValue) {
             //                console.log(billKey, billValue);
             //

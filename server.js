@@ -388,12 +388,19 @@ app.get('/bill/:loggedinUser', function (req, res) {
     // Get all the friends from the database
     Bill
         .find({
-            "paidTo": req.params.loggedinUser
+            "$or": [
+                {
+                    "paidTo": req.params.loggedinUser
+                },
+                {
+                    "paidBy": req.params.loggedinUser
+                }
+            ]
         })
         //sort to be done
-        .sort({
-            "paidBy": 1
-        })
+        //        .sort({
+        //            "paidBy": 1
+        //        })
         .then(function (bills) {
             console.log(bills);
             return res.json(bills);
