@@ -878,8 +878,6 @@ function main_calculation(result) {
         }
 
     }
-
-
     console.log("FINAL", final_output);
 
     return final_output;
