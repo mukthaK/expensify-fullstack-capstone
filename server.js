@@ -488,22 +488,32 @@ app.put('/update-habit/:habitId', function (req, res) {
 });
 
 // PUT --------------------------------------
-// Update habit checkin value
-app.put('/habit/checkin', function (req, res) {
-    let habitId = req.body.habitId;
-    //console.log(habitId);
-    Habit
+// Update bill value after settleup
+app.put('/bill/settleup', function (req, res) {
+    let loggedinUser = req.body.loggedinUser;
+    let user = req.body.user;
+    console.log(loggedinUser, user);
+    Bill
         .update({
-            _id: habitId
+            $or: [{
+                    "paidTo": req.body.loggedinUser,
+                    "paidBy": user
+                },
+                {
+                    "paidTo": user,
+                    "paidBy": req.body.loggedinUser
+                }]
         }, {
-            $inc: {
-                "checkin": 1
+            $set: {
+                "amount": 0
             }
-        }).exec().then(function (milestone) {
+        }, {
+            multi: true
+        }).exec().then(function (settledBill) {
             return res.status(204).end();
         }).catch(function (err) {
             return res.status(500).json({
-                message: 'Habit checkin failed'
+                message: 'Bill settle up failed'
             });
         });
 });

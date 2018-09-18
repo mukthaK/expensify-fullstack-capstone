@@ -903,14 +903,16 @@ function getBillsYouOwe() {
                     buildTheHtmlOutput += `<div class="panel">`;
                     buildTheHtmlOutput += `<p>Owes you</p>`;
                     buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
-                    buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+                    buildTheHtmlOutput += '<input type="hidden" id="settleup-user" value="' + billValue.user2 + '">';
+                    buildTheHtmlOutput += `<p>Total: $ ${(billValue.amount).toFixed(2)}</p>`;
                     buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
                     buildTheHtmlOutput += `</div>`;
                 } else if (billValue.amount < 0) {
                     buildTheHtmlOutput += `<div class="panel">`;
                     buildTheHtmlOutput += `<p>You owe</p>`;
                     buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
-                    buildTheHtmlOutput += `<p>Total: $ ${-billValue.amount}</p>`;
+                    buildTheHtmlOutput += '<input type="hidden" id="settleup-user" value="' + billValue.user2 + '">';
+                    buildTheHtmlOutput += `<p>Total: $ ${(-billValue.amount).toFixed(2)}</p>`;
                     buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
                     buildTheHtmlOutput += `</div>`;
                 }
@@ -1049,7 +1051,36 @@ $(document).on('click', '#youOwe-js', function (event) {
 
 $(document).on('click', '#settleup-js', function (event) {
     event.preventDefault();
-    alert('settleup clicked');
+    //alert('settleup clicked');
+    const loggedinUser = $('#loggedin-user').val();
+    const user = $(this).parent().find('#settleup-user').val();
+
+    // Create a payload to update the bill value in DB
+    const billSettleupObject = {
+        loggedinUser,
+        user
+    };
+    console.log("bill settleup to update", billSettleupObject);
+    //make the api call using the payload above
+    $.ajax({
+            type: 'PUT',
+            url: '/bill/settleup',
+            dataType: 'json',
+            data: JSON.stringify(billSettleupObject),
+            contentType: 'application/json'
+        })
+        //if call is succefull
+        .done(function (result) {
+            getBillsYouOwe();
+            alert("bill settled");
+        })
+        //if the call is failing
+        .fail(function (jqXHR, error, errorThrown) {
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+            alert('Settleup Error');
+        });
 });
 
 function getBillsOwed() {
