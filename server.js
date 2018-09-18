@@ -178,7 +178,7 @@ function makeid() {
     return text;
 }
 
-// ---------------USER ENDPOINTS-------------------------------------
+// ---------------USER ENDPOINTS------------------------------------
 // creating a new user **
 app.post('/users/create', (req, res) => {
     //take the  username and the password from the ajax api call
@@ -461,124 +461,6 @@ app.get('/billowed/:loggedinUser', function (req, res) {
         });
 });
 
-// PUT ------------------------------------
-// accessing a habit content by habit id and updating
-app.put('/update-habit/:habitId', function (req, res) {
-    console.log("inside get habit server call");
-    console.log("habit id server ", req.params.habitId);
-    let toUpdate = {};
-    let updateableFields = ['habitName', 'weekday', 'time'];
-    updateableFields.forEach(function (field) {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
-
-    Habit
-        .findByIdAndUpdate(req.params.habitId, {
-            $set: toUpdate
-        }).exec().then(function (achievement) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Habit update failed'
-            });
-        });
-
-});
-
-// PUT --------------------------------------
-// Update bill value after settleup
-app.put('/bill/settleup', function (req, res) {
-    let loggedinUser = req.body.loggedinUser;
-    let user = req.body.user;
-    console.log(loggedinUser, user);
-    Bill
-        .update({
-            $or: [{
-                    "paidTo": req.body.loggedinUser,
-                    "paidBy": user
-                },
-                {
-                    "paidTo": user,
-                    "paidBy": req.body.loggedinUser
-                }]
-        }, {
-            $set: {
-                "amount": 0
-            }
-        }, {
-            multi: true
-        }).exec().then(function (settledBill) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Bill settle up failed'
-            });
-        });
-});
-
-// DELETE ----------------------------------------
-// deleting a Habit  by id
-app.delete('/habit/:habitID', function (req, res) {
-    Habit
-        .findByIdAndRemove(req.params.habitID)
-        .exec().then(function (item) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Delete Habit failed'
-            });
-        });
-});
-
-// ---------------NOTES ENDPOINTS-------------------------------------
-// GET ------------------------------------
-// accessing a note content by habit id
-app.get('/get-notes/:habitId', function (req, res) {
-    //    console.log("habit id server " + req.params.habitId);
-    Notes
-        .find({
-            "habitID": req.params.habitId
-        })
-        .then(function (note) {
-            console.log("note ", note);
-            return res.json(note);
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Get Notes failed'
-            });
-        });
-});
-
-// PUT-----------------------------------------------
-// Saving entry for Notes
-app.put('/notes/save', (req, res) => {
-    let notesContent = req.body.notesContent;
-    let notesID = req.body.notesID;
-    let toUpdate = {};
-    let updateableFields = ['notesContent'];
-    updateableFields.forEach(function (field) {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
-        }
-    });
-
-    Notes
-        .findByIdAndUpdate(notesID, {
-            $set: toUpdate
-        }).exec().then(function (note) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Notes Save failed'
-            });
-        });
-});
-
-// ---------------MILESTONES ENDPOINTS-------------------------------------
 // POST-----------------------------------------------
 // Adding entry for friend (list) **
 app.post('/friend/add', (req, res) => {
@@ -631,67 +513,181 @@ app.post('/bill/create', (req, res) => {
     });
 });
 
-// GET ------------------------------------
-// accessing a milestone items by habit id
-app.get('/get-milestones/:habitId', function (req, res) {
-
-    Milestones
-        .find({
-            "habitID": req.params.habitId
-        })
-        .then(function (milestone) {
-            console.log("milestone ", milestone);
-            return res.json(milestone);
-        })
-        .catch(function (err) {
-            console.error(err);
-            res.status(500).json({
-                message: 'Get milestones failed'
-            });
-        });
-});
-
 // PUT --------------------------------------
-// Update milestone item for checked value
-app.put('/milestone/check', function (req, res) {
-    let milestoneID = req.body.milestoneID;
-    let checkedValue = req.body.checked;
-    //console.log(milestoneID, checkedValue);
-
-    let toUpdate = {};
-    let updateableFields = ['checked'];
-    updateableFields.forEach(function (field) {
-        if (field in req.body) {
-            toUpdate[field] = req.body[field];
+// Update bill value after settleup
+app.put('/bill/settleup', function (req, res) {
+    let loggedinUser = req.body.loggedinUser;
+    let user = req.body.user;
+    console.log(loggedinUser, user);
+    Bill
+        .update({
+        $or: [{
+            "paidTo": req.body.loggedinUser,
+            "paidBy": user
+        },
+              {
+                  "paidTo": user,
+                  "paidBy": req.body.loggedinUser
+              }]
+    }, {
+        $set: {
+            "amount": 0
         }
+    }, {
+        multi: true
+    }).exec().then(function (settledBill) {
+        return res.status(204).end();
+    }).catch(function (err) {
+        return res.status(500).json({
+            message: 'Bill settle up failed'
+        });
     });
-    //console.log(toUpdate);
-
-    Milestones
-        .findByIdAndUpdate(milestoneID, {
-            $set: toUpdate
-        }).exec().then(function (milestone) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Check milestones failed'
-            });
-        });
 });
 
-// DELETE ----------------------------------------
-// deleting a milestone item by id
-app.delete('/milestone/:milestoneID', function (req, res) {
-    Milestones
-        .findByIdAndRemove(req.params.milestoneID)
-        .exec().then(function (item) {
-            return res.status(204).end();
-        }).catch(function (err) {
-            return res.status(500).json({
-                message: 'Milestone delete failed'
-            });
-        });
-});
+
+
+//// PUT ------------------------------------
+//// accessing a habit content by habit id and updating
+//app.put('/update-habit/:habitId', function (req, res) {
+//    console.log("inside get habit server call");
+//    console.log("habit id server ", req.params.habitId);
+//    let toUpdate = {};
+//    let updateableFields = ['habitName', 'weekday', 'time'];
+//    updateableFields.forEach(function (field) {
+//        if (field in req.body) {
+//            toUpdate[field] = req.body[field];
+//        }
+//    });
+//
+//    Habit
+//        .findByIdAndUpdate(req.params.habitId, {
+//            $set: toUpdate
+//        }).exec().then(function (achievement) {
+//            return res.status(204).end();
+//        }).catch(function (err) {
+//            return res.status(500).json({
+//                message: 'Habit update failed'
+//            });
+//        });
+//
+//});
+//// DELETE ----------------------------------------
+//// deleting a Habit  by id
+//app.delete('/habit/:habitID', function (req, res) {
+//    Habit
+//        .findByIdAndRemove(req.params.habitID)
+//        .exec().then(function (item) {
+//            return res.status(204).end();
+//        }).catch(function (err) {
+//            return res.status(500).json({
+//                message: 'Delete Habit failed'
+//            });
+//        });
+//});
+//// ---------------NOTES ENDPOINTS-----------------------------------
+//// GET ------------------------------------
+//// accessing a note content by habit id
+//app.get('/get-notes/:habitId', function (req, res) {
+//    //    console.log("habit id server " + req.params.habitId);
+//    Notes
+//        .find({
+//            "habitID": req.params.habitId
+//        })
+//        .then(function (note) {
+//            console.log("note ", note);
+//            return res.json(note);
+//        })
+//        .catch(function (err) {
+//            console.error(err);
+//            res.status(500).json({
+//                message: 'Get Notes failed'
+//            });
+//        });
+//});
+//// PUT-----------------------------------------------
+//// Saving entry for Notes
+//app.put('/notes/save', (req, res) => {
+//    let notesContent = req.body.notesContent;
+//    let notesID = req.body.notesID;
+//    let toUpdate = {};
+//    let updateableFields = ['notesContent'];
+//    updateableFields.forEach(function (field) {
+//        if (field in req.body) {
+//            toUpdate[field] = req.body[field];
+//        }
+//    });
+//
+//    Notes
+//        .findByIdAndUpdate(notesID, {
+//            $set: toUpdate
+//        }).exec().then(function (note) {
+//            return res.status(204).end();
+//        }).catch(function (err) {
+//            return res.status(500).json({
+//                message: 'Notes Save failed'
+//            });
+//        });
+//});
+//// ---------------MILESTONES ENDPOINTS------------------------------
+//// GET ------------------------------------
+//// accessing a milestone items by habit id
+//app.get('/get-milestones/:habitId', function (req, res) {
+//
+//    Milestones
+//        .find({
+//            "habitID": req.params.habitId
+//        })
+//        .then(function (milestone) {
+//            console.log("milestone ", milestone);
+//            return res.json(milestone);
+//        })
+//        .catch(function (err) {
+//            console.error(err);
+//            res.status(500).json({
+//                message: 'Get milestones failed'
+//            });
+//        });
+//});
+//// PUT --------------------------------------
+//// Update milestone item for checked value
+//app.put('/milestone/check', function (req, res) {
+//    let milestoneID = req.body.milestoneID;
+//    let checkedValue = req.body.checked;
+//    //console.log(milestoneID, checkedValue);
+//
+//    let toUpdate = {};
+//    let updateableFields = ['checked'];
+//    updateableFields.forEach(function (field) {
+//        if (field in req.body) {
+//            toUpdate[field] = req.body[field];
+//        }
+//    });
+//    //console.log(toUpdate);
+//
+//    Milestones
+//        .findByIdAndUpdate(milestoneID, {
+//            $set: toUpdate
+//        }).exec().then(function (milestone) {
+//            return res.status(204).end();
+//        }).catch(function (err) {
+//            return res.status(500).json({
+//                message: 'Check milestones failed'
+//            });
+//        });
+//});
+//// DELETE ----------------------------------------
+//// deleting a milestone item by id
+//app.delete('/milestone/:milestoneID', function (req, res) {
+//    Milestones
+//        .findByIdAndRemove(req.params.milestoneID)
+//        .exec().then(function (item) {
+//            return res.status(204).end();
+//        }).catch(function (err) {
+//            return res.status(500).json({
+//                message: 'Milestone delete failed'
+//            });
+//        });
+//});
 
 
 // MISC ------------------------------------------
