@@ -1,7 +1,7 @@
 const User = require('./models/user');
 const Friend = require('./models/friend');
 const Bill = require('./models/bill');
-const Milestones = require('./models/milestones');
+//const Milestones = require('./models/milestones');
 const bodyParser = require('body-parser');
 const config = require('./configbuilder').config();
 const mongoose = require('mongoose');
@@ -353,6 +353,29 @@ app.get('/friend/:email', function (req, res) {
         });
 });
 
+// POST-----------------------------------------------
+// Adding entry for friend (list) **
+app.post('/friend/add', (req, res) => {
+    let loggedinUser = req.body.loggedinUser;
+    let email = req.body.email;
+    //let username = req.body.username;
+
+    Friend.create({
+        loggedinUser,
+        email,
+        // username
+    }, (err, item) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Failed to add friend'
+            });
+        }
+        if (item) {
+            return res.json(item);
+        }
+    });
+});
+
 // GET ------------------------------------
 // accessing all of a user's friends list **
 app.get('/getfriends/:loggedinUser', function (req, res) {
@@ -461,28 +484,7 @@ app.get('/billowed/:loggedinUser', function (req, res) {
         });
 });
 
-// POST-----------------------------------------------
-// Adding entry for friend (list) **
-app.post('/friend/add', (req, res) => {
-    let loggedinUser = req.body.loggedinUser;
-    let email = req.body.email;
-    //let username = req.body.username;
 
-    Friend.create({
-        loggedinUser,
-        email,
-        // username
-    }, (err, item) => {
-        if (err) {
-            return res.status(500).json({
-                message: 'Failed to add friend'
-            });
-        }
-        if (item) {
-            return res.json(item);
-        }
-    });
-});
 
 //POST----------
 // Creating Bill **
@@ -521,30 +523,69 @@ app.put('/bill/settleup', function (req, res) {
     console.log(loggedinUser, user);
     Bill
         .update({
-        $or: [{
-            "paidTo": req.body.loggedinUser,
-            "paidBy": user
+            $or: [{
+                    "paidTo": req.body.loggedinUser,
+                    "paidBy": user
         },
-              {
-                  "paidTo": user,
-                  "paidBy": req.body.loggedinUser
+                {
+                    "paidTo": user,
+                    "paidBy": req.body.loggedinUser
               }]
-    }, {
-        $set: {
-            "amount": 0
-        }
-    }, {
-        multi: true
-    }).exec().then(function (settledBill) {
-        return res.status(204).end();
-    }).catch(function (err) {
-        return res.status(500).json({
-            message: 'Bill settle up failed'
+        }, {
+            $set: {
+                "amount": 0
+            }
+        }, {
+            multi: true
+        }).exec().then(function (settledBill) {
+            return res.status(204).end();
+        }).catch(function (err) {
+            return res.status(500).json({
+                message: 'Bill settle up failed'
+            });
         });
-    });
 });
 
 
+// UPDATE
+// Update user password
+app.put('/update-password/:loggedinUser', function (req, res) {
+    let password = req.body.pw;
+    password = password.trim();
+    bcrypt.genSalt(10, (err, salt) => {
+        if (err) {
+            return res.status(500).json({
+                message: 'Internal server error on genSalt'
+            });
+        }
+
+        bcrypt.hash(password, salt, (err, hash) => {
+            if (err) {
+                return res.status(500).json({
+                    message: 'Internal server error on hash'
+                });
+            }
+
+            User
+                .update({
+                    "email": req.params.loggedinUser
+                }, {
+                    $set: {
+                        password: hash
+                    }
+                })
+                .then((user) => {
+                    return res.json(user);
+                })
+                .catch(err => {
+                    console.error(err);
+                    res.status(500).json({
+                        message: 'Password was not modified'
+                    });
+                });
+        });
+    });
+});
 
 //// PUT ------------------------------------
 //// accessing a habit content by habit id and updating

@@ -23,51 +23,51 @@ function addFriendToList(email) {
     console.log(friendObject);
     // Check if friend already added
     $.ajax({
-        type: 'GET',
-        url: `/getfriends/${loggedinUser}`,
-        dataType: 'json',
-        contentType: 'application/json'
-    })
-    //if call is successfull
+            type: 'GET',
+            url: `/getfriends/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
         .done(function (result) {
-        console.log(result);
-        let exists = checkFriend(result.friendsOutput, email);
-        console.log(exists);
-        // if exists message- already beedn added
-        if (exists) {
-            alert("Friend has alredy been added!");
-        }
-        // if not Add friend to the list (post call)
-        else {
-            //make the api call using the payload above
-            $.ajax({
-                type: 'POST',
-                url: '/friend/add',
-                dataType: 'json',
-                data: JSON.stringify(friendObject),
-                contentType: 'application/json'
-            })
-            //if call is succefull
-                .done(function (result) {
-                console.log(result);
-                getFriends(loggedinUser);
-                //$('#dashboard-js').show();
-            })
-            //if the call is failing
-                .fail(function (jqXHR, error, errorThrown) {
-                console.log(jqXHR);
-                console.log(error);
-                console.log(errorThrown);
-                alert('Incorrect friend');
-            });
-        }
-    })
-    //if the call is failing
+            console.log(result);
+            let exists = checkFriend(result.friendsOutput, email);
+            console.log(exists);
+            // if exists message- already beedn added
+            if (exists) {
+                alert("Friend has alredy been added!");
+            }
+            // if not Add friend to the list (post call)
+            else {
+                //make the api call using the payload above
+                $.ajax({
+                        type: 'POST',
+                        url: '/friend/add',
+                        dataType: 'json',
+                        data: JSON.stringify(friendObject),
+                        contentType: 'application/json'
+                    })
+                    //if call is succefull
+                    .done(function (result) {
+                        console.log(result);
+                        getFriends(loggedinUser);
+                        //$('#dashboard-js').show();
+                    })
+                    //if the call is failing
+                    .fail(function (jqXHR, error, errorThrown) {
+                        console.log(jqXHR);
+                        console.log(error);
+                        console.log(errorThrown);
+                        alert('Incorrect friend');
+                    });
+            }
+        })
+        //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
-        console.log(jqXHR);
-        console.log(error);
-        console.log(errorThrown);
-    });
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 
 
 }
@@ -76,23 +76,23 @@ function getFriends(loggedinUser) {
     //const loggedinUser = $('#loggedin-user').val();
     //make the api call to get habits by username
     $.ajax({
-        type: 'GET',
-        url: `/getfriends/${loggedinUser}`,
-        dataType: 'json',
-        contentType: 'application/json'
-    })
-    //if call is successfull
+            type: 'GET',
+            url: `/getfriends/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
         .done(function (result) {
-        console.log(result);
-        displayFriend(result.friendsOutput);
-        //$('.habit-edit-screen').hide();
-    })
-    //if the call is failing
+            console.log(result);
+            displayFriend(result.friendsOutput);
+            //$('.habit-edit-screen').hide();
+        })
+        //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
-        console.log(jqXHR);
-        console.log(error);
-        console.log(errorThrown);
-    });
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 }
 
 function displayFriend(friend) {
@@ -248,188 +248,188 @@ function main_calculation(result) {
 function getBillsYouOwe() {
     const loggedinUser = $('#loggedin-user').val();
     $.ajax({
-        type: 'GET',
-        url: `/bill/${loggedinUser}`,
-        dataType: 'json',
-        contentType: 'application/json'
-    })
-    //if call is successfull
+            type: 'GET',
+            url: `/bill/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
         .done(function (result) {
-        console.log(result);
-        let billSummary = main_calculation(result);
-        let buildTheHtmlOutput = "";
-        $.each(billSummary, function (billKey, billValue) {
-            if (billValue.amount > 0) {
-                buildTheHtmlOutput += `<div class="panel">`;
-                buildTheHtmlOutput += `<p>Owes you</p>`;
-                buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
-                buildTheHtmlOutput += '<input type="hidden" id="settleup-user" value="' + billValue.user2 + '">';
-                buildTheHtmlOutput += `<p>Total: $ ${(billValue.amount).toFixed(2)}</p>`;
-                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-                buildTheHtmlOutput += `</div>`;
-            } else if (billValue.amount < 0) {
-                buildTheHtmlOutput += `<div class="panel">`;
-                buildTheHtmlOutput += `<p>You owe</p>`;
-                buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
-                buildTheHtmlOutput += '<input type="hidden" id="settleup-user" value="' + billValue.user2 + '">';
-                buildTheHtmlOutput += `<p>Total: $ ${(-billValue.amount).toFixed(2)}</p>`;
-                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-                buildTheHtmlOutput += `</div>`;
-            }
-        });
-        $('#youOweBills').html(buildTheHtmlOutput);
-        //let flag = "youowe";
-        //let billResult_u_owe = getUniqueValue(result, flag);
-        //console.log(billResult_u_owe, "i get paid");
-        //            flag = "owed";
-        //            let billResult_owed = getUniqueValue(result, flag);
-        //            console.log(billResult_owed, "i need to pay");
+            console.log(result);
+            let billSummary = main_calculation(result);
+            let buildTheHtmlOutput = "";
+            $.each(billSummary, function (billKey, billValue) {
+                if (billValue.amount > 0) {
+                    buildTheHtmlOutput += `<div class="panel">`;
+                    buildTheHtmlOutput += `<p>Owes you</p>`;
+                    buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
+                    buildTheHtmlOutput += '<input type="hidden" id="settleup-user" value="' + billValue.user2 + '">';
+                    buildTheHtmlOutput += `<p>Total: $ ${(billValue.amount).toFixed(2)}</p>`;
+                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+                    buildTheHtmlOutput += `</div>`;
+                } else if (billValue.amount < 0) {
+                    buildTheHtmlOutput += `<div class="panel">`;
+                    buildTheHtmlOutput += `<p>You owe</p>`;
+                    buildTheHtmlOutput += `<h4>${billValue.user2}</h4>`;
+                    buildTheHtmlOutput += '<input type="hidden" id="settleup-user" value="' + billValue.user2 + '">';
+                    buildTheHtmlOutput += `<p>Total: $ ${(-billValue.amount).toFixed(2)}</p>`;
+                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+                    buildTheHtmlOutput += `</div>`;
+                }
+            });
+            $('#youOweBills').html(buildTheHtmlOutput);
+            //let flag = "youowe";
+            //let billResult_u_owe = getUniqueValue(result, flag);
+            //console.log(billResult_u_owe, "i get paid");
+            //            flag = "owed";
+            //            let billResult_owed = getUniqueValue(result, flag);
+            //            console.log(billResult_owed, "i need to pay");
 
-        //
-        //            let buildTheHtmlOutput = "";
-        //            $.each(billResult_u_owe, function (billKey, billValue) {
-        //
-        //                buildTheHtmlOutput += `<div class="panel">`;
-        //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
-        //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-        //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-        //                buildTheHtmlOutput += `</div>`;
-        //            });
-        //            $.each(billResult_owed, function (billKey, billValue) {
-        //
-        //                buildTheHtmlOutput += `<div class="panel">`;
-        //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
-        //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-        //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-        //                buildTheHtmlOutput += `</div>`;
-        //            });
-        //            let total = 0;
-        //            let oldValue = "";
-        //            let final_total = 0;
-        //populate drop down list with values
-        //            $.each(billResult, function (billKey, billValue) {
-        //
-        //                buildTheHtmlOutput += `<div class="panel">`;
-        //                buildTheHtmlOutput += `<h4>${billValue.paidBy}</h4>`;
-        //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-        //                buildTheHtmlOutput += `<p class="descriptionResult"></p>`;
-        //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-        //                buildTheHtmlOutput += `</div>`;
-        //                populateDescriptionResults(billValue.paidBy, loggedinUser);
-        //
-        //            });
-        //            $('#youOweBills').html(buildTheHtmlOutput);
-        //            $.each(result, function (billKey, billValue) {
-        //                console.log(billKey, billValue);
-        //
-        //                let newValue = billValue.paidBy;
-        //                //total = billValue.amount;
-        //
-        //                if (oldValue != newValue) {
-        //                    total = billValue.amount;
-        //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
-        //                    buildTheHtmlOutput += `<div class="panel">`;
-        //                    buildTheHtmlOutput += `<p>Total:${total}</p>`;
-        //                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-        //                    buildTheHtmlOutput += `</div>`;
-        //                    //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-        //
-        //                }
-        //                if (oldValue == newValue) {
-        //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-        //                    //buildTheHtmlOutput += `<p>Total:${total}</p>`;
-        //                    total += billValue.amount;
-        //                    //buildTheHtmlOutput += `<p>Total:${final_total}</p>`;
-        //
-        //                }
-        //
-        //                if paid by person already listed, then add the amount
-        //                if (oldValue == newValue) {
-        //                    total += billValue.amount;
-        //                    console.log(total);
-        //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
-        //                    buildTheHtmlOutput += `<div class="panel">`;
-        //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-        //                    buildTheHtmlOutput += `</div>`;
-        //
-        //                } else {
-        //                    //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}<span id="totalBillValue">${billValue.amount}</span></button>`;
-        //                    buildTheHtmlOutput += `<p>Total: ${total}</p>`;
-        //
-        //                }
-        //
-        //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-        //
-        //                //                buildTheHtmlOutput += `<div class="panel">`;
-        //                //                buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-        //                //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-        //                //                buildTheHtmlOutput += `</div>`;
-        //
-        //                oldValue = newValue;
-        //                total = billValue.amount;
-        //            });
+            //
+            //            let buildTheHtmlOutput = "";
+            //            $.each(billResult_u_owe, function (billKey, billValue) {
+            //
+            //                buildTheHtmlOutput += `<div class="panel">`;
+            //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
+            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //            });
+            //            $.each(billResult_owed, function (billKey, billValue) {
+            //
+            //                buildTheHtmlOutput += `<div class="panel">`;
+            //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
+            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //            });
+            //            let total = 0;
+            //            let oldValue = "";
+            //            let final_total = 0;
+            //populate drop down list with values
+            //            $.each(billResult, function (billKey, billValue) {
+            //
+            //                buildTheHtmlOutput += `<div class="panel">`;
+            //                buildTheHtmlOutput += `<h4>${billValue.paidBy}</h4>`;
+            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+            //                buildTheHtmlOutput += `<p class="descriptionResult"></p>`;
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //                populateDescriptionResults(billValue.paidBy, loggedinUser);
+            //
+            //            });
+            //            $('#youOweBills').html(buildTheHtmlOutput);
+            //            $.each(result, function (billKey, billValue) {
+            //                console.log(billKey, billValue);
+            //
+            //                let newValue = billValue.paidBy;
+            //                //total = billValue.amount;
+            //
+            //                if (oldValue != newValue) {
+            //                    total = billValue.amount;
+            //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
+            //                    buildTheHtmlOutput += `<div class="panel">`;
+            //                    buildTheHtmlOutput += `<p>Total:${total}</p>`;
+            //                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                    buildTheHtmlOutput += `</div>`;
+            //                    //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //
+            //                }
+            //                if (oldValue == newValue) {
+            //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //                    //buildTheHtmlOutput += `<p>Total:${total}</p>`;
+            //                    total += billValue.amount;
+            //                    //buildTheHtmlOutput += `<p>Total:${final_total}</p>`;
+            //
+            //                }
+            //
+            //                if paid by person already listed, then add the amount
+            //                if (oldValue == newValue) {
+            //                    total += billValue.amount;
+            //                    console.log(total);
+            //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
+            //                    buildTheHtmlOutput += `<div class="panel">`;
+            //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //                    buildTheHtmlOutput += `</div>`;
+            //
+            //                } else {
+            //                    //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}<span id="totalBillValue">${billValue.amount}</span></button>`;
+            //                    buildTheHtmlOutput += `<p>Total: ${total}</p>`;
+            //
+            //                }
+            //
+            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //
+            //                //                buildTheHtmlOutput += `<div class="panel">`;
+            //                //                buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
+            //                //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+            //                //                buildTheHtmlOutput += `</div>`;
+            //
+            //                oldValue = newValue;
+            //                total = billValue.amount;
+            //            });
 
 
-        //$('#youOweBills').html(buildTheHtmlOutput);
-        //            $('#friendPaid').append(`<option value="${loggedinUser}">${loggedinUser}</option>`);
-        //            //populate checkboxed with value
-        //
-        //            buildTheHtmlOutput = "";
-        //            $.each(friend, function (friendKey, friendValue) {
-        //                console.log(friendKey, friendValue);
-        //                buildTheHtmlOutput += `<div class="friends-billed">`;
-        //                buildTheHtmlOutput += `<label for="friend-name">${friendValue.email}</label>`;
-        //                buildTheHtmlOutput += `<input type="checkbox" class="friend-name" name="paidFor" value="${friendValue.email}" required>`;
-        //                buildTheHtmlOutput += `</div>`;
-        //            });
-        //            $('#paidForWrapper').html(buildTheHtmlOutput);
-        //            $('#paidForWrapper').append(`<div class="friends-billed"><label for="friend-name">${loggedinUser}</label><input type="checkbox" class="friend-name" name="paidFor" value="${loggedinUser}" required></div>`);
-        //
-        //            $('.habit-edit-screen').hide();
-    })
-    //if the call is failing
+            //$('#youOweBills').html(buildTheHtmlOutput);
+            //            $('#friendPaid').append(`<option value="${loggedinUser}">${loggedinUser}</option>`);
+            //            //populate checkboxed with value
+            //
+            //            buildTheHtmlOutput = "";
+            //            $.each(friend, function (friendKey, friendValue) {
+            //                console.log(friendKey, friendValue);
+            //                buildTheHtmlOutput += `<div class="friends-billed">`;
+            //                buildTheHtmlOutput += `<label for="friend-name">${friendValue.email}</label>`;
+            //                buildTheHtmlOutput += `<input type="checkbox" class="friend-name" name="paidFor" value="${friendValue.email}" required>`;
+            //                buildTheHtmlOutput += `</div>`;
+            //            });
+            //            $('#paidForWrapper').html(buildTheHtmlOutput);
+            //            $('#paidForWrapper').append(`<div class="friends-billed"><label for="friend-name">${loggedinUser}</label><input type="checkbox" class="friend-name" name="paidFor" value="${loggedinUser}" required></div>`);
+            //
+            //            $('.habit-edit-screen').hide();
+        })
+        //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
-        console.log(jqXHR);
-        console.log(error);
-        console.log(errorThrown);
-    });
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 }
 
 function getBillsOwed() {
     const loggedinUser = $('#loggedin-user').val();
     $.ajax({
-        type: 'GET',
-        url: `/billowed/${loggedinUser}`,
-        dataType: 'json',
-        contentType: 'application/json'
-    })
-    //if call is successfull
+            type: 'GET',
+            url: `/billowed/${loggedinUser}`,
+            dataType: 'json',
+            contentType: 'application/json'
+        })
+        //if call is successfull
         .done(function (result) {
-        console.log(result);
-        let flag = "owed";
-        let billResult = getUniqueValue(result, flag);
+            console.log(result);
+            let flag = "owed";
+            let billResult = getUniqueValue(result, flag);
 
-        let buildTheHtmlOutput = "";
-        //            let total = 0;
-        //            let oldValue = "";
-        //            let final_total = 0;
-        //populate drop down list with values
-        $.each(billResult, function (billKey, billValue) {
+            let buildTheHtmlOutput = "";
+            //            let total = 0;
+            //            let oldValue = "";
+            //            let final_total = 0;
+            //populate drop down list with values
+            $.each(billResult, function (billKey, billValue) {
 
-            buildTheHtmlOutput += `<div class="panel">`;
-            buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
-            buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-            buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-            buildTheHtmlOutput += `</div>`;
-        });
-        $('#owedBills').html(buildTheHtmlOutput);
-    })
-    //if the call is failing
+                buildTheHtmlOutput += `<div class="panel">`;
+                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
+                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+                buildTheHtmlOutput += `</div>`;
+            });
+            $('#owedBills').html(buildTheHtmlOutput);
+        })
+        //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
-        console.log(jqXHR);
-        console.log(error);
-        console.log(errorThrown);
-    });
+            console.log(jqXHR);
+            console.log(error);
+            console.log(errorThrown);
+        });
 }
 
 // **
@@ -932,6 +932,42 @@ $(document).on('click', '#invite-cancel-js', function (event) {
     event.preventDefault();
     alert("invite cancelled");
     $('.invite').hide();
+});
+
+// Update password form
+$(document).on('submit', '.chgPswd-form', function (event) {
+    event.preventDefault();
+    const loggedinUser = $('#loggedin-user').val();
+    const pw = $('#old-psw').val();
+    const pw2 = $('#new-psw').val();
+    if (pw !== pw2) {
+        alert('Passwords do not match, please re-enter password');
+    } else if (pw == "") {
+        alert('Please enter old password');
+    } else if (pw2 == "") {
+        alert('Please enter new password');
+    } else {
+        const updateUserObject = {
+            pw
+        };
+        $.ajax({
+                type: 'PUT',
+                url: `/update-password/${loggedinUser}`,
+                dataType: 'json',
+                data: JSON.stringify(updateUserObject),
+                contentType: 'application/json'
+            })
+            .done(function (res) {
+                $('#loggedin-user').val(res.email);
+                alert("Password successfully updated");
+                $('#chgPswd').show();
+            })
+            .fail(function (jqXHR, error, errorThrown) {
+                console.log(jqXHR);
+                console.log(error);
+                console.log(errorThrown);
+            });
+    }
 });
 
 //  logout
@@ -1451,5 +1487,3 @@ $(document).on('click', '#logout-js', function (event) {
 //            alert('Incorrect Milestone updation');
 //        });
 //});
-
-

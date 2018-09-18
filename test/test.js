@@ -7,10 +7,12 @@ const {
 
 var chai = require('chai');
 var chaiHttp = require('chai-http');
+const Friend = require('./models/friend');
+const Bill = require('./models/bill');
 //var entry = require('../models/entry.js');
-var habit = require('../models/habit');
-var notes = require('../models/notes');
-var milestones = require('../models/milestones');
+//var habit = require('../models/habit');
+//var notes = require('../models/notes');
+//var milestones = require('../models/milestones');
 var should = chai.should();
 
 chai.use(chaiHttp);
