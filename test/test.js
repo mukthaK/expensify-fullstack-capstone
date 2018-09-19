@@ -17,17 +17,14 @@ var should = chai.should();
 
 chai.use(chaiHttp);
 
-// HABIT endpoints check - test cases
-describe('habit API', function () {
-    it('should add a habit on POST', function () {
+// Friend endpoints check - test cases
+describe('Friend API', function () {
+    it('should add a friend on POST', function () {
         chai.request(app)
-            .post('/habit/create')
+            .post('/friend/add')
             .send({
-                habitName: "running",
-                weekday: "tuesday",
-                time: "morning",
                 loggedinUser: "test@gmail.com",
-                checkin: 0
+                email: "demo@gmail.com"
             })
             .then(function (err, res) {
                 res.should.have.status(201);
@@ -40,45 +37,9 @@ describe('habit API', function () {
             }));
     });
 
-    it('Should Get All Users habits', function () {
+    it('Should Get All friends of loggedin user', function () {
         chai.request(app)
-            .get('/get-habit/:loggedinUser')
-            .then(function (res) {
-                res.should.have.status(201);
-                done();
-            })
-            .catch(err => console.log({
-                err
-            }));
-    });
-
-    it('Should Update a habit', function () {
-        chai.request(app)
-            .put('/update-habit/5b11d3da6c25be0e6b554553')
-            .then(function (res) {
-                res.should.have.status(201);
-                done();
-            })
-            .catch(err => console.log({
-                err
-            }));
-    });
-
-    it('Should Update habit checkin', function () {
-        chai.request(app)
-            .put('/habit/checkin')
-            .then(function (res) {
-                res.should.have.status(201);
-                done();
-            })
-            .catch(err => console.log({
-                err
-            }));
-    });
-
-    it('Should Delete a habit', function () {
-        chai.request(app)
-            .delete('/habit/5b11d3da6c25be0e6b554553')
+            .get('/getfriends/:loggedinUser')
             .then(function (res) {
                 res.should.have.status(201);
                 done();
@@ -90,45 +51,17 @@ describe('habit API', function () {
 });
 
 
-// NOTES endpoints check - test cases
-describe('notes API', function () {
-
-    it('Should Get All habits notes', function () {
+// Bill endpoints check - test cases
+describe('Bill API', function () {
+    it('should add a bill on POST', function () {
         chai.request(app)
-            .get('/get-notes/5b11d3da6c25be0e6b554553')
-            .then(function (res) {
-                res.should.have.status(201);
-                done();
-            })
-            .catch(err => console.log({
-                err
-            }));
-    });
-
-    it('Should Update a note', function () {
-        chai.request(app)
-            .put('/notes/save')
-            .then(function (res) {
-                res.should.have.status(201);
-                done();
-            })
-            .catch(err => console.log({
-                err
-            }));
-    });
-});
-
-// MILESTONES endpoints check - test cases
-describe('milestone API', function () {
-    it('should add a milestone on POST', function () {
-        chai.request(app)
-            .post('/milestones/add')
+            .post('/bill/create')
             .send({
-                milestonesContent: "run 2 miles",
-                checked: false,
-                habitName: "running",
-                habitID: "5b11d3da6c25be0e6b554553",
-                loggedinUser: "test@gmail.com"
+                description: "Rent",
+                amount: "500",
+                paidBy: "test@gmail.com",
+                paidTo: "demo@gmail.com",
+                date: new Date()
             })
             .then(function (err, res) {
                 res.should.have.status(201);
@@ -140,10 +73,9 @@ describe('milestone API', function () {
                 err
             }));
     });
-
-    it('Should Get All milestones of a habit', function () {
+    it('Should Get All bills', function () {
         chai.request(app)
-            .get('/get-milestones/:habitId')
+            .get('/bill/:loggedinUser')
             .then(function (res) {
                 res.should.have.status(201);
                 done();
@@ -153,21 +85,9 @@ describe('milestone API', function () {
             }));
     });
 
-    it('Should Update a milestone', function () {
+    it('Should settleup a bill', function () {
         chai.request(app)
-            .put('/milestone/check')
-            .then(function (res) {
-                res.should.have.status(201);
-                done();
-            })
-            .catch(err => console.log({
-                err
-            }));
-    });
-
-    it('Should Delete a milestone', function () {
-        chai.request(app)
-            .delete('/milestone/:milestoneID')
+            .put('/bill/settleup')
             .then(function (res) {
                 res.should.have.status(201);
                 done();
