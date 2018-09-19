@@ -300,7 +300,7 @@ app.post('/friend/create', (req, res) => {
         .create({
             //username,
             email,
-            password
+            password: hash
         }, (err, item) => {
             if (err) {
                 return res.status(500).json({
