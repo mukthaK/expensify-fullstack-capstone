@@ -109,7 +109,7 @@ function displayFriend(friend) {
     $('.friends-list').html(buildTheHtmlOutput);
 }
 
-function getUniqueValue(result, flag) {
+//function getUniqueValue(result, flag) {
     //get unique psidBy users
     //    let paidByUsers = [...new Set(result.map(item => item.paidBy))];
     //
@@ -145,7 +145,7 @@ function getUniqueValue(result, flag) {
     return billResult;
 }
 
-function populateDescriptionResults(paidBy, loggedinUser) {
+//function populateDescriptionResults(paidBy, loggedinUser) {
 
 }
 
@@ -278,114 +278,6 @@ function getBillsYouOwe() {
                 }
             });
             $('#youOweBills').html(buildTheHtmlOutput);
-            //let flag = "youowe";
-            //let billResult_u_owe = getUniqueValue(result, flag);
-            //console.log(billResult_u_owe, "i get paid");
-            //            flag = "owed";
-            //            let billResult_owed = getUniqueValue(result, flag);
-            //            console.log(billResult_owed, "i need to pay");
-
-            //
-            //            let buildTheHtmlOutput = "";
-            //            $.each(billResult_u_owe, function (billKey, billValue) {
-            //
-            //                buildTheHtmlOutput += `<div class="panel">`;
-            //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
-            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-            //                buildTheHtmlOutput += `</div>`;
-            //            });
-            //            $.each(billResult_owed, function (billKey, billValue) {
-            //
-            //                buildTheHtmlOutput += `<div class="panel">`;
-            //                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
-            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-            //                buildTheHtmlOutput += `</div>`;
-            //            });
-            //            let total = 0;
-            //            let oldValue = "";
-            //            let final_total = 0;
-            //populate drop down list with values
-            //            $.each(billResult, function (billKey, billValue) {
-            //
-            //                buildTheHtmlOutput += `<div class="panel">`;
-            //                buildTheHtmlOutput += `<h4>${billValue.paidBy}</h4>`;
-            //                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-            //                buildTheHtmlOutput += `<p class="descriptionResult"></p>`;
-            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-            //                buildTheHtmlOutput += `</div>`;
-            //                populateDescriptionResults(billValue.paidBy, loggedinUser);
-            //
-            //            });
-            //            $('#youOweBills').html(buildTheHtmlOutput);
-            //            $.each(result, function (billKey, billValue) {
-            //                console.log(billKey, billValue);
-            //
-            //                let newValue = billValue.paidBy;
-            //                //total = billValue.amount;
-            //
-            //                if (oldValue != newValue) {
-            //                    total = billValue.amount;
-            //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
-            //                    buildTheHtmlOutput += `<div class="panel">`;
-            //                    buildTheHtmlOutput += `<p>Total:${total}</p>`;
-            //                    buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-            //                    buildTheHtmlOutput += `</div>`;
-            //                    //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-            //
-            //                }
-            //                if (oldValue == newValue) {
-            //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-            //                    //buildTheHtmlOutput += `<p>Total:${total}</p>`;
-            //                    total += billValue.amount;
-            //                    //buildTheHtmlOutput += `<p>Total:${final_total}</p>`;
-            //
-            //                }
-            //
-            //                if paid by person already listed, then add the amount
-            //                if (oldValue == newValue) {
-            //                    total += billValue.amount;
-            //                    console.log(total);
-            //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}</button>`;
-            //                    buildTheHtmlOutput += `<div class="panel">`;
-            //                    buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-            //                    buildTheHtmlOutput += `</div>`;
-            //
-            //                } else {
-            //                    //                    buildTheHtmlOutput += `<button role="button" type="button" class="accordion">${billValue.paidBy}<span id="totalBillValue">${billValue.amount}</span></button>`;
-            //                    buildTheHtmlOutput += `<p>Total: ${total}</p>`;
-            //
-            //                }
-            //
-            //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-            //
-            //                //                buildTheHtmlOutput += `<div class="panel">`;
-            //                //                buildTheHtmlOutput += `<p>${billValue.description}.....${billValue.amount}</p>`;
-            //                //                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-            //                //                buildTheHtmlOutput += `</div>`;
-            //
-            //                oldValue = newValue;
-            //                total = billValue.amount;
-            //            });
-
-
-            //$('#youOweBills').html(buildTheHtmlOutput);
-            //            $('#friendPaid').append(`<option value="${loggedinUser}">${loggedinUser}</option>`);
-            //            //populate checkboxed with value
-            //
-            //            buildTheHtmlOutput = "";
-            //            $.each(friend, function (friendKey, friendValue) {
-            //                console.log(friendKey, friendValue);
-            //                buildTheHtmlOutput += `<div class="friends-billed">`;
-            //                buildTheHtmlOutput += `<label for="friend-name">${friendValue.email}</label>`;
-            //                buildTheHtmlOutput += `<input type="checkbox" class="friend-name" name="paidFor" value="${friendValue.email}" required>`;
-            //                buildTheHtmlOutput += `</div>`;
-            //            });
-            //            $('#paidForWrapper').html(buildTheHtmlOutput);
-            //            $('#paidForWrapper').append(`<div class="friends-billed"><label for="friend-name">${loggedinUser}</label><input type="checkbox" class="friend-name" name="paidFor" value="${loggedinUser}" required></div>`);
-            //
-            //            $('.habit-edit-screen').hide();
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -395,42 +287,42 @@ function getBillsYouOwe() {
         });
 }
 
-function getBillsOwed() {
-    const loggedinUser = $('#loggedin-user').val();
-    $.ajax({
-            type: 'GET',
-            url: `/billowed/${loggedinUser}`,
-            dataType: 'json',
-            contentType: 'application/json'
-        })
-        //if call is successfull
-        .done(function (result) {
-            console.log(result);
-            let flag = "owed";
-            let billResult = getUniqueValue(result, flag);
-
-            let buildTheHtmlOutput = "";
-            //            let total = 0;
-            //            let oldValue = "";
-            //            let final_total = 0;
-            //populate drop down list with values
-            $.each(billResult, function (billKey, billValue) {
-
-                buildTheHtmlOutput += `<div class="panel">`;
-                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
-                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
-                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
-                buildTheHtmlOutput += `</div>`;
-            });
-            $('#owedBills').html(buildTheHtmlOutput);
-        })
-        //if the call is failing
-        .fail(function (jqXHR, error, errorThrown) {
-            console.log(jqXHR);
-            console.log(error);
-            console.log(errorThrown);
-        });
-}
+//function getBillsOwed() {
+//    const loggedinUser = $('#loggedin-user').val();
+//    $.ajax({
+//            type: 'GET',
+//            url: `/billowed/${loggedinUser}`,
+//            dataType: 'json',
+//            contentType: 'application/json'
+//        })
+//        //if call is successfull
+//        .done(function (result) {
+//            console.log(result);
+//            let flag = "owed";
+//            let billResult = getUniqueValue(result, flag);
+//
+//            let buildTheHtmlOutput = "";
+//            //            let total = 0;
+//            //            let oldValue = "";
+//            //            let final_total = 0;
+//            //populate drop down list with values
+//            $.each(billResult, function (billKey, billValue) {
+//
+//                buildTheHtmlOutput += `<div class="panel">`;
+//                buildTheHtmlOutput += `<h4>${billValue.paidTo}</h4>`;
+//                buildTheHtmlOutput += `<p>Total: $ ${billValue.amount}</p>`;
+//                buildTheHtmlOutput += `<button role="button" type="submit" id="settleup-js">Settle Up</button>`;
+//                buildTheHtmlOutput += `</div>`;
+//            });
+//            $('#owedBills').html(buildTheHtmlOutput);
+//        })
+//        //if the call is failing
+//        .fail(function (jqXHR, error, errorThrown) {
+//            console.log(jqXHR);
+//            console.log(error);
+//            console.log(errorThrown);
+//        });
+//}
 
 // **
 $(document).ready(function () {
@@ -507,18 +399,6 @@ $(document).on('click', '#signup-js', function (event) {
                 console.log(result);
                 $('#loggedin-user').val(result.email);
                 getBillsYouOwe();
-                //                $('#nav-bar span').text("Hello " + result.username);
-                //                $('main').hide();
-                //                $('#nav-bar').show();
-                //                $('#nav-bar').addClass('nav-background');
-                //                $('.nav-left li, .nav-right li').css('color', 'white');
-                //                $('#footer-container').show();
-                //                $('#dashboard-js').show();
-                //                $('#navbar-login-js').hide();
-                //                $('#navbar-logout-js').show();
-                //                $(".newuser-msg").show();
-                //                $('.habit-edit-screen').hide();
-                //                populateHabitsByUsername(result.username);
             })
             // if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -570,20 +450,6 @@ $(document).on('click', '#login-js', function (event) {
                 console.log(result);
                 $('#loggedin-user').val(result.email);
                 getBillsYouOwe();
-
-                //                $('#nav-bar span').text("Hello " + result.username);
-                //
-                //                populateHabitsByUsername(result.username);
-                //
-                //                $('main').hide();
-                //                $('#nav-bar').show();
-                //                $('#nav-bar').addClass('nav-background');
-                //                $('.nav-left li, .nav-right li').css('color', 'white');
-                //                $('#navbar-login-js').hide();
-                //                $('#navbar-logout-js').show();
-                //                $('#footer-container').show();
-                //                $('#dashboard-js').show();
-                //                $('.habit-edit-screen').hide();
             })
             //            //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -614,8 +480,6 @@ $(document).on('click', '#bill-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#bill').show();
-    //$('.bill-friend').hide();
-    //$('.bill-split').hide();
     const loggedinUser = $('#loggedin-user').val();
 
     $.ajax({
@@ -627,7 +491,6 @@ $(document).on('click', '#bill-js', function (event) {
         //if call is successfull
         .done(function (result) {
             console.log(result);
-            //displayFriend(result.friendsOutput);
             const friend = result.friendsOutput;
             let buildTheHtmlOutput = "";
             //populate drop down list with values
@@ -651,7 +514,6 @@ $(document).on('click', '#bill-js', function (event) {
             $('#paidForWrapper').html(buildTheHtmlOutput);
             $('#paidForWrapper').append(`<div class="friends-billed"><label for="friend-name">${loggedinUser}</label><input type="checkbox" class="friend-name" name="paidFor" value="${loggedinUser}" required></div>`);
 
-            //$('.habit-edit-screen').hide();
         })
         //if the call is failing
         .fail(function (jqXHR, error, errorThrown) {
@@ -676,7 +538,7 @@ $(document).on('click', '#bill-submit', function (event) {
         paidForArray.push($(this).val());
     })
 
-    console.log("description", description, "amount", amount, "whoPaid", whoPaid, "paidFor", paidForArray);
+    //console.log("description", description, "amount", amount, "whoPaid", whoPaid, "paidFor", paidForArray);
 
     if (description == "") {
         alert('Please enter description');
@@ -726,21 +588,6 @@ $(document).on('click', '#bill-submit', function (event) {
     }
 })
 
-// Bill split type selection and next btn
-//$(document).on('click', '#bill-split-next', function (event) {
-//    event.preventDefault();
-//
-//    const splitType = $("input[name='split']:checked").val();
-//    console.log("splitType", splitType);
-//
-//    if (splitType == "") {
-//        alert('Please select an option');
-//    } else {
-//        $('.bill-split').hide();
-//        $('.bill-friend').show();
-//    }
-//})
-
 // **
 // YouOwe link
 $(document).on('click', '#youOwe-js', function (event) {
@@ -748,11 +595,7 @@ $(document).on('click', '#youOwe-js', function (event) {
     $('main').hide();
     $('#nav-bar').show();
     $('#youOwe').show();
-
-
     getBillsYouOwe();
-
-
 });
 
 $(document).on('click', '#settleup-js', function (event) {
@@ -840,7 +683,6 @@ $(document).on('click', '#add-friend-js', function (event) {
     }
     // if the input is valid
     else {
-        //$('#save-friend-name').val(name); // ok to do ?????
         $('#save-friend-email').val(email);
 
         //make the api call to check if friend is a user of app
@@ -848,7 +690,6 @@ $(document).on('click', '#add-friend-js', function (event) {
                 type: 'GET',
                 url: `/friend/${email}`,
                 dataType: 'json',
-                //                data: JSON.stringify(newFriendObject),
                 contentType: 'application/json'
             })
             //if call is successfull
@@ -858,25 +699,13 @@ $(document).on('click', '#add-friend-js', function (event) {
                 if (result.length === 0) {
                     //display message - want to invite friend?
                     $('.invite').show();
-
-
                 } // if friend found
                 else {
                     // add friend to list
                     addFriendToList(result[0].email);
                     // show friend on dashboard
                     getFriends(loggedinUser);
-
-                    //add friend to the loged in user friends list ???
                 }
-                //                $('#habit-add-screen').hide();
-                //                $('#dashboard-js').show();
-                //                populateHabitsByUsername(result.loggedinUser);
-                //
-                //                $('html, body').animate({
-                //                    scrollTop: $('footer').offset().top
-                //                }, 1200);
-
             })
             //if the call is failing
             .fail(function (jqXHR, error, errorThrown) {
@@ -891,7 +720,6 @@ $(document).on('click', '#add-friend-js', function (event) {
 $(document).on('click', '#invite-js', function (event) {
     event.preventDefault();
     //alert("invite accepted");
-    //let name = $(this).parent().parent().find('#save-friend-name').val();
     let email = $(this).parent().parent().find('#save-friend-email').val();
     let loggedinUser = $('#loggedin-user').val();
     console.log(" friend email", email, " loggedin user", loggedinUser);
@@ -977,515 +805,3 @@ $(document).on('click', '#logout-js', function (event) {
     event.preventDefault();
     location.reload();
 });
-
-//// Get the Habits for that user
-//function populateHabitsByUsername(loggedinUser) {
-//    //Get AJAX User Entries call, render on page
-//    if ((loggedinUser == "") || (loggedinUser == undefined) || (loggedinUser == null)) {
-//        loggedinUser = $('#loggedin-user').val();
-//    }
-//    //console.log(loggedinUser);
-//    //make the api call to get habits by username
-//    $.ajax({
-//        type: 'GET',
-//        url: `/get-habit/${loggedinUser}`,
-//        dataType: 'json',
-//        contentType: 'application/json'
-//    })
-//    //if call is successfull
-//        .done(function (result) {
-//        console.log(result);
-//        displayHabits(result.habitsOutput);
-//        $('.habit-edit-screen').hide();
-//    })
-//    //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//        console.log(jqXHR);
-//        console.log(error);
-//        console.log(errorThrown);
-//    });
-//}
-//// To display habits on user dashboard
-//function displayHabits(result) {
-//    //create an empty variable to store each habits of a user
-//    let buildTheHtmlOutput = "";
-//
-//    $.each(result, function (resultKey, resultValue) {
-//
-//        buildTheHtmlOutput += '<div class="habit-container" id="habit-container-js">';
-//        buildTheHtmlOutput += '<div class="habit-name">';
-//        buildTheHtmlOutput += '<div class="habit-title">';
-//        buildTheHtmlOutput += '<h4>' + resultValue.habitName + '</h4>';
-//        buildTheHtmlOutput += '<p><i class="fas fa-trophy"></i>' + resultValue.checkin + ' Check-ins</p>';
-//        buildTheHtmlOutput += '</div>';
-//        buildTheHtmlOutput += '<div class="habit-edit-bar">';
-//        buildTheHtmlOutput += '<a onclick="deleteHabit(\'' + resultValue._id + '\',\'' + resultValue.loggedinUser + '\')"><i class="far fa-trash-alt" id="delete-habit-js"></i><span>Delete</span></a>';
-//        buildTheHtmlOutput += '<a onclick="editHabit(\'' + resultValue._id + '\')"><i class="fas fa-pencil-alt" id="edit-habit-js"></i><span>Edit</span></a>';
-//        buildTheHtmlOutput += '<a onclick="checkinHabit(\'' + resultValue._id + '\')"><i class="far fa-calendar-check"></i><span>Check-in</span></a>';
-//        buildTheHtmlOutput += '</div>';
-//        buildTheHtmlOutput += '</div>';
-//        buildTheHtmlOutput += '<div class="note-milestone-container">';
-//        buildTheHtmlOutput += '<input type="hidden" class="noteMilestoneContainerID" value="' + resultValue._id + '">';
-//
-//        //notes wrapper start
-//        buildTheHtmlOutput += '<div class="notes-container ' + resultValue._id + '">';
-//        // Get the notes content and display
-//        populateNotesByHabitId(resultValue._id);
-//        buildTheHtmlOutput += '</div>';
-//        //notes wrapper stop
-//
-//        //milestone wrapper start
-//        buildTheHtmlOutput += '<div class="milestone-container ' + resultValue._id + '">';
-//        buildTheHtmlOutput += '</div>';
-//        //milestone wrapper stop
-//
-//        // Get the milestone items and display here
-//        populateMilestoneItemsByHabitId(resultValue._id);
-//
-//        buildTheHtmlOutput += '</div>';
-//
-//        // Start habit edit form
-//        buildTheHtmlOutput += '<div class="habit-edit-screen" id="' + resultValue._id + '">';
-//        buildTheHtmlOutput += '<form role="form" class="habit-edit-form">';
-//        buildTheHtmlOutput += '<fieldset>';
-//        buildTheHtmlOutput += '<label for="habit-name">Habit title</label>';
-//        buildTheHtmlOutput += '<input type="text" class="habit-name" placeholder="Name for a Habit" value="' + resultValue.habitName + '">';
-//        buildTheHtmlOutput += '<div class="select-day">';
-//        buildTheHtmlOutput += '<span>I want to repeat this</span>';
-//        if (resultValue.weekday == 'monday') {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday" checked>';
-//            buildTheHtmlOutput += '<label for="monday">Mon</label>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="monday" value="monday">';
-//            buildTheHtmlOutput += '<label for="monday">Mon</label>';
-//        }
-//        if (resultValue.weekday == 'tuesday') {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday" checked>';
-//            buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="tuesday" value="tuesday">';
-//            buildTheHtmlOutput += '<label for="tuesday">Tue</label>';
-//        }
-//        if (resultValue.weekday == 'wednesday') {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday" checked>';
-//            buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="wednesday" value="wednesday">';
-//            buildTheHtmlOutput += '<label for="wednesday">Wed</label>';
-//        }
-//        if (resultValue.weekday == 'thursday') {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday" checked>';
-//            buildTheHtmlOutput += '<label for="thursday">Thu</label>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="thursday" value="thursday">';
-//            buildTheHtmlOutput += '<label for="thursday">Thu</label>';
-//        }
-//        if (resultValue.weekday == 'friday') {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday" checked>';
-//            buildTheHtmlOutput += '<label for="friday">Fri</label>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="friday" value="friday">';
-//            buildTheHtmlOutput += '<label for="friday">Fri</label>';
-//        }
-//        if (resultValue.weekday == 'saturday') {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday" checked>';
-//            buildTheHtmlOutput += '<label for="saturday">Sat</label>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="saturday" value="saturday">';
-//            buildTheHtmlOutput += '<label for="saturday">Sat</label>';
-//        }
-//        if (resultValue.weekday == 'sunday') {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="sunday" value="sunday" checked>';
-//            buildTheHtmlOutput += '<label for="sunday">Sun</label>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="radio" name="day" class="sunday" value="sunday">';
-//            buildTheHtmlOutput += '<label for="sunday">Sun</label>';
-//        }
-//
-//        buildTheHtmlOutput += '</div>';
-//        buildTheHtmlOutput += '<div class="select-daytime">';
-//        buildTheHtmlOutput += '<span>I will do it</span>';
-//        buildTheHtmlOutput += '<select name="daytime" class="habit-time">';
-//        if (resultValue.time == 'anytime') {
-//            buildTheHtmlOutput += '<option value="anytime" selected>At any time of the day</option>';
-//        } else {
-//            buildTheHtmlOutput += '<option value="anytime">At any time of the day</option>';
-//        }
-//        if (resultValue.time == 'morning') {
-//            buildTheHtmlOutput += '<option value="morning" selected>In the morning</option>';
-//        } else {
-//            buildTheHtmlOutput += '<option value="morning">In the morning</option>';
-//        }
-//        if (resultValue.time == 'afternoon') {
-//            buildTheHtmlOutput += '<option value="afternoon" selected>In the afternoon</option>';
-//        } else {
-//            buildTheHtmlOutput += '<option value="afternoon">In the afternoon</option>';
-//        }
-//        if (resultValue.time == 'evening') {
-//            buildTheHtmlOutput += '<option value="evening" selected>In the evening</option>';
-//        } else {
-//            buildTheHtmlOutput += '<option value="evening">In the evening</option>';
-//        }
-//
-//        buildTheHtmlOutput += '</select>';
-//        buildTheHtmlOutput += '</div>';
-//        buildTheHtmlOutput += '</fieldset>';
-//        buildTheHtmlOutput += '<button type="submit" class="habit-form-done">Done</button>';
-//        buildTheHtmlOutput += '<button type="button" class="habit-form-cancel" onclick="hideHabitFormContainer(\'' + resultValue._id + '\')">Cancel</button>';
-//        buildTheHtmlOutput += '</form>';
-//        buildTheHtmlOutput += '</div>';
-//        // End Habit Edit form
-//        buildTheHtmlOutput += '</div>';
-//
-//    });
-//
-//    //use the HTML output to show it in the index.html
-//    $(".habit-container-wrapper").html(buildTheHtmlOutput);
-//
-//}
-//// Get Notes content from DB by Habit Id
-//function populateNotesByHabitId(habitId) {
-//    $.ajax({
-//        type: 'GET',
-//        url: `/get-notes/${habitId}`,
-//        dataType: 'json',
-//        contentType: 'application/json'
-//    })
-//    //if call is successfull
-//        .done(function (result) {
-//        //console.log("get notes result done function", result);
-//        displayNotes(result, habitId);
-//    })
-//    //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//        console.log(jqXHR);
-//        console.log(error);
-//        console.log(errorThrown);
-//    });
-//}
-//function displayNotes(result, habitId) {
-//    let buildTheHtmlOutput = "";
-//
-//    $.each(result, function (resultKey, resultValue) {
-//        //notes container start
-//        buildTheHtmlOutput += '<div class="habit-notes" id="habit-notes-js">';
-//        buildTheHtmlOutput += '<div class="notes-handle">';
-//        buildTheHtmlOutput += '<span>Notes & Journal</span>';
-//        buildTheHtmlOutput += '<input type="hidden" class="save-note-id" value="' + resultValue._id + '">';
-//        buildTheHtmlOutput += '<button type="submit" class="notes-save notesSaveJs"><i class="far fa-save"></i></button>';
-//        buildTheHtmlOutput += '</div>';
-//        buildTheHtmlOutput += '<div contenteditable class="notes-content-js">' + resultValue.notesContent;
-//        buildTheHtmlOutput += '</div>';
-//        buildTheHtmlOutput += '</div>';
-//        //notes container stop
-//    });
-//
-//    //use the HTML output to show it in the index.html
-//    $(".notes-container." + habitId).html(buildTheHtmlOutput);
-//}
-//// Edit habit option
-//function editHabit(habitId) {
-//    //console.log($(this).parent());
-//    $('#' + habitId).show();
-//}
-//// Delete habit by habit Id
-//function deleteHabit(habitID, username) {
-//    // Make a DELETE call to delete item by ID
-//    $.ajax({
-//        type: 'DELETE',
-//        url: `/habit/${habitID}`,
-//        dataType: 'json',
-//        contentType: 'application/json'
-//    })
-//    //if call is succefull
-//        .done(function (result) {
-//        //console.log(result);
-//        populateHabitsByUsername(username);
-//        alert("Habit will be deleted");
-//    })
-//    //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//        console.log(jqXHR);
-//        console.log(error);
-//        console.log(errorThrown);
-//    });
-//
-//}
-//// Checkin habit by habit ID
-//function checkinHabit(habitId) {
-//    //console.log(habitId);
-//
-//    // Create a payload to update the checked value in DB
-//    const habitObject = {
-//        habitId
-//    };
-//    console.log("habit to update", habitObject);
-//    //make the api call using the payload above
-//    $.ajax({
-//        type: 'PUT',
-//        url: '/habit/checkin',
-//        dataType: 'json',
-//        data: JSON.stringify(habitObject),
-//        contentType: 'application/json'
-//    })
-//    //if call is succefull
-//        .done(function (result) {
-//        //console.log(result);
-//        populateHabitsByUsername();
-//    })
-//    //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//        console.log(jqXHR);
-//        console.log(error);
-//        console.log(errorThrown);
-//        alert('Incorrect habit checkin updation');
-//    });
-//}
-//// Make a GET call to get the milestone items for the habit
-//function populateMilestoneItemsByHabitId(habitId) {
-//    $.ajax({
-//        type: 'GET',
-//        url: `/get-milestones/${habitId}`,
-//        dataType: 'json',
-//        contentType: 'application/json'
-//    })
-//    //if call is successfull
-//        .done(function (result) {
-//        //console.log("get milestones result done function", result);
-//        displayMilestones(result, habitId);
-//    })
-//    //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//        console.log(jqXHR);
-//        console.log(error);
-//        console.log(errorThrown);
-//    });
-//}
-//function displayMilestones(result, habitId) {
-//    let buildTheHtmlOutput = "";
-//
-//    //milestone container start
-//    buildTheHtmlOutput += '<div class="habit-milestones" id="habit-milestones-js">';
-//    buildTheHtmlOutput += '<div class="milestone-list">';
-//    buildTheHtmlOutput += '<div class="milestones-header">';
-//    buildTheHtmlOutput += '<label for="milestoneInput" class="milestone-title">Milestones</label>';
-//    buildTheHtmlOutput += '<input type="text" class="milestoneInput" placeholder="Enter title..." required>';
-//    buildTheHtmlOutput += '<button type="submit" class="milestone-add-button" id="milestone-item-add-js"><i class="fa fa-plus" aria-hidden="true"></i></button>';
-//    buildTheHtmlOutput += '</div>';
-//    buildTheHtmlOutput += '<ul id="milestonesItems">';
-//
-//    $.each(result, function (resultKey, resultValue) {
-//        buildTheHtmlOutput += '<li>';
-//        console.log(resultValue.checked);
-//        if (resultValue.checked == 'true') {
-//            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item" checked>';
-//        } else {
-//            buildTheHtmlOutput += '<input type="checkbox" class="milestone-item">';
-//        }
-//        buildTheHtmlOutput += '<input type="hidden" class="save-milestone-id" value="' + resultValue._id + '">';
-//        buildTheHtmlOutput += '<label for="milestone-item">';
-//        buildTheHtmlOutput += resultValue.milestonesContent;
-//        buildTheHtmlOutput += '</label>';
-//        buildTheHtmlOutput += '<button class="delete-milestone-item"><i class="fas fa-times"></i></button>';
-//        buildTheHtmlOutput += '</li>';
-//    });
-//
-//    buildTheHtmlOutput += '</ul>';
-//    buildTheHtmlOutput += '</div>';
-//    buildTheHtmlOutput += '</div>';
-//    //milestone container stop
-//
-//    //use the HTML output to show it in the index.html
-//    $(".milestone-container." + habitId).html(buildTheHtmlOutput);
-//}
-//function hideHabitFormContainer(habitId) {
-//    $('#' + habitId).hide();
-//    //alert("Cancel button clicked");
-//}
-////habit container - delete habit
-//$('#delete-habit-js').on('click', function (event) {
-//    event.preventDefault();
-//    $('#habit-container-js').hide();
-//
-//    // Get values of habit name and logged in user
-//    //const habitName = $(".habit-name").val();
-//    //const loggedinUser = $('#loggedin-user').val();
-//});
-//// habit  form cancel button
-//$(document).on('click', '#habit-form-cancel-js', function (event) {
-//    event.preventDefault();
-//    $('main').hide();
-//    $('#habit-add-screen').hide();
-//    $('#dashboard-js').show();
-//});
-//// Notes save
-//$(document).on('click', '.notesSaveJs', function (event) {
-//    event.preventDefault();
-//
-//    // Get the value from the notes container
-//    let notesContent = $(this).parent().parent().find('.notes-content-js').html();
-//    let habitID = $(this).parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
-//
-//    if (notesContent == "") {
-//        notesContent = "Type here...";
-//    }
-//    let notesID = $(this).parent().find('.save-note-id').val();
-//
-//    // create the payload object (what data we send to the api call)
-//    const notesObject = {
-//        notesContent,
-//        notesID,
-//        habitID
-//    };
-//    console.log("notes object initialized", notesObject);
-//
-//    //make the api call using the payload above
-//    $.ajax({
-//            type: 'PUT',
-//            url: '/notes/save',
-//            dataType: 'json',
-//            data: JSON.stringify(notesObject),
-//            contentType: 'application/json'
-//        })
-//        //if call is succefull
-//        .done(function (result) {
-//            //                $('#habit-add-screen').hide();
-//            alert("Notes saved");
-//            populateNotesByHabitId(habitID);
-//            $('#dashboard-js').show();
-//        })
-//        //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//            console.log(jqXHR);
-//            console.log(error);
-//            console.log(errorThrown);
-//            alert('Incorrect Notes');
-//        });
-//});
-//// Adding an item in Milestones list habitId(unique) instead of Habit name(not unique)-- ??
-//$(document).on('click', '#milestone-item-add-js', function (event) {
-//    event.preventDefault();
-//
-//    // Get the value from the milestone item input
-//    const milestonesContent = $(this).parent().find('.milestoneInput').val();
-//
-//    // Get the user name
-//    const loggedinUser = $(this).parents().find('#loggedin-user').val();
-//
-//    // Get the habit name associated with the milestones
-//    const habitName = $(this).parent().parent().parent().parent().parent().parent().find('.habit-title h4').html();
-//
-//    // Get the Habit ID
-//    const habitID = $(this).parent().parent().parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
-//
-//    console.log("milestonesContent-", milestonesContent, "habitName-", habitName, "loggedinUser-", loggedinUser, "habitID-", habitID);
-//
-//    // validate
-//    if (milestonesContent == "") {
-//        alert("Input milestone title");
-//        //console.log($(this));
-//        $(this).parent().find('.milestoneInput').focus();
-//    } else {
-//        // create the payload object (what data we send to the api call)
-//        const milestonesObject = {
-//            milestonesContent: milestonesContent,
-//            loggedinUser: loggedinUser,
-//            habitName: habitName,
-//            habitID
-//        };
-//        //console.log(milestonesObject);
-//
-//        //make the api call using the payload above
-//        $.ajax({
-//                type: 'POST',
-//                url: '/milestones/add',
-//                dataType: 'json',
-//                data: JSON.stringify(milestonesObject),
-//                contentType: 'application/json'
-//            })
-//            //if call is succefull
-//            .done(function (result) {
-//                //console.log(result);
-//                populateMilestoneItemsByHabitId(habitID);
-//                $('#dashboard-js').show();
-//            })
-//            //if the call is failing
-//            .fail(function (jqXHR, error, errorThrown) {
-//                console.log(jqXHR);
-//                console.log(error);
-//                console.log(errorThrown);
-//                alert('Incorrect milestone');
-//            });
-//    }
-//});
-//// Delete button on Milestones
-//$(document).on('click', '.delete-milestone-item', function (event) {
-//    event.preventDefault();
-//
-//    // Get the clicked elemt and habit ID
-//    let milestoneID = $(this).parent().find('.save-milestone-id').val();
-//    let habitID = $(this).parent().parent().parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
-//
-//    $.ajax({
-//            type: 'DELETE',
-//            url: `/milestone/${milestoneID}`,
-//            dataType: 'json',
-//            contentType: 'application/json'
-//        })
-//        //if call is succefull
-//        .done(function (result) {
-//            console.log(result);
-//            populateMilestoneItemsByHabitId(habitID);
-//            alert("Milestone item deleted");
-//        })
-//        //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//            console.log(jqXHR);
-//            console.log(error);
-//            console.log(errorThrown);
-//        });
-//
-//});
-//// Milestone item check and uncheck
-//$(document).on('change', '.milestone-item', function (event) {
-//    const milestoneID = $(this).parent().find('.save-milestone-id').val();
-//    let habitID = $(this).parent().parent().parent().parent().parent().parent().find('.noteMilestoneContainerID').val();
-//    let checked;
-//
-//    console.log("milestone id", milestoneID);
-//    // Set the checked varibale value based on user check/unchek
-//    if (this.checked) {
-//        checked = true;
-//        console.log("checked", checked);
-//
-//    } else {
-//        checked = false;
-//        console.log("unchecked", checked);
-//    }
-//
-//    // Create a payload to update the checked value in DB
-//    const milestoneObject = {
-//        milestoneID,
-//        checked
-//    };
-//    console.log("milestone to update", milestoneObject);
-//    //make the api call using the payload above
-//    $.ajax({
-//            type: 'PUT',
-//            url: '/milestone/check',
-//            dataType: 'json',
-//            data: JSON.stringify(milestoneObject),
-//            contentType: 'application/json'
-//        })
-//        //if call is succefull
-//        .done(function (result) {
-//            console.log(result);
-//        })
-//        //if the call is failing
-//        .fail(function (jqXHR, error, errorThrown) {
-//            console.log(jqXHR);
-//            console.log(error);
-//            console.log(errorThrown);
-//            alert('Incorrect Milestone updation');
-//        });
-//});
