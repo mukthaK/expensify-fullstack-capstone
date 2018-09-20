@@ -182,12 +182,12 @@ function makeid() {
 // creating a new user **
 app.post('/users/create', (req, res) => {
     //take the  username and the password from the ajax api call
-    let username = req.body.username;
+    //let username = req.body.username;
     let password = req.body.password;
     let email = req.body.email;
 
     //exclude extra spaces from the username and password
-    username = username.trim();
+    //username = username.trim();
     password = password.trim();
     email = email.trim();
 
@@ -213,7 +213,7 @@ app.post('/users/create', (req, res) => {
 
             //using the mongoose DB schema, connect to the database and create the new user
             User.create({
-                username,
+                //username,
                 email,
                 password: hash,
             }, (err, item) => {

@@ -469,14 +469,14 @@ $(document).on('click', '#signup-login-js', function (event) {
 $(document).on('click', '#signup-js', function (event) {
     event.preventDefault();
     // get values from sign up form
-    const username = $('#signup-username').val();
+    //const username = $('#signup-username').val();
     const email = $('#signup-email').val();
     const password = $('#signup-psw').val();
 
     // validate user inputs
-    if (username == '')
-        alert('Must input username');
-    else if (password == '')
+    //    if (username == '')
+    //        alert('Must input username');
+    if (password == '')
         alert('Must input password');
     else if (email == '')
         alert('Must enter email');
@@ -484,7 +484,7 @@ $(document).on('click', '#signup-js', function (event) {
     else {
         // create the payload object (what data we send to the api call)
         const newUserObject = {
-            username: username,
+            //username: username,
             email: email,
             password: password
         };
