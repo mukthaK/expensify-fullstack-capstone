@@ -2,7 +2,7 @@
 
 // to check if friend already been added
 function checkFriend(friendsOutput, email) {
-    console.log(friendsOutput);
+    //console.log(friendsOutput);
     for (let i = 0; i < friendsOutput.length; i++) {
         if (friendsOutput[i].email === email) {
             return true;
@@ -20,7 +20,7 @@ function addFriendToList(email) {
         email,
         //username
     };
-    console.log(friendObject);
+    //console.log(friendObject);
     // Check if friend already added
     $.ajax({
             type: 'GET',
@@ -30,9 +30,9 @@ function addFriendToList(email) {
         })
         //if call is successfull
         .done(function (result) {
-            console.log(result);
+//            console.log(result);
             let exists = checkFriend(result.friendsOutput, email);
-            console.log(exists);
+//            console.log(exists);
             // if exists message- already beedn added
             if (exists) {
                 alert("Friend has alredy been added!");
@@ -49,7 +49,7 @@ function addFriendToList(email) {
                     })
                     //if call is succefull
                     .done(function (result) {
-                        console.log(result);
+//                        console.log(result);
                         getFriends(loggedinUser);
                         //$('#dashboard-js').show();
                     })
@@ -83,7 +83,7 @@ function getFriends(loggedinUser) {
         })
         //if call is successfull
         .done(function (result) {
-            console.log(result);
+//            console.log(result);
             displayFriend(result.friendsOutput);
             //$('.habit-edit-screen').hide();
         })
@@ -100,7 +100,7 @@ function displayFriend(friend) {
     let buildTheHtmlOutput = "";
 
     $.each(friend, function (friendKey, friendValue) {
-        console.log(friendKey, friendValue);
+//        console.log(friendKey, friendValue);
         buildTheHtmlOutput += '<div class="friend">';
         buildTheHtmlOutput += `<span>${friendValue.email}</span>`;
         //        buildTheHtmlOutput += '<button role="button" type="submit" class="friend-delete">&times;</button>';
@@ -255,7 +255,7 @@ function getBillsYouOwe() {
         })
         //if call is successfull
         .done(function (result) {
-            console.log(result);
+//            console.log(result);
             let billSummary = main_calculation(result);
             let buildTheHtmlOutput = "";
             $.each(billSummary, function (billKey, billValue) {
@@ -380,7 +380,7 @@ $(document).on('click', '#signup-js', function (event) {
             email: email,
             password: password
         };
-        console.log(newUserObject);
+//        console.log(newUserObject);
         // make the api call using the payload above
         $.ajax({
                 type: 'POST',
@@ -396,7 +396,7 @@ $(document).on('click', '#signup-js', function (event) {
                 //alert("signup clicked");
                 $('#youOwe').show();
 
-                console.log(result);
+//                console.log(result);
                 $('#loggedin-user').val(result.email);
                 getBillsYouOwe();
             })
@@ -447,7 +447,7 @@ $(document).on('click', '#login-js', function (event) {
                 //alert("login clicked");
                 $('#youOwe').show();
 
-                console.log(result);
+//                console.log(result);
                 $('#loggedin-user').val(result.email);
                 getBillsYouOwe();
             })
@@ -490,12 +490,12 @@ $(document).on('click', '#bill-js', function (event) {
         })
         //if call is successfull
         .done(function (result) {
-            console.log(result);
+//            console.log(result);
             const friend = result.friendsOutput;
             let buildTheHtmlOutput = "";
             //populate drop down list with values
             $.each(friend, function (friendKey, friendValue) {
-                console.log(friendKey, friendValue);
+//                console.log(friendKey, friendValue);
                 buildTheHtmlOutput += `<option value="${friendValue.email}">${friendValue.email}</option>`;
             });
 
@@ -505,7 +505,7 @@ $(document).on('click', '#bill-js', function (event) {
 
             buildTheHtmlOutput = "";
             $.each(friend, function (friendKey, friendValue) {
-                console.log(friendKey, friendValue);
+//                console.log(friendKey, friendValue);
                 buildTheHtmlOutput += `<div class="friends-billed">`;
                 buildTheHtmlOutput += `<label for="friend-name">${friendValue.email}</label>`;
                 buildTheHtmlOutput += `<input type="checkbox" class="friend-name" name="paidFor" value="${friendValue.email}" required>`;
@@ -552,7 +552,7 @@ $(document).on('click', '#bill-submit', function (event) {
         const amount = (payment / paidForArray.length).toFixed(2);
         paidForArray.forEach(function (friendPaidFor) {
             if (friendPaidFor !== whoPaid) {
-                console.log(friendPaidFor);
+//                console.log(friendPaidFor);
                 const newBillObject = {
                     description,
                     amount,
@@ -561,7 +561,7 @@ $(document).on('click', '#bill-submit', function (event) {
                     //date: new Date(),
                     //loggedinUser: loggedinUser
                 };
-                console.log(newBillObject);
+//                console.log(newBillObject);
 
                 //make the api call using the payload above
                 $.ajax({
@@ -572,7 +572,7 @@ $(document).on('click', '#bill-submit', function (event) {
                         contentType: 'application/json'
                     })
                     .done(function (result) {
-                        console.log(result);
+//                        console.log(result);
                         alert("Bill added");
                         var frm = document.getElementsByClassName('bill-form')[0];
                         frm.reset();
@@ -609,7 +609,7 @@ $(document).on('click', '#settleup-js', function (event) {
         loggedinUser,
         user
     };
-    console.log("bill settleup to update", billSettleupObject);
+//    console.log("bill settleup to update", billSettleupObject);
     //make the api call using the payload above
     $.ajax({
             type: 'PUT',
@@ -673,7 +673,7 @@ $(document).on('click', '#add-friend-js', function (event) {
 
     const loggedinUser = $('#loggedin-user').val();
 
-    console.log("add friend: ", name, email, loggedinUser);
+//    console.log("add friend: ", name, email, loggedinUser);
     // validate the input
     //    if (name == "") {
     //        alert('Please enter  name');
@@ -694,7 +694,7 @@ $(document).on('click', '#add-friend-js', function (event) {
             })
             //if call is successfull
             .done(function (result) {
-                console.log("friend check", result);
+//                console.log("friend check", result);
                 // if no frind returned
                 if (result.length === 0) {
                     //display message - want to invite friend?
@@ -722,7 +722,7 @@ $(document).on('click', '#invite-js', function (event) {
     //alert("invite accepted");
     let email = $(this).parent().parent().find('#save-friend-email').val();
     let loggedinUser = $('#loggedin-user').val();
-    console.log(" friend email", email, " loggedin user", loggedinUser);
+//    console.log(" friend email", email, " loggedin user", loggedinUser);
     //// if yes -> make post call with all the details to create new user
     // create the payload object (what data we send to the api call)
     const newFriendObject = {
@@ -730,7 +730,7 @@ $(document).on('click', '#invite-js', function (event) {
         email: email,
         loggedinUser: loggedinUser
     };
-    console.log(newFriendObject);
+//    console.log(newFriendObject);
 
     //make the api call using the payload above
     $.ajax({
@@ -741,12 +741,12 @@ $(document).on('click', '#invite-js', function (event) {
             contentType: 'application/json'
         })
         .done(function (result) {
-            console.log(result);
+//            console.log(result);
             $('.invite').hide();
             // add friend to list
             addFriendToList(result.email);
             //display in user friend dashboard
-            console.log(loggedinUser);
+//            console.log(loggedinUser);
             getFriends(loggedinUser);
         })
         .fail(function (jqXHR, error, errorThrown) {
