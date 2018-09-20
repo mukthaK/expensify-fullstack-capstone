@@ -711,7 +711,9 @@ $(document).on('click', '#bill-submit', function (event) {
                     })
                     .done(function (result) {
                         console.log(result);
-                        getBillsYouOwe();
+                        alert("Bill added");
+                        var frm = document.getElementsByClassName('bill-form')[0];
+                        frm.reset();
                     })
                     .fail(function (jqXHR, error, errorThrown) {
                         console.log(jqXHR);
@@ -930,7 +932,7 @@ $(document).on('click', '#invite-js', function (event) {
 // friend invite no click
 $(document).on('click', '#invite-cancel-js', function (event) {
     event.preventDefault();
-    alert("invite cancelled");
+    //alert("invite cancelled");
     $('.invite').hide();
 });
 
