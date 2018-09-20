@@ -110,44 +110,44 @@ function displayFriend(friend) {
 }
 
 //function getUniqueValue(result, flag) {
-    //get unique psidBy users
-    //    let paidByUsers = [...new Set(result.map(item => item.paidBy))];
-    //
-    //    console.log(paidByUsers);
-
-    let temp = {};
-    let obj = null;
-    for (let i = 0; i < result.length; i++) {
-        obj = result[i];
-        if (flag == "youowe") {
-            if (!temp[obj.paidBy]) {
-                temp[obj.paidBy] = obj;
-                console.log(temp[obj.paidBy]);
-            } else {
-                temp[obj.paidBy].amount += obj.amount;
-                //console.log(temp[obj.paidBy].amount, "amount -n");
-            }
-
-        } else if (flag == "owed") {
-            if (!temp[obj.paidTo]) {
-                temp[obj.paidTo] = obj;
-            } else {
-                temp[obj.paidTo].amount += obj.amount;
-            }
-            console.log(obj.amount, "debug");
-        }
-    }
-    let billResult = [];
-    for (let prop in temp)
-        billResult.push(temp[prop]);
-    console.log(billResult);
-
-    return billResult;
-}
+//    //get unique psidBy users
+//    //    let paidByUsers = [...new Set(result.map(item => item.paidBy))];
+//    //
+//    //    console.log(paidByUsers);
+//
+//    let temp = {};
+//    let obj = null;
+//    for (let i = 0; i < result.length; i++) {
+//        obj = result[i];
+//        if (flag == "youowe") {
+//            if (!temp[obj.paidBy]) {
+//                temp[obj.paidBy] = obj;
+//                console.log(temp[obj.paidBy]);
+//            } else {
+//                temp[obj.paidBy].amount += obj.amount;
+//                //console.log(temp[obj.paidBy].amount, "amount -n");
+//            }
+//
+//        } else if (flag == "owed") {
+//            if (!temp[obj.paidTo]) {
+//                temp[obj.paidTo] = obj;
+//            } else {
+//                temp[obj.paidTo].amount += obj.amount;
+//            }
+//            console.log(obj.amount, "debug");
+//        }
+//    }
+//    let billResult = [];
+//    for (let prop in temp)
+//        billResult.push(temp[prop]);
+//    console.log(billResult);
+//
+//    return billResult;
+//}
 
 //function populateDescriptionResults(paidBy, loggedinUser) {
-
-}
+//
+//}
 
 function main_calculation(result) {
     const user = $('#loggedin-user').val();
