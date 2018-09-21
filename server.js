@@ -58,8 +58,8 @@ function closeServer() {
 
 // gmail send api
 function sendEmail(email, loggedinUser, password) {
-    console.log('* [example 1.1] sending test email');
-    console.log(email, loggedinUser, password);
+    //    console.log('* [example 1.1] sending test email');
+    //    console.log(email, loggedinUser, password);
     let htmlString = `<h3>Hello!.</h3>`;
     htmlString += `<p>You have been invited to join Expensify.</p>`;
     htmlString += `<p>Expensify helps you split expenses with friends. The app maintains a running total so that you can pay each other at once! </p>`;
@@ -92,80 +92,6 @@ function sendEmail(email, loggedinUser, password) {
     }, function (err, res) {
         console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
     });
-
-
-
-    //console.log(htmlString);
-    // Require'ing module and setting default options
-
-    //    var send = require('gmail-send')({
-    //var send = require('../index.js')({
-    //        user: 'expensify.info@gmail.com',
-    // user: credentials.user,                  // Your GMail account used to send emails
-    //        password: '',
-    // pass: credentials.pass,                  // Application-specific password
-    //        to: 'test@gmail.com',
-    // to:   credentials.user,                  // Send to yourself
-    // you also may set array of recipients:
-    // [ 'user1@gmail.com', 'user2@gmail.com' ]
-    // from:    credentials.user,            // from: by default equals to user
-    // replyTo: credentials.user,            // replyTo: by default undefined
-    // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
-    //        subject: 'Invitation to join Expensify!',
-    //        text: `Hello!` // Plain text
-    //html: htmlString // HTML
-    //    });
-    //    var send = require('gmail-send')({
-    //        //var send = require('../index.js')({
-    //        user: 'expensify.info@gmail.com',
-    //        // user: credentials.user,                  // Your GMail account used to send emails
-    //        password: '',
-    //        // pass: credentials.pass,                  // Application-specific password
-    //        to: email,
-    //        // to:   credentials.user,                  // Send to yourself
-    //        // you also may set array of recipients:
-    //        // [ 'user1@gmail.com', 'user2@gmail.com' ]
-    //        // from:    credentials.user,            // from: by default equals to user
-    //        // replyTo: credentials.user,            // replyTo: by default undefined
-    //        // bcc: 'some-user@mail.com',            // almost any option of `nodemailer` will be passed to it
-    //        subject: 'Invitation to join Expensify!',
-    //        text: `Hello ${name}! You have been invited you to join Expensify - Split expenses with friends. The app maintains a running total so that you can pay each other at once!
-    //        Here is the link to join Expensify.  <a href="https://expensify-capstone.herokuapp.com/">Log In to Expensify</a>
-    //        username: ${name}
-    //        email: ${email}
-    //        password: ${password}` // Plain text
-    //        //html: htmlString // HTML
-    //    });
-
-
-    // Override any default option and send email
-
-    //    console.log('* [example 1.1] sending test email');
-    //
-    //    var filepath = './demo-attachment.txt';  // File to attach
-    //
-    //    send({ // Overriding default parameters
-    //            subject: 'attached '+filepath,         // Override value set as default
-    //            files: [ filepath ],
-    //    }, function (err, res) {
-    //        console.log('* [example 1.1] send() callback returned: err:', err, '; res:', res);
-    //    });
-
-    // Set additional file properties
-
-    //    console.log('* [example 1.2] sending test email');
-    //
-    //    send({ // Overriding default parameters
-    //        subject: 'attached '+filepath,              // Override value set as default
-    //        files: [                                    // Array of files to attach
-    //            {
-    //                path: filepath,
-    //                filename: 'filename-can-be-changed.txt' // You can override filename in the attachment if needed
-    //            }
-    //        ],
-    //    }, function (err, res) {
-    //        console.log('* [example 1.2] send() callback returned: err:', err, '; res:', res);
-    //    });
 }
 
 function makeid() {
@@ -294,7 +220,7 @@ app.post('/friend/create', (req, res) => {
     let email = req.body.email;
     let password = makeid();
     let loggedinUser = req.body.loggedinUser;
-    console.log("friend create payload ", email, password, loggedinUser);
+    //    console.log("friend create payload ", email, password, loggedinUser);
 
     User
         .create({
@@ -308,41 +234,23 @@ app.post('/friend/create', (req, res) => {
                 });
             }
             if (item) {
-                console.log("friend generated ", item)
+                //                console.log("friend generated ", item)
                 sendEmail(item.email, loggedinUser, password);
-                //            Notes.create({
-                //                notesContent: 'Type here...',
-                //                habitName,
-                //                habitID: item._id,
-                //                loggedinUser
-                //            }, (err, item) => {
-                //                if (err) {
-                //                    console.log('Error Creating Notes while creating Habit');
-                //                }
-                //                if (item) {
-                //                    console.log(item);
-                //                }
-                //            });
+
                 return res.json(item);
             }
         });
-    //        .catch(function (err) {
-    //            console.error(err);
-    //            res.status(500).json({
-    //                message: 'Friend could not be created!'
-    //            });
-    //        });
 });
 
 // GET to check friend exists **
 app.get('/friend/:email', function (req, res) {
-    console.log("email id server side" + req.params.email);
+    //    console.log("email id server side" + req.params.email);
     User
         .find({
             "email": req.params.email
         })
         .then(function (friend) {
-            console.log("friend ", friend);
+            //            console.log("friend ", friend);
             return res.json(friend);
         })
         .catch(function (err) {
@@ -383,7 +291,7 @@ app.get('/getfriends/:loggedinUser', function (req, res) {
     Friend
         .find()
         .then(function (friends) {
-            console.log(friends);
+            //            console.log(friends);
             // Creates friendOutput array
             let friendsOutput = [];
             friends.map(function (friend) {
@@ -425,20 +333,9 @@ app.get('/bill/:loggedinUser', function (req, res) {
         //            "paidBy": 1
         //        })
         .then(function (bills) {
-            console.log(bills);
+            //            console.log(bills);
             return res.json(bills);
-            // Creates friendOutput array
-            //            let billsOutput = [];
-            //            bills.map(function (bill) {
-            // if there is a friend matching existing user...
-            //            if (friend.loggedinUser == req.params.loggedinUser || //friend.email == req.params.loggedinUser) {
-            // ... added to the habit output array
-            //                billsOutput.push(bill);
-            //}
-            //            });
-            //            res.json({
-            //                billsOutput
-            //            });
+
         })
         .catch(function (err) {
             console.error(err);
@@ -495,7 +392,7 @@ app.post('/bill/create', (req, res) => {
     let paidBy = req.body.paidBy;
     let paidTo = req.body.paidTo;
     //let date = new Date();
-    console.log(description, amount, paidBy, paidTo);
+    //    console.log(description, amount, paidBy, paidTo);
     Bill.create({
         description,
         amount,
@@ -509,7 +406,7 @@ app.post('/bill/create', (req, res) => {
             });
         }
         if (item) {
-            console.log(item);
+            //            console.log(item);
             return res.json(item);
         }
     });
@@ -520,7 +417,7 @@ app.post('/bill/create', (req, res) => {
 app.put('/bill/settleup', function (req, res) {
     let loggedinUser = req.body.loggedinUser;
     let user = req.body.user;
-    console.log(loggedinUser, user);
+    //    console.log(loggedinUser, user);
     Bill
         .update({
             $or: [{
@@ -587,148 +484,6 @@ app.put('/update-password/:loggedinUser', function (req, res) {
     });
 });
 
-//// PUT ------------------------------------
-//// accessing a habit content by habit id and updating
-//app.put('/update-habit/:habitId', function (req, res) {
-//    console.log("inside get habit server call");
-//    console.log("habit id server ", req.params.habitId);
-//    let toUpdate = {};
-//    let updateableFields = ['habitName', 'weekday', 'time'];
-//    updateableFields.forEach(function (field) {
-//        if (field in req.body) {
-//            toUpdate[field] = req.body[field];
-//        }
-//    });
-//
-//    Habit
-//        .findByIdAndUpdate(req.params.habitId, {
-//            $set: toUpdate
-//        }).exec().then(function (achievement) {
-//            return res.status(204).end();
-//        }).catch(function (err) {
-//            return res.status(500).json({
-//                message: 'Habit update failed'
-//            });
-//        });
-//
-//});
-//// DELETE ----------------------------------------
-//// deleting a Habit  by id
-//app.delete('/habit/:habitID', function (req, res) {
-//    Habit
-//        .findByIdAndRemove(req.params.habitID)
-//        .exec().then(function (item) {
-//            return res.status(204).end();
-//        }).catch(function (err) {
-//            return res.status(500).json({
-//                message: 'Delete Habit failed'
-//            });
-//        });
-//});
-//// ---------------NOTES ENDPOINTS-----------------------------------
-//// GET ------------------------------------
-//// accessing a note content by habit id
-//app.get('/get-notes/:habitId', function (req, res) {
-//    //    console.log("habit id server " + req.params.habitId);
-//    Notes
-//        .find({
-//            "habitID": req.params.habitId
-//        })
-//        .then(function (note) {
-//            console.log("note ", note);
-//            return res.json(note);
-//        })
-//        .catch(function (err) {
-//            console.error(err);
-//            res.status(500).json({
-//                message: 'Get Notes failed'
-//            });
-//        });
-//});
-//// PUT-----------------------------------------------
-//// Saving entry for Notes
-//app.put('/notes/save', (req, res) => {
-//    let notesContent = req.body.notesContent;
-//    let notesID = req.body.notesID;
-//    let toUpdate = {};
-//    let updateableFields = ['notesContent'];
-//    updateableFields.forEach(function (field) {
-//        if (field in req.body) {
-//            toUpdate[field] = req.body[field];
-//        }
-//    });
-//
-//    Notes
-//        .findByIdAndUpdate(notesID, {
-//            $set: toUpdate
-//        }).exec().then(function (note) {
-//            return res.status(204).end();
-//        }).catch(function (err) {
-//            return res.status(500).json({
-//                message: 'Notes Save failed'
-//            });
-//        });
-//});
-//// ---------------MILESTONES ENDPOINTS------------------------------
-//// GET ------------------------------------
-//// accessing a milestone items by habit id
-//app.get('/get-milestones/:habitId', function (req, res) {
-//
-//    Milestones
-//        .find({
-//            "habitID": req.params.habitId
-//        })
-//        .then(function (milestone) {
-//            console.log("milestone ", milestone);
-//            return res.json(milestone);
-//        })
-//        .catch(function (err) {
-//            console.error(err);
-//            res.status(500).json({
-//                message: 'Get milestones failed'
-//            });
-//        });
-//});
-//// PUT --------------------------------------
-//// Update milestone item for checked value
-//app.put('/milestone/check', function (req, res) {
-//    let milestoneID = req.body.milestoneID;
-//    let checkedValue = req.body.checked;
-//    //console.log(milestoneID, checkedValue);
-//
-//    let toUpdate = {};
-//    let updateableFields = ['checked'];
-//    updateableFields.forEach(function (field) {
-//        if (field in req.body) {
-//            toUpdate[field] = req.body[field];
-//        }
-//    });
-//    //console.log(toUpdate);
-//
-//    Milestones
-//        .findByIdAndUpdate(milestoneID, {
-//            $set: toUpdate
-//        }).exec().then(function (milestone) {
-//            return res.status(204).end();
-//        }).catch(function (err) {
-//            return res.status(500).json({
-//                message: 'Check milestones failed'
-//            });
-//        });
-//});
-//// DELETE ----------------------------------------
-//// deleting a milestone item by id
-//app.delete('/milestone/:milestoneID', function (req, res) {
-//    Milestones
-//        .findByIdAndRemove(req.params.milestoneID)
-//        .exec().then(function (item) {
-//            return res.status(204).end();
-//        }).catch(function (err) {
-//            return res.status(500).json({
-//                message: 'Milestone delete failed'
-//            });
-//        });
-//});
 
 
 // MISC ------------------------------------------
