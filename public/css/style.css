@@ -3,6 +3,7 @@
 body,
 html {
     height: 100%;
+    font-family: 'Monda', sans-serif;
 }
 
 * {
@@ -71,6 +72,7 @@ html {
     font-size: 55px;
     padding: 0 0 10px 0;
     color: #269ccc;
+    font-family: 'Megrim', cursive;
 }
 
 .about-app h3 {
@@ -184,6 +186,7 @@ input[type=password]:focus {
     width: 100%;
     opacity: 0.9;
     text-align: center;
+    margin-bottom: 5px;
 }
 
 .btn:hover {
@@ -211,6 +214,7 @@ input[type=password]:focus {
     color: #269ccc;
     color: white;
     text-decoration: none;
+    font-family: 'Megrim', cursive;
 }
 
 .topnav a:hover {
@@ -226,7 +230,9 @@ input[type=password]:focus {
     font-size: 17px;
 }
 
-
+.demo-info {
+    margin-top: 10px;
+}
 
 /* Log In, Sign Up section style */
 
